@@ -3,7 +3,7 @@ title: "Introduction"
 teaching: 0
 exercises: 0
 questions:
-- "Key question"
+- "What are we learning in this course?"
 objectives:
 - "First objective."
 keypoints:
