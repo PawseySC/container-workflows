@@ -1,6 +1,6 @@
 ---
 title: "Let's talk about containers"
-teaching: 0
+teaching: 15
 exercises: 0
 questions:
 - "Key question"

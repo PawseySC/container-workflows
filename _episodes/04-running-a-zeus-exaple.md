@@ -1,9 +1,9 @@
 ---
 title: "Running a Tensorflow app with GPUs and HPC"
-teaching: 0
+teaching: 45
 exercises: 0
 questions:
-- "Key question"
+- "How can we run a container on a HPC resource?"
 objectives:
 - "First objective."
 keypoints:
