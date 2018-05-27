@@ -23,7 +23,7 @@ A container allows us to:
 For those familiar with virtual machines (VMs), this description will sound quite similar.  At the core, containers and VMs provide the same function; isolated, reproducable environments.
 However, there are some important differences:
 
-![Container vs. VM](https://github.com/PawseySupercomputing/container-workflows/fig/container_vs_vm.png "Container vs. VM")
+![Container vs. VM]({{ page.root }}/fig/container_vs_vm.png "Container vs. VM")
 
 The key difference is in what each system virtualises; VMs virtualise ***hardware*** whereas containers virtualise ***operating systems***.
 
@@ -40,7 +40,7 @@ The key difference is in what each system virtualises; VMs virtualise ***hardwar
 
 ### Docker ###
 
-![Docker Logo](https://github.com/PawseySupercomputing/container-workflows/fig/docker_logo.png "Docker")
+![Docker Logo]({{ page.root }}/fig/docker_logo.png "Docker")
 
 There are a number of options for creating, deploying, and using containers, but by far the most common and widely-used is Docker.
 
@@ -57,7 +57,7 @@ Docker provides a framework that allows users to create, share, and manage conta
   * Repository for storing images
   * Public (e.g. Docker Hub) and private options
 
-![Docker Workflow](https://github.com/PawseySupercomputing/container-workflows/fig/docker_workflow.png "Docker Workflow")
+![Docker Workflow]({{ page.root }}/fig/docker_workflow.png "Docker Workflow")
 
 ### Docker Basics ###
 
@@ -108,7 +108,7 @@ if you wish to know more about advanced features of Docker.
 
 ### Containers and HPC ###
 
-![Containers & HPC](https://github.com/PawseySupercomputing/container-workflows/fig/containers_hpc.png "Container and HPC")
+![Containers & HPC]({{ page.root }}/fig/containers_hpc.png "Container and HPC")
 
 Why can't we just run Docker on Magnus?  At present, Docker presents several challenges for running in a shared, HPC environment:
 
@@ -127,7 +127,7 @@ Several options have been developed to enable containers on HPC systems.
 
 ### Shifter ###
 
-![Shifter](https://github.com/PawseySupercomputing/container-workflows/fig/shifterlogo.png "Shifter Logo")
+![Shifter]({{ page.root }}/fig/shifterlogo.png "Shifter Logo")
 
 [Shifter](http://www.nersc.gov/users/software/using-shifter-and-docker/using-shifter-at-nersc) is a container technology developed by NERSC that enables the use of containers on HPC systems,
 particularly Cray systems.  At its core it's meant to function just like Docker.
@@ -155,7 +155,7 @@ Pawsey filesystems.  Pynamic is a synthetic Python code that creates a large num
 functions.  The results show running Pynamic on several parallel filesytems, as well as copying the Pynamic libraries to a local ramdisk, and finally
 running directly in a container with Shifter:
 
-![Pyanmic Benchmark](https://github.com/PawseySupercomputing/container-workflows/fig/pyanmic_bench.png "Pyanmic Benchmark")
+![Pyanmic Benchmark]({{ page.root }}/fig/pynamic_bench.png "Pyanmic Benchmark")
 
 Using Shifter is outside the scope of this course, but if you wish to use it, see the following resources:
 
@@ -167,7 +167,7 @@ Pawsey currently has deployed Shifter on both of its Cray systems, Magnus and Ga
 
 ### Singularity ###
 
-![Singularity](https://github.com/PawseySupercomputing/container-workflows/fig/singularity_logo.png "Singularity Logo")
+![Singularity]({{ page.root }}/fig/singularity_logo.png "Singularity Logo")
 
 [Singularity](https://singularity.lbl.gov) is another container technology designed for HPC use.  It functions much the same as Shifter, in that it provides
 a framework for safely and securely using containers in a shared, HPC environment.
