@@ -10,6 +10,7 @@ keypoints:
 - "This course is an introduction to the utility of containers at Pawsey"
 ---
 
+## URL: http://pawseysupercomputing.github.io/container-workflows ##
 ## About this course
 This course is an introduction to the use of a technology called 'Containers'.  The second section of the course will discuss this in more detail,  how containers differ from Virtual Machines (VMs), and how you can use containers to simplify and improve your workflows.
 
