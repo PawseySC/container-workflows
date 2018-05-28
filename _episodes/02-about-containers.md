@@ -188,3 +188,24 @@ on both sides to support multiple MPI implementations.
 
 **GPU Support**
 Singularity supports GPUs by default, and a version of Shifter developed by CSCS has GPU support, as well.
+
+Singularity has a similar CLI to Docker:
+
+`singularity exec`
+  * Spawn and execute a command within a container
+  * `singularity exec centos7.img python hello.py`
+  * NOTE: Not the same as Docker `exec`
+
+`singularity build <target> <output container>`
+  * Builds Singularity container
+  * Can build from either Singularity Hub or Docker Hub
+  * `singularity build my_img.simg shub://Pawsey/test_cont`
+
+`singularity pull`
+  * Pull a container from a remote repo
+  * `singularity pull shub://vsoch/pokemon`
+
+`singularity run`
+  * Run a container as an executable
+  * Under the hood, a runscript internal to the container is executed
+  * `singularity exec centos7.img`
