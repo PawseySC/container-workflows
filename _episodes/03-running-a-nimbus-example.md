@@ -1,12 +1,12 @@
 ---
-title: "Running a Tensorflow App in Nimbus"
+title: "Running a Container App in Nimbus"
 teaching: 10
 exercises: 35
 questions:
 - "How do you use Containers on Nimbus?"
 objectives:
 - "Setup and install Docker"
-- "Use an Docker container to run a Machine Learning script in Tensorflow"
+- "Use a Docker container to run a Machine Learning script in Tensorflow"
 keypoints:
 - "We launched a VM and ran a container to run a script."
 - "We used Tensorflow without any Tensorflow installation work! Neat!"
@@ -14,7 +14,11 @@ keypoints:
 
 ## Let's get started with Nimbus
 
-Before we begin the container training today we will need to setup a Nimbus Virtual Machine.  You can follow the Nimbus training at https://pawseysupercomputing.github.io/using-nimbus/.  Completing sections 1 to 6 will give you a Virtual Machine suitable for this lesson.  When you VM is up and running, come back to this page. Good luck!
+Before we begin the container training today we will need to setup a Nimbus Virtual Machine.  You can follow the Nimbus training at:
+
+### [https://pawseysupercomputing.github.io/using-nimbus/](https://pawseysupercomputing.github.io/using-nimbus/) ###
+
+Completing sections 1 to 6 will give you a Virtual Machine suitable for this lesson.  When you VM is up and running, come back to this page. Good luck!
 
 ## First we need to setup and install Docker
 

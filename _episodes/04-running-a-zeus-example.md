@@ -5,9 +5,9 @@ exercises: 0
 questions:
 - "How can we run a container on a HPC resource?"
 objectives:
-- "First objective."
+- "Run a task on a HPC facility using Singularity."
 keypoints:
-- "First key point."
+- "Containers can be used to support cross platform workflows"
 ---
 
 ## Setting up on Zeus
