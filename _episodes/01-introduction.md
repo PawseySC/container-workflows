@@ -18,3 +18,11 @@ The later sections will take you through the use of containers in two specific c
 If you have experience with Nimbus or job scheduling with Slurm, then this course will be slightly easier, jhowewver this experience is not required. Scripts and commands you need to enter are in the course materials.
 
 The purpose of this course is to get some hands-on experience with containers and to appreciate how you can use containers to move workflows between quite different systems.
+
+## About Today
+
+This is a (mostly) hands-on course.  For most of today you can use your login details (provided) to use a terminal in our Jupyterhub at
+
+## https://hub.pawsey.org.au/ ##
+
+You can use your own laptop if you have some experience with command line work.
