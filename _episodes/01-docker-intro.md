@@ -1,6 +1,13 @@
-## Objective ##
+---
+title: "Introduction to Docker"
+teaching: 10
+exercises: 0
+questions:
+objectives:
+- Learn how to run images, either one-off or as a running service
 
-Learn how to run images, either one-off or as a running service
+keypoints:
+---
 
 ### Terminology ###
 
@@ -20,11 +27,11 @@ Most Linux distributions have pre-built images available on dockerhub, so you ca
 > docker run ubuntu /bin/echo 'hello world'
 Unable to find image 'ubuntu:latest' locally
 latest: Pulling from library/ubuntu
-af49a5ceb2a5: Pull complete 
-8f9757b472e7: Pull complete 
-e931b117db38: Pull complete 
-47b5e16c0811: Pull complete 
-9332eaf1a55b: Pull complete 
+af49a5ceb2a5: Pull complete
+8f9757b472e7: Pull complete
+e931b117db38: Pull complete
+47b5e16c0811: Pull complete
+9332eaf1a55b: Pull complete
 Digest: sha256:3b64c309deae7ab0f7dbdd42b6b326261ccd6261da5d88396439353162703fb5
 Status: Downloaded newer image for ubuntu:latest
 hello world
@@ -70,7 +77,7 @@ In an interactive shell in a container, you can change the container contents. B
 ```
 > docker run -t -i ubuntu /bin/bash
 root@1688f55c3418:/# touch /tmp/a-file.txt
-root@1688f55c3418:/# ls -l /tmp/a-file.txt 
+root@1688f55c3418:/# ls -l /tmp/a-file.txt
 -rw-r--r-- 1 root root 0 Nov 30 17:50 /tmp/a-file.txt
 root@1688f55c3418:/# exit
 exit
@@ -156,9 +163,9 @@ The official build of Nginx seems to be very popular, let's go with that:
 > docker run -p 8080:80 nginx
 Unable to find image 'nginx:latest' locally
 latest: Pulling from library/nginx
-386a066cd84a: Pull complete 
-386dc9762af9: Pull complete 
-d685e39ac8a4: Pull complete 
+386a066cd84a: Pull complete
+386dc9762af9: Pull complete
+d685e39ac8a4: Pull complete
 Digest: sha256:3861a20a81e4ba699859fe0724dc6afb2ce82d21cd1ddc27fff6ec76e4c2824e
 Status: Downloaded newer image for nginx:latest
 ```

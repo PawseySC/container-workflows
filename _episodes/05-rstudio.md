@@ -1,3 +1,11 @@
+---
+title: "RStudio deployment for fun and profit"
+teaching: 10
+exercises: 0
+questions:
+objectives:
+keypoints:
+---
 ## RStudio Example  ##
 
 R is a popular language in bioinformatics, particularly because of its statistical packages.  It often requires installing a large number of dependencies, and installing these on an HPC system can be tedious.

@@ -1,6 +1,13 @@
-## Objective ##
+---
+title: "Cleaning up Docker"
+teaching: 10
+exercises: 0
+questions:
+objectives:
+- Learn how to remove containers and images from your machine when you no longer need them
 
-Learn how to remove containers and images from your machine when you no longer need them
+keypoints:
+---
 
 ### Cleaning Up ###
 Eventually, you may want to clean out the cache of images and the history of containers, to reclaim space or just keep things tidy. Cleaning up involves two steps, removing the containers that you've run first, then removing the images themselves.

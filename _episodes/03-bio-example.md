@@ -1,3 +1,12 @@
+---
+title: "Docker: A Bioinformatics Example"
+teaching: 10
+exercises: 0
+questions:
+objectives:
+keypoints:
+---
+
 ## Objective ##
 Run a real-world bioinformatics application in a docker container
 
@@ -42,7 +51,7 @@ This is a human prion FASTA sequence.  We'll also need a reference database to b
 > gunzip zebrafish.1.protein.faa.gz
 ```
 
-We need to prepare the zebrafish database with `makeblastdb` for the search, but first we need to make our files available inside the containers. 
+We need to prepare the zebrafish database with `makeblastdb` for the search, but first we need to make our files available inside the containers.
 
 Docker has the ability to mount host directories into a container.  This allows you to add data to your container, as well as specify output directories you can use to store data after a container ends.  The docker daemon has a parameter called volume (`-v` or `--volume`), which we'll use to specify directories to be mounted.
 

@@ -1,3 +1,11 @@
+---
+title: "Running a container for machine learning"
+teaching: 10
+exercises: 0
+questions:
+objectives:
+keypoints:
+---
 ## Running a container for machine learning
 
 Now we're going to run a container to perform a machine learning benchmark application.  We'll use the popular ML package [TensorFlow](tensorflow.org) to build a convolutional neural network that classifies the [MNIST dataset](http://yann.lecun.com/exdb/mnist/), which is just a large collection of handwritten digits.  It's good dataset to get started with because the data has been formatted and cleaned, so you can focus on learning CNNs instead of dealing with data issues.
