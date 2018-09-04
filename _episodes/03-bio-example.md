@@ -55,7 +55,7 @@ We need to prepare the zebrafish database with `makeblastdb` for the search, but
 
 Docker has the ability to mount host directories into a container.  This allows you to add data to your container, as well as specify output directories you can use to store data after a container ends.  The docker daemon has a parameter called volume (`-v` or `--volume`), which we'll use to specify directories to be mounted.
 
-The format is `-v/host/path:/container/path`.  Docker will create the directory inside the container if it present at runtime.  Be aware the behaviour is different if you use absolute or relative paths, we use absolute paths here.
+The format is `-v /host/path:/container/path`.  Docker will create the directory inside the container if it present at runtime.  Be aware the behaviour is different if you use absolute or relative paths, we use absolute paths here.
 
 To generate our database with data mounted into the blast container, we'll run the following:
 
