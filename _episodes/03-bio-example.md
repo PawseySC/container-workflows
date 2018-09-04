@@ -41,7 +41,7 @@ Let's download some data to start blasting:
 ```
 > mkdir blast-example
 > cd blast-example
-> wget wget http://www.uniprot.org/uniprot/P04156.fasta
+> wget http://www.uniprot.org/uniprot/P04156.fasta
 ```
 
 This is a human prion FASTA sequence.  We'll also need a reference database to blast against:
