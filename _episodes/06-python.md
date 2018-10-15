@@ -8,7 +8,8 @@ keypoints:
 ---
 ## Why can Python be Awful? ##
 
-Python is a great language for doing all kinds of work. 
+Python is a great language for doing all kinds of work.
 
+![Python can get messy]({{ page.root }}/fig/python-complexity-cartoon.png)
 ## More stuff ##
  words
