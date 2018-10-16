@@ -9,35 +9,84 @@ objectives:
 keypoints:
 ---
 
+## Docker Containers ##
+
+Docker is tool that allows you to easily create, deploy, and run applications on any architecture.  It does this via something called **containers**, which is way for you to package up an application and all of its dependecies, into a single object that's easy to track, manage, share, and deploy.
+
+### Containers vs Virtual Machines ###
+
+Many of you have probably used a VM, so you're actually already familiar with some of the concepts of a containers.
+
+![Containers vs. VMs]({{ page.root }}/fig/container_vs_vm.png)
+
+The key difference here is that VMs virtualise ***hardware*** while containers virtualise ***operating systems***.  There are other differences (and benefits)
+
+* Containers are lighter weight (less CPU and memory usage, faster start-up times)
+* More portable
+* Modular (can easily combine multiple containers that work together)
+
+### Containers and your workflow ###
+
+There are a number of reasons for using containers in your daily work:
+
+* Provide a consistent testing environment
+* Data reproducibility/provenance
+* Cross-platform compatibility
+* Simplified software dependencies and management
+* Scalability
+
+A few examples of how containers are being used at Pawsey
+
+* Bioinformatic workflows
+* RStudio & JupyterHub
+* Webservers
+* HPC workflows (via Shifter)
+* Machine Learning Python apps in radio astronomy
+
+Here's an overview of what a workflow might look like:
+
+![Docker Workflow]({{ page.root }}/fig/docker_workflow.png)
+
 ### Terminology ###
 
 An **image** is a file (or set of files) that contains the application and all its dependencies, libraries, run-time systems, etc. required to run.  You can copy images around, upload them, download them etc.
 
-A **container** is an instantiation of an image.  That is, it's a process started from an image.  You can run multiple containers from the same image, much like you might run the same application with different options or arguments.
+A **container** is an instantiation of an image.  That is, it's a process that Docker creates and starts up, and an image is run inside a container.  You can run multiple containers from the same image, much like you might run the same application with different options or arguments.
 
-So, an image corresponds to files, a container corresponds to processes.
+In general, an image corresponds to a file, a container corresponds to a process.
 
 ### Running a simple command in a container ###
 
-Docker images have a _name_ and a _tag_. The default for the tag is 'latest', and can be omitted. If you ask docker to run an image that is not present on your system, it will download it from [dockerhub.com](dockerhub.com) first, then run it.
+Let's run a simple command:
+
+```
+docker run ubuntu cat /etc/lsb-release
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+124c757242f8: Pull complete
+9d866f8bde2a: Pull complete
+fa3f2f277e67: Pull complete
+398d32b153e8: Pull complete
+afde35469481: Pull complete
+Digest: sha256:de774a3145f7ca4f0bd144c7d4ffb2931e06634f11529653b23eba85aef8e378
+Status: Downloaded newer image for ubuntu:latest
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+DISTRIB_CODENAME=bionic
+DISTRIB_DESCRIPTION="Ubuntu 18.04.1 LTS"
+
+```
+Here's what we've done:
+
+* Run an Ubuntu Linux container
+* The command we've run inside the Ubuntu container is `cat /etc/lsb-release`, which simply prints some info about the operating system
+
+Docker images have a _name_ and a _tag_. The default for the tag is 'latest', and can be omitted (but be careful...more on this later). If you ask docker to run an image that is not present on your system, it will download it from [dockerhub.com](dockerhub.com) first, then run it.
 
 Most Linux distributions have pre-built images available on dockerhub, so you can readily find something to get you started. Let's start with the official Ubuntu linux image, and run a simple 'hello world'. The **docker run** command takes options first, then the image name, then the command and arguments to run follow it on the command line:
 
-```
-> docker run ubuntu /bin/echo 'hello world'
-Unable to find image 'ubuntu:latest' locally
-latest: Pulling from library/ubuntu
-af49a5ceb2a5: Pull complete
-8f9757b472e7: Pull complete
-e931b117db38: Pull complete
-47b5e16c0811: Pull complete
-9332eaf1a55b: Pull complete
-Digest: sha256:3b64c309deae7ab0f7dbdd42b6b326261ccd6261da5d88396439353162703fb5
-Status: Downloaded newer image for ubuntu:latest
-hello world
-```
 
-Note docker uses the 'ubuntu:latest' tag, since we didn't specify what version we want.  We can specify a specific version of ubuntu like this:
+Note in our example Docker uses the 'ubuntu:latest' tag, since we didn't specify what version we want.  We can specify a specific version of ubuntu like this:
 
 ```
 docker run ubuntu:17.04 cat /etc/lsb-release

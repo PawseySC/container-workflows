@@ -10,6 +10,8 @@ keypoints:
 ## Objective ##
 Run a real-world bioinformatics application in a docker container
 
+Learn about Docker volumes
+
 ### Running BLAST from a container ###
 We'll be running a BLAST (Basic Local Alignment Search Tool) example with a container from [BioContainers](https://biocontainers.pro).  BLAST is a tool bioinformaticians use to compare a sample genetic sequence to a database of known seqeuences; it's one of the most widely used bioinformatic tools.
 
@@ -53,7 +55,11 @@ This is a human prion FASTA sequence.  We'll also need a reference database to b
 
 We need to prepare the zebrafish database with `makeblastdb` for the search, but first we need to make our files available inside the containers.
 
-Docker has the ability to mount host directories into a container.  This allows you to add data to your container, as well as specify output directories you can use to store data after a container ends.  The docker daemon has a parameter called volume (`-v` or `--volume`), which we'll use to specify directories to be mounted.
+Docker has the ability to mount host directories into a container.  This allows you to add data to your container, as well as specify output directories you can use to store data after a container ends.  This is extremely useful as it's a bad idea to package up your containers with lots of data; it increases the size of the containers and makes them less portable (what if someone else wants to run the same container with different data?).
+
+![Docker Volumes]({{ page.root }}/fig/docker-volume.png)
+
+The docker daemon has a parameter called volume (`-v` or `--volume`), which we'll use to specify directories to be mounted.
 
 The format is `-v /host/path:/container/path`.  Docker will create the directory inside the container if it present at runtime.  Be aware the behaviour is different if you use absolute or relative paths, we use absolute paths here.
 
@@ -84,6 +90,21 @@ equences producing significant alignments:                          (Bits)  Valu
 ...
 ```
 We can see that several proteins in the zebrafish genome match those in the human prion (interesting?).
+
+
+### Comments on Volumes ###
+
+Docker has several ways to mount data into containers:
+
+* **-v (or --volume)** 
+* **--mount** 
+
+There are some subtle differences, but here are the key points:
+
+* Volume mounts (-v) will create a new directory in the container, and mount your external directory there, even if the container directory doesn't exist (--mount will generate an error if the internal directory isn't present)
+* --mount is generally more performant, but requires you to be explicit in your mount command, and requires that your host machine has a specific directory structure
+
+In general, start with **-v**
 
 
 ### Conclusion ###
