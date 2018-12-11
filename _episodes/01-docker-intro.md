@@ -135,6 +135,11 @@ The `-t` and `-i` options make sure we can attach a terminal to the container, a
 
 As you can see, you have root access in your container, and you are in what looks like a normal linux system. Now you can do whatever you like, e.g. install software and develop applications, all within the container of your choice.
 
+Note there is also a command to just download a container image without running it:
+
+```
+docker pull ubuntu
+```
 
 ### Starting a long-running service in a container ###
 Containers are useful for running services, like web-servers etc. Many come packaged from the developers, so you can start one easily, but first you need to find the one you want to run. You can either search on [dockerhub.com](dockerhub.com), or you can use the **docker search** command. Nginx is a popular web-server, let's look for that:
