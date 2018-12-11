@@ -18,19 +18,19 @@ We'll be running a BLAST (Basic Local Alignment Search Tool) example with a cont
 To begin, we'll pull the BLAST container (this will take a little bit):
 
 ```
-> docker pull biocontainers/blast
-Using default tag: latest
-latest: Pulling from biocontainers/blast
-22dc81ace0ea: Pull complete
-1a8b3c87dba3: Pull complete
+> docker pull biocontainers/blast:v2.2.31_cv2
+v2.2.31_cv2: Pulling from biocontainers/blast
+22dc81ace0ea: Pull complete 
+1a8b3c87dba3: Pull complete 
 ...
-Status: Downloaded newer image for biocontainers/blast:latest
+Digest: sha256:238717ec69830ec62a19fc05c6f70183f218a13f7678864060f0157dc63dc54f
+Status: Downloaded newer image for biocontainers/blast:v2.2.31_cv2
 ```
 
-We can run a simple command to verify the container workds:
+We can run a simple command to verify the container works:
 
 ```
->  docker run biocontainers/blast blastp -help
+>  docker run biocontainers/blast:v2.2.31_cv2 blastp -help
 USAGE
   blastp [-h] [-help] [-import_search_strategy filename]
 ...
@@ -66,13 +66,13 @@ The format is `-v /host/path:/container/path`.  Docker will create the directory
 To generate our database with data mounted into the blast container, we'll run the following:
 
 ```
-> docker run -v `pwd`:/data/ biocontainers/blast makeblastdb -in zebrafish.1.protein.faa -dbtype prot
+> docker run -v `pwd`:/data/ biocontainers/blast:v2.2.31_cv2 makeblastdb -in zebrafish.1.protein.faa -dbtype prot
 ```
 
 Note that I'm using ``` `pwd` ``` as a sortcut for the current working directory, where the BLAST files are located.  You should now see several new files, that are present after our docker container terminated.  We can now do the final alignment step:
 
 ```
-> docker run -v `pwd`:/data/ biocontainers/blast blastp -query P04156.fasta -db zebrafish.1.protein.faa -out results.txt
+> docker run -v `pwd`:/data/ biocontainers/blast:v2.2.31_cv2 blastp -query P04156.fasta -db zebrafish.1.protein.faa -out results.txt
 ```
 The final results are stored in `results.txt`;
 ```
