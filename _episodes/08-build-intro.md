@@ -54,7 +54,7 @@ CMD ["/bin/bash"]
 
 * `FROM`: compulsory, it provides the starting image we will use to build our customised one;
 * `MAINTAINER`: details of the person who wrote the Dockerfile, optional;
-* `ARG`: used to set temporary values that will be used during the build process, and that might need to be changed in future builds; a common use is to specify package versions, like in this case;
+* `ARG`: used to set temporary values that will be used during the build process, and that might need to be changed in future builds; a common use is to specify package versions, like in this sample case;
 * `RUN`: this is the most used instruction, that alllows to run most shell commands during the build. Multiple `RUN` instructions are often found in a single Dockerfile. Each `RUN` instruction creates an additional _layer_ in the container image. More on this later;
 * `ENV`: required to set environment variables that will persist at runtime in the container; in this specific case, the `EDITOR` variable is created as an example.  
   **DO NOT** use `RUN export <..>` to this end;
@@ -62,6 +62,8 @@ CMD ["/bin/bash"]
 * `WORKDIR`: changes directory to the specified path; the last current directory in the build will be the working directory in the running container.  
   **NOTE**: if you use instead `RUN cd <..>`, the changed directory will only persist within that `RUN` instruction, and then be lost in subsequent build steps/layers;
 * `CMD`: specifies the default command to be executed with the container. `bash` is the default anyway for Ubuntu containers, but it's good to be aware of this syntax.
+
+Note that uses for `ARG` and `ENV` in this example are not really required, they are included just to showcase these instructions.
 
 
 ### Layers in a container image ###
@@ -145,4 +147,6 @@ Dockerfiles use specific instructions to direct the image building process. Once
 
 ### Best practices ###
 
+- for stand-alone packages, it is suggested to use the policy of one container per package
+- for Python or R pipelines, it may be handier to use the policy of a single container for the entire pipeline
 - [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) are found in the Docker website
