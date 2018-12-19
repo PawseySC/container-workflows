@@ -51,23 +51,13 @@ This is a human prion FASTA sequence.  We'll also need a reference database to b
 > gunzip zebrafish.1.protein.faa.gz
 ```
 
-We need to prepare the zebrafish database with `makeblastdb` for the search, but first we need to make our files available inside the containers.
-
-Docker has the ability to mount host directories into a container.  This allows you to add data to your container, as well as specify output directories you can use to store data after a container ends.  This is extremely useful as it's a bad idea to package up your containers with lots of data; it increases the size of the containers and makes them less portable (what if someone else wants to run the same container with different data?).
-
-![Docker Volumes]({{ page.root }}/fig/docker-volume.png)
-
-The docker daemon has a parameter called volume (`-v` or `--volume`), which we'll use to specify directories to be mounted.
-
-The format is `-v /host/path:/container/path`.  Docker will create the directory inside the container if present at runtime.  Be aware the behaviour is different if you use absolute or relative paths, we use absolute paths here.
-
-To generate our database with data mounted into the blast container, we'll run the following:
+We need to prepare the zebrafish database with `makeblastdb` for the search, so we'll run the following (see a previous lesson for details on `-v`):
 
 ```
 > docker run -v `pwd`:/data/ biocontainers/blast:v2.2.31_cv2 makeblastdb -in zebrafish.1.protein.faa -dbtype prot
 ```
 
-Note that I'm using ``` `pwd` ``` as a sortcut for the current working directory, where the BLAST files are located.  You should now see several new files, that are present after our docker container terminated.  We can now do the final alignment step:
+After the docker container has terminated, you should see several new files in the current directory.  We can now do the final alignment step:
 
 ```
 > docker run -v `pwd`:/data/ biocontainers/blast:v2.2.31_cv2 blastp -query P04156.fasta -db zebrafish.1.protein.faa -out results.txt
@@ -88,34 +78,6 @@ equences producing significant alignments:                          (Bits)  Valu
 ...
 ```
 We can see that several proteins in the zebrafish genome match those in the human prion (interesting?).
-
-
-### Comments on Volumes ###
-
-Docker has several ways to mount data into containers:
-
-* **-v (or --volume)** 
-* **--mount** 
-
-There are some subtle differences, but here are the key points:
-
-* Volume mounts (`-v`) will create a new directory in the container, and mount your external directory there, even if the container directory doesn't exist (`--mount` will generate an error if the internal directory isn't present)
-* `--mount` is generally more performant, but requires you to be explicit in your mount command, and requires that your host machine has a specific directory structure
-
-In general, start with **-v**
-
-
-### Changing directory when the container starts ###
-
-Docker has an option to allow changing working directory at the time a container is run:
-
-* **-w (or --workdir)**
-
-This can be useful to make your workflow uniform, as different container providers may have different default working directorries. For instance:
-
-```
-> docker run -v `pwd`:/data/ -w /data biocontainers/blast:v2.2.31_cv2 less results.txt
-```
 
 
 ### Conclusion ###
