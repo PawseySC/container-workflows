@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Docker"
-teaching: 10
+teaching: 20
 exercises: 0
 questions:
 objectives:
@@ -11,11 +11,11 @@ keypoints:
 
 ## Docker Containers ##
 
-Docker is tool that allows you to easily create, deploy, and run applications on any architecture.  It does this via something called **containers**, which is way for you to package up an application and all of its dependecies, into a single object that's easy to track, manage, share, and deploy.
+Docker is a tool that allows you to easily create, deploy, and run applications on any architecture.  It does this via something called **containers**, which is a way for you to package up an application and all of its dependecies, into a single object that's easy to track, manage, share, and deploy.
 
 ### Containers vs Virtual Machines ###
 
-Many of you have probably used a VM, so you're actually already familiar with some of the concepts of a containers.
+Many of you have probably used a VM, so you're actually already familiar with some of the concepts of a container.
 
 ![Containers vs. VMs]({{ page.root }}/fig/container_vs_vm.png)
 
@@ -37,11 +37,12 @@ There are a number of reasons for using containers in your daily work:
 
 A few examples of how containers are being used at Pawsey
 
-* Bioinformatic workflows
+* Bioinformatics workflows
 * RStudio & JupyterHub
 * Webservers
 * HPC workflows (via Shifter)
-* Machine Learning Python apps in radio astronomy
+* Machine Learning 
+* Python apps in radio astronomy
 
 Here's an overview of what a workflow might look like:
 
@@ -60,7 +61,7 @@ In general, an image corresponds to a file, a container corresponds to a process
 Let's run a simple command:
 
 ```
-docker run ubuntu cat /etc/lsb-release
+> docker run ubuntu cat /etc/lsb-release
 Unable to find image 'ubuntu:latest' locally
 latest: Pulling from library/ubuntu
 124c757242f8: Pull complete
@@ -90,7 +91,7 @@ Most Linux distributions have pre-built images available on dockerhub, so you ca
 Note in our example Docker uses the 'ubuntu:latest' tag, since we didn't specify what version we want.  We can specify a specific version of ubuntu like this:
 
 ```
-docker run ubuntu:17.04 cat /etc/lsb-release
+> docker run ubuntu:17.04 cat /etc/lsb-release
 DISTRIB_ID=Ubuntu
 DISTRIB_RELEASE=17.04
 DISTRIB_CODENAME=zesty
@@ -107,7 +108,7 @@ hello world
 You can list all Docker containers on your system with
 
 ```
-docker ps -a
+> docker ps -a
 ```
 
 The `-a` flag prints all containers (those currently running and any stopped containers)
@@ -115,11 +116,11 @@ The `-a` flag prints all containers (those currently running and any stopped con
 Similarly, you can list all docker images you have with
 
 ```
-docker images
+> docker images
 ```
 
 ### Running an interactive command in an image ###
-Docker has the option to run containers interactively.  While this is convenient (and useful for debugging), in general you shouldn't use this model as your standard way of working with containers.  To run interactively, we just need to use the `-i` and `-t` flags:
+Docker has the option to run containers interactively.  While this is convenient (and useful for debugging), in general you shouldn't use this model as your standard way of working with containers.  To run interactively, we just need to use the `-i` and `-t` flags, or `-it` for brevity:
 
 ```
 > docker run -i -t ubuntu /bin/bash
@@ -131,7 +132,7 @@ boot  etc  lib   media  opt  root  sbin  sys  usr
 > exit # or hit control-D
 ```
 
-The `-t` and `-i` options make sure we can attach a terminal to the container, and we tell it to run our favourite shell as the application.
+The `-t` and `-i` options make sure we allocate a terminal to the container, and keep its STDIN (standard input) open.
 
 As you can see, you have root access in your container, and you are in what looks like a normal linux system. Now you can do whatever you like, e.g. install software and develop applications, all within the container of your choice.
 
@@ -242,12 +243,11 @@ So now you've started it, how do you stop it? Use the **docker stop** command! Y
 pensive_booth
 > docker ps # check that it's gone
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-```:wq
+```
 
 ### Conclusion ###
 You now know how to find a container that you want to run. You can start it, re-start it, run it as a detached service, attach a terminal to it for debugging, view the logs externally and even map ports between it and your host machine.
 
 ### Best practices ###
-
 
 - prefer official images over those built by third-parties. Docker runs with privileges, so you have to be a bit careful what you run.
