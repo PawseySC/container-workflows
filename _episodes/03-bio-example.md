@@ -4,16 +4,14 @@ teaching: 10
 exercises: 0
 questions:
 objectives:
+- Run a real-world bioinformatics application in a docker container
+- Learn about Docker volumes
+
 keypoints:
 ---
 
-## Objective ##
-Run a real-world bioinformatics application in a docker container
-
-Learn about Docker volumes
-
 ### Running BLAST from a container ###
-We'll be running a BLAST (Basic Local Alignment Search Tool) example with a container from [BioContainers](https://biocontainers.pro).  BLAST is a tool bioinformaticians use to compare a sample genetic sequence to a database of known seqeuences; it's one of the most widely used bioinformatic tools.
+We'll be running a BLAST (Basic Local Alignment Search Tool) example with a container from [BioContainers](https://biocontainers.pro).  BLAST is a tool bioinformaticians use to compare a sample genetic sequence to a database of known seqeuences; it's one of the most widely used bioinformatics tools.
 
 To begin, we'll pull the BLAST container (this will take a little bit):
 
@@ -30,7 +28,7 @@ Status: Downloaded newer image for biocontainers/blast:v2.2.31_cv2
 We can run a simple command to verify the container works:
 
 ```
->  docker run biocontainers/blast:v2.2.31_cv2 blastp -help
+> docker run biocontainers/blast:v2.2.31_cv2 blastp -help
 USAGE
   blastp [-h] [-help] [-import_search_strategy filename]
 ...
@@ -61,7 +59,7 @@ Docker has the ability to mount host directories into a container.  This allows 
 
 The docker daemon has a parameter called volume (`-v` or `--volume`), which we'll use to specify directories to be mounted.
 
-The format is `-v /host/path:/container/path`.  Docker will create the directory inside the container if it present at runtime.  Be aware the behaviour is different if you use absolute or relative paths, we use absolute paths here.
+The format is `-v /host/path:/container/path`.  Docker will create the directory inside the container if present at runtime.  Be aware the behaviour is different if you use absolute or relative paths, we use absolute paths here.
 
 To generate our database with data mounted into the blast container, we'll run the following:
 
@@ -101,10 +99,23 @@ Docker has several ways to mount data into containers:
 
 There are some subtle differences, but here are the key points:
 
-* Volume mounts (-v) will create a new directory in the container, and mount your external directory there, even if the container directory doesn't exist (--mount will generate an error if the internal directory isn't present)
-* --mount is generally more performant, but requires you to be explicit in your mount command, and requires that your host machine has a specific directory structure
+* Volume mounts (`-v`) will create a new directory in the container, and mount your external directory there, even if the container directory doesn't exist (`--mount` will generate an error if the internal directory isn't present)
+* `--mount` is generally more performant, but requires you to be explicit in your mount command, and requires that your host machine has a specific directory structure
 
 In general, start with **-v**
+
+
+### Changing directory when the container starts ###
+
+Docker has an option to allow changing working directory at the time a container is run:
+
+* **-w (or --workdir)**
+
+This can be useful to make your workflow uniform, as different container providers may have different default working directorries. For instance:
+
+```
+> docker run -v `pwd`:/data/ -w /data biocontainers/blast:v2.2.31_cv2 less results.txt
+```
 
 
 ### Conclusion ###
