@@ -40,7 +40,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 97b1e86df1f1        ubuntu              "/bin/bash"              50 minutes ago      Exited (0) 50 minutes ago                       backstabbing_brown
 ```
 
-You can concoct your own one-liner to clean up everything, if you wish. Docker will refuse to delete something that's actively in use, so you won't screw things up too badly this way
+You can construct your own one-liner to clean up everything, if you wish. Docker will refuse to delete something that's actively in use, so you won't screw things up too badly this way
 
 ```
 > docker rm `docker ps --all -q`
@@ -91,5 +91,5 @@ Cleaning up containers and images is a two-step process. Now you should be able 
 
 ### Best practices ###
 
-- use the ```--rm``` flag when you know you won't want to re-start a container
+- use `docker run` with the `--rm` flag when you know you won't want to re-start a container
 - if you use containers heavily, clean up the images from time to time
