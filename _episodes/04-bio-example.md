@@ -5,7 +5,6 @@ exercises: 0
 questions:
 objectives:
 - Run a real-world bioinformatics application in a docker container
-- Learn about Docker volumes
 
 keypoints:
 ---
