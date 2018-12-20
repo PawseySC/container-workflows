@@ -123,7 +123,7 @@ In general, start with **-v**.
 ### Matching user permissions with the host ###
 
 So far we have seen that files created by the container belong to the root user. This can be annoying, in that the host user might then have limitations in editing/deleting those files. 
-Docker has an option, `-u`, to alter the user and group ID in the running container. It can be used in conjunction with the linux command `id` to pass the host IDs directly to the container. For instance:
+Docker has an option, `-u` or `--user`, to alter the user and group ID in the running container. It can be used in conjunction with the linux command `id` to pass the host IDs directly to the container. For instance:
 
 ```
 > docker run -v `pwd`:/data -w /data -u `id -u`:`id -g` ubuntu touch container3
