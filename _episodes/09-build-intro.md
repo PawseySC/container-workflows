@@ -91,6 +91,8 @@ Sending build context to Docker daemon  2.048kB
 Step 1/8 : FROM ubuntu:18.04
  ---> 93fd78260bd1
 
+[...]
+
 Step 8/8 : CMD ["/bin/bash"]
  ---> Running in c8e8e1f38299
 Removing intermediate container c8e8e1f38299
@@ -99,7 +101,13 @@ Successfully built 92b3a4b7a0f5
 Successfully tagged nano:2.9.3-2
 ```
 
-Here, the `-t` flag is used to specify the image name and tag. `.` is the location of the build context (i.e. the directory for the Dockerfile).
+Here, `.` is the location of the build context (i.e. the directory for the Dockerfile).  
+The `-t` flag is used to specify the image name (compulsory) and tag (optional).
+
+Any lowercase alphanumeric string can be used as image name. Using the format `<Your Docker Hub account>/<Image name>` as in this example allows to push the built image to your Docker Hub repository.  
+The image tag (following the colon) can be used to maintain a set of different image versions on Docker Hub, and is a key feature in enabling reproducibility of your computations through containers.
+
+Finally, note that `docker build` has an option to change at build time the value of temporary `ARG` variables set in the Dockerfile: `--build-arg <variable>=<value>`.
 
 
 ### Pushing the image to Docker Hub ###
@@ -111,6 +119,8 @@ If you have a (free) Docker Hub account, `marcodelapierre` in this case, you are
 The push refers to repository [docker.io/marcodelapierre/nano]
 b7b5c20b2e8d: Pushed 
 62c23d30c50a: Pushed 
+
+[...]
 
 2.9.3-2: digest: sha256:1efb81d9eabb81e0da9bda95fca11f9140c5934ca965f53be986463ae21218f6 size: 1568
 ```
