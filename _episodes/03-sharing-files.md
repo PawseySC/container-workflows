@@ -161,6 +161,6 @@ Docker provides flags to map host directories in the containers, and to match fi
 
 - figuring out a standard way to consistently map host directories in container can help scripting and automation. For instance:
     - ``` -v `pwd`:/data -w /data ``` can be useful when just working in the current directory
-    - ``` -v /<DATA-DIRECTORY> -w /data ``` can be useful if your workstation/cluster is organised with one directory called `<DATA-DIRECTORY>` that contains all sample data and reference data
+    - ``` -v /<DATA-DIRECTORY>:/data -w /data ``` can be useful if your workstation/cluster is organised with one directory called `<DATA-DIRECTORY>` that contains all sample data and reference data
 - eventually, multiple volume mappings are allowed at the same time, for instance:
         ```-v `pwd`:/data -v /reference-database:/ref -w /data ```
