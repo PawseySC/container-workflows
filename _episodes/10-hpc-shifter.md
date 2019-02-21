@@ -19,10 +19,11 @@ To use it, we need first to load the corresponding module:
 > module load shifter
 ```
 
-The command to pull container images is very similar to Docker, for instance:
+In principle, the command to pull container images is very similar to Docker: `shifter pull ubuntu`.  
+However, to avoid disk quota issues on Pawsey HPC systems, the following syntax is recommended, that makes use of the `sg` linux command, for instance:
 
 ```
-> shifter pull ubuntu
+> sg $PAWSEY_PROJECT -c 'shifter pull ubuntu'
 # image     : index.docker.io/library/ubuntu/latest
 # cacheDir  : /group/shifterrepos/mdelapierre/.shifter/cache
 # tmpDir    : /tmp
@@ -39,15 +40,15 @@ The command to pull container images is very similar to Docker, for instance:
 ```
 
 ```
-> shifter pull biocontainers/blast:v2.2.31_cv2
-> shifter pull busybox
+> sg $PAWSEY_PROJECT -c 'shifter pull centos'
+> sg $PAWSEY_PROJECT -c 'shifter pull busybox'
 ```
 
 Similar again to Docker, we can list locally pulled images with:
 
 ```
 > shifter images
-biocontainers/blast              v2.2.31_cv2                  6c7abe0caf53   2018-12-19T22:33:46   729.12MB     index.docker.io
+library/centos                   latest                       ea4b646d9000   2018-11-27T07:05:23   69.62MB      index.docker.io
 library/busybox                  latest                       7dc9d60af829   2018-12-19T22:31:48   704.00KB     index.docker.io
 library/ubuntu                   latest                       d71fc6939e16   2018-12-19T22:30:41   29.94MB      index.docker.io
 ```
@@ -84,10 +85,12 @@ A few differences in behaviour can be noticed compared to Docker, such that usin
 - the host user is automatically set for the container;
 - Shifter automatically removes containers after execution is terminated;
 
-As an additional example, you might want to run:
+As additional examples, you might want to run:
 
 ```
-> shifter run biocontainers/blast:v2.2.31_cv2 blastp -help
+> shifter run ubuntu ls /
+
+> shifter run ubuntu whoami
 ```
 
 Finally, no flag is required to run a container interactively. To launch an interactive shell from within the container, just run it without any commands, for isntance:

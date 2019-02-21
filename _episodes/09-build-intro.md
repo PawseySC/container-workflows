@@ -91,8 +91,6 @@ Sending build context to Docker daemon  2.048kB
 Step 1/8 : FROM ubuntu:18.04
  ---> 93fd78260bd1
 
-[...]
-
 Step 8/8 : CMD ["/bin/bash"]
  ---> Running in c8e8e1f38299
 Removing intermediate container c8e8e1f38299
@@ -119,8 +117,6 @@ If you have a (free) Docker Hub account, `marcodelapierre` in this case, you are
 The push refers to repository [docker.io/marcodelapierre/nano]
 b7b5c20b2e8d: Pushed 
 62c23d30c50a: Pushed 
-
-[...]
 
 2.9.3-2: digest: sha256:1efb81d9eabb81e0da9bda95fca11f9140c5934ca965f53be986463ae21218f6 size: 1568
 ```
