@@ -117,5 +117,72 @@ nginx
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 
+
+### Docker-Compose ###
+
+Sometimes we may need to run and manage multiple containers (e.g., running an Nginx webserver in front of some other application we are running in a container).
+
+We can run all of these via `docker run` commands, but it may get cumbersome if you have lots of arguments and flags.  We can use a tool called `docker-compose` to orchestrate and manage containers for us.
+
+All we need to do is define the various options and properties for our containers in a YAML file.  Let's create a simple, containerised MySQL/Nginx setup:
+
+```
+version: '3'
+services:
+
+  # Nginx
+  webserver:
+    image: nginx:alpine
+    container_name: nginx-webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - appnet
+
+  # MySQL
+  db:
+    image: mysql:5.7.22
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - appnet
+
+  # Docker Volumes
+  volumes:
+    dbdata:
+      driver:local
+     
+  # Docker Networks
+  networks:
+    appnet:
+      driver: bridge
+```
+
+Here we can define different services and options.  There are a lot of options, so I'll touch on a few:
+
+* image - this is the Docker image you want to pull
+* restart - we can tell Docker-Compose to restart containers unders certain conditions
+* ports - open up different ports to a container
+* networks - we define a virtual network for containers to connect to
+* volumes - Docker volumes are persistent data stores we can use to store app data after a container ends
+
+To run this, you simply need to save the above file as `docker-compose.yml`, cd to that directory and run
+
+```
+docker-compose up -d
+```
+
+
 ### Conclusion ###
 In this lesson you've learned how to run Docker containers in the background, allowing you to have long-running services (like a web server).  You can also use options like `--name` and `docker logs` to manage and query your containers.
