@@ -34,7 +34,7 @@ BUILD  convolutional.py  __init__.py
 
 If you can see it, then we have some minor editing to complete. We need to edit **convolutional.py** to set NUM_EPOCS to 1 (since we don’t have a GPU here, this will take forever at the current value of 10).  If you need assistance with this in a class, call a class assistance, otherwise have a look at (link).
 
-Find the line with the variable *NUM_EPOCHS**, you should see that it's set to 10. Make the change to 1 and save the file. It now will look like the following:
+Find the line with the variable **NUM_EPOCHS**, you should see that it's set to 10. Make the change to 1 and save the file. It now will look like the following:
 
 ```
 # CVDF mirror of http://yann.lecun.com/exdb/mnist/
@@ -126,7 +126,7 @@ To build our new image we'll use the `docker build` command:
 > docker build -t bskjerven/tensorflow-ex .
 ```
 
-Here were giving our image a title; the naming format is `<dockerhub account>/<image name>`, so you can substitute in your own details.  You'll need to set up your own DockerHub account if you want to push this image to the cloud later.
+Here were giving our image a title; the naming format is `<Docker Hub Account>/<Image Name>`, so you can substitute in your own details.  You'll need to set up your own DockerHub account if you want to push this image to the cloud later.
 
 We can now run the container just as before, but let's test it first:
 

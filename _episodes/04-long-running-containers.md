@@ -10,7 +10,7 @@ keypoints:
 ---
 
 ### Starting a long-running service in a container ###
-Containers are useful for running services, like web-servers etc. Many come packaged from the developers, so you can start one easily, but first you need to find the one you want to run. You can either search on [dockerhub.com](dockerhub.com), or you can use the **docker search** command. Nginx is a popular web-server, let's look for that:
+Containers are useful for running services, like web-servers etc. Many come packaged from the developers, so you can start one easily, but first you need to find the one you want to run. You can either search on [Docker Hub](https://hub.docker.com), or you can use the **docker search** command. Nginx is a popular web-server, let's look for that:
 
 ```
 > docker search nginx

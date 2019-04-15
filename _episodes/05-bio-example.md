@@ -82,7 +82,7 @@ We can see that several proteins in the zebrafish genome match those in the huma
 ### Conclusion ###
 There are a lot of applications (not just bioinformatics) already wrapped up in container images.  Here's a small list of some of the repositories we use at Pawsey:
 
-* [DockerHub](hub.docker.com)
+* [Docker Hub](https://hub.docker.com)
 * [Bioboxes](bioboxes.org)
 * [Biocontainers](biocontainers.pro)
 * [Nvidia GPU Cloud (NGC)](ngc.nvidia.com)*

@@ -29,19 +29,20 @@ The key difference here is that VMs virtualise ***hardware*** while containers v
 
 There are a number of reasons for using containers in your daily work:
 
-* Provide a consistent testing environment
 * Data reproducibility/provenance
-* Cross-platform compatibility
+* Cross-platform portability
+* Simplified collaboration
 * Simplified software dependencies and management
 * Scalability
+* Provide a consistent testing environment
 
 A few examples of how containers are being used at Pawsey
 
 * Bioinformatics workflows
 * RStudio & JupyterHub
-* Webservers
-* HPC workflows (via Shifter)
 * Machine Learning 
+* HPC workflows (via Shifter)
+* Webservers
 * Python apps in radio astronomy
 
 Here's an overview of what a workflow might look like:
@@ -56,6 +57,11 @@ A **container** is an instantiation of an image.  That is, it's a process that D
 
 In general, an image corresponds to a file, a container corresponds to a process.
 
+A **Dockerfile** is a recipe to build an image.
+
+A **registry** is a server application where images are stored and can be accessed by users. It can be public (e.g. Docker Hub) or private.
+
+
 ### Running a simple command in a container ###
 
 Let's run a simple command:
@@ -64,17 +70,16 @@ Let's run a simple command:
 > docker run ubuntu cat /etc/lsb-release
 Unable to find image 'ubuntu:latest' locally
 latest: Pulling from library/ubuntu
-124c757242f8: Pull complete
-9d866f8bde2a: Pull complete
-fa3f2f277e67: Pull complete
-398d32b153e8: Pull complete
-afde35469481: Pull complete
-Digest: sha256:de774a3145f7ca4f0bd144c7d4ffb2931e06634f11529653b23eba85aef8e378
+898c46f3b1a1: Pull complete 
+63366dfa0a50: Pull complete 
+041d4cd74a92: Pull complete 
+6e1bee0f8701: Pull complete 
+Digest: sha256:017eef0b616011647b269b5c65826e2e2ebddbe5d1f8c1e56b3599fb14fabec8
 Status: Downloaded newer image for ubuntu:latest
 DISTRIB_ID=Ubuntu
 DISTRIB_RELEASE=18.04
 DISTRIB_CODENAME=bionic
-DISTRIB_DESCRIPTION="Ubuntu 18.04.1 LTS"
+DISTRIB_DESCRIPTION="Ubuntu 18.04.2 LTS"
 
 ```
 Here's what we've done:
@@ -83,9 +88,9 @@ Here's what we've done:
 * Created a container from our Ubuntu image
 * The command we've run inside the Ubuntu container is `cat /etc/lsb-release`, which simply prints some info about the operating system
 
-Docker images have a _name_ and a _tag_. The default for the tag is 'latest', and can be omitted (but be careful...more on this later). If you ask docker to run an image that is not present on your system, it will download it from [dockerhub.com](dockerhub.com) first, then run it.
+Docker images have a _name_ and a _tag_. The default for the tag is 'latest', and can be omitted (but be careful...more on this later). If you ask docker to run an image that is not present on your system, it will download it from [Docker Hub](https://hub.docker.com) first, then run it.
 
-Most Linux distributions have pre-built images available on dockerhub, so you can readily find something to get you started. Let's start with the official Ubuntu linux image, and run a simple 'hello world'. The **docker run** command takes options first, then the image name, then the command and arguments to run follow it on the command line:
+Most Linux distributions have pre-built images available on Docker Hub, so you can readily find something to get you started. Let's start with the official Ubuntu linux image, and run a simple 'hello world'. The **docker run** command takes options first, then the image name, then the command and arguments to run follow it on the command line:
 
 
 Note in our example Docker uses the 'ubuntu:latest' tag, since we didn't specify what version we want.  We can specify a specific version of ubuntu like this:
@@ -124,7 +129,8 @@ In the example above, Docker automatically downloaded the Ubuntu image.  If you 
 ```
 > docker pull ubuntu
 ```
-Another handy Docker command line option is the `search` option.  You can use it to quickly search for available images on DockerHub.  Note that you may still want to visit the DockerHub webpage to find out more information about a particular image (e.g. run commands, configuration instructions, etc.).
+
+Another handy Docker command line option is the `search` option.  You can use it to quickly search for available images on Docker Hub.  Note that you may still want to visit the [Docker Hub](https://hub.docker.com) webpage to find out more information about a particular image (e.g. run commands, configuration instructions, etc.).
 
 ```
 > docker search tensorflow
