@@ -90,7 +90,7 @@ Here's what we've done:
 
 Docker images have a _name_ and a _tag_. The default for the tag is 'latest', and can be omitted (but be careful...more on this later). If you ask docker to run an image that is not present on your system, it will download it from [Docker Hub](https://hub.docker.com) first, then run it.
 
-Most Linux distributions have pre-built images available on Docker Hub, so you can readily find something to get you started. Let's start with the official Ubuntu linux image, and run a simple 'hello world'. The **docker run** command takes options first, then the image name, then the command and arguments to run follow it on the command line:
+Most Linux distributions have pre-built images available on Docker Hub, so you can readily find something to get you started. Let's start with the official Ubuntu linux image, and run a simple 'hello world'. The `docker run` command takes options first, then the image name, then the command and arguments to run follow it on the command line:
 
 
 Note in our example Docker uses the 'ubuntu:latest' tag, since we didn't specify what version we want.  We can specify a specific version of ubuntu like this:
@@ -116,7 +116,7 @@ You can list all Docker containers on your system with
 > docker ps -a
 ```
 
-The `-a` flag prints all containers (those currently running and any stopped containers)
+The `-a` (or `--all`) flag prints all containers, i.e. those currently running and any stopped containers.
 
 Similarly, you can list all docker images you have with
 
@@ -130,7 +130,7 @@ In the example above, Docker automatically downloaded the Ubuntu image.  If you 
 > docker pull ubuntu
 ```
 
-Another handy Docker command line option is the `search` option.  You can use it to quickly search for available images on Docker Hub.  Note that you may still want to visit the [Docker Hub](https://hub.docker.com) webpage to find out more information about a particular image (e.g. run commands, configuration instructions, etc.).
+Another handy Docker command line option is `docker search`.  You can use it to quickly search for available images on Docker Hub.  Note that you may still want to visit the [Docker Hub](https://hub.docker.com) webpage to find out more information about a particular image (e.g. run commands, configuration instructions, etc.).
 
 ```
 > docker search tensorflow
