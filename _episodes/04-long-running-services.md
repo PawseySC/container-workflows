@@ -1,5 +1,5 @@
 ---
-title: "Long running containers with Docker"
+title: "Long running services with Docker"
 teaching: 20
 exercises: 0
 questions:

@@ -12,8 +12,8 @@ keypoints:
 
 ### Directory and file defaults in Docker ###
 
- We are going to use the bash syntax `bash -c '<..> ; <..>'` to run multiple commands at the same time within the same container.
- Try and run the following:
+*Note*: we are going to use the bash syntax `bash -c '<..> ; <..>'` to run multiple commands at the same time within the same container.
+First, try and run the following to get to know what is the starting point in the Ubuntu container and what it contains:
 
 ```
 > docker run ubuntu bash -c 'pwd ; ls -l'
@@ -55,7 +55,7 @@ What we have just seen is a consequence of some Docker defaults:
 - a container hasn't got any access to directories in the host filesystem (i.e. directories in the computer where you're running the container from)
 - as by default a container is run as root, any created file is owned by the group user.
 
-Let's see how these defaults can be overcome if you want to read/write on host directories effectively.
+Let's see how these defaults can be overridden if you want to read/write on host directories effectively.
 
 
 ### Accessing host directories ###
@@ -102,28 +102,28 @@ docker run -v `pwd`:/data -w /data ubuntu touch container2
 -rw-r--r-- 1 root root 0 Dec 19 08:19 container2
 ```
 
-This can be useful to make your workflow uniform, as different container providers may have different default working directorries.
+This can be useful to make your workflow uniform, as different container providers may have different default working directories.
 
 
 ### More on Volumes ###
 
 Docker has several ways to mount data into containers:
 
-* **-v (or --volume)** 
-* **--mount** 
+* `-v` (or `--volume`)
+* `--mount`
 
 There are some subtle differences, but here are the key points:
 
-* Volume mounts (`-v`) will create a new directory in the container, and mount your external directory there, even if the container directory doesn't exist (`--mount` will generate an error if the internal directory isn't present)
+* Volume mounts (`-v`) will create a new directory in the container, and mount your external directory there, even if the container directory doesn't exist. On the other hand, `--mount` will generate an error if the internal directory isn't present;
 * `--mount` is generally more performant, but requires you to be explicit in your mount command, and requires that your host machine has a specific directory structure.
 
-In general, start with **-v**.
+In general, start with `-v`.
 
 
 ### Matching user permissions with the host ###
 
 So far we have seen that files created by the container belong to the root user. This can be annoying, in that the host user might then have limitations in editing/deleting those files. 
-Docker has an option, `-u` or `--user`, to alter the user and group ID in the running container. It can be used in conjunction with the linux command `id` to pass the host IDs directly to the container. For instance:
+Docker has an option, `-u` or `--user`, to alter the user and group ID in the running container. It can be used in conjunction with the linux command `id` to pass the host user and group IDs directly to the container. For instance:
 
 ```
 > docker run -v `pwd`:/data -w /data -u `id -u`:`id -g` ubuntu touch container3
@@ -140,7 +140,7 @@ Now, let us inspect the ownerships of all the files created so far through conta
 
 As desired, the last created file is owned by the host user.
 
-Finally, note that when running a container interactively with host IDs, you might get warnings of this type:
+When running a container interactively with host IDs, you might get warnings of this type:
 
 ```
 > docker run -it -u `id -u`:`id -g` ubuntu bash
@@ -152,6 +152,10 @@ I have no name!@9bfdf83aed93:/data$
 
 These can typically be ignored.
 
+Finally, third-party containers might have been set-up so that permissions of standard users are more restricted compared to root. There are some critical cases here: only root can execute the application, or only root can write on certain locations that need to be modified at runtime. In these cases, the typical solutions are:
+- run the container as root, then fix output file ownerships;
+- build your own container for that application, with appropriate priviligies for non-root users.
+
 
 ### Conclusion ###
 Docker provides flags to map host directories in the containers, and to match file ownerships. The syntax looks ugly, but once learnt it can be reused with minimal variations.
@@ -159,8 +163,8 @@ Docker provides flags to map host directories in the containers, and to match fi
 
 ### Best practices ###
 
-- figuring out a standard way to consistently map host directories in container can help scripting and automation. For instance:
+- Figuring out a standard way to consistently map host directories in container can help scripting and automation. For instance:
     - ``` -v `pwd`:/data -w /data ``` can be useful when just working in the current directory
     - ``` -v /<DATA-DIRECTORY>:/data -w /data ``` can be useful if your workstation/cluster is organised with one directory called `<DATA-DIRECTORY>` that contains all sample data and reference data
-- eventually, multiple volume mappings are allowed at the same time, for instance:
+- Eventually, multiple volume mappings are allowed at the same time, for instance:
         ```-v `pwd`:/data -v /reference-database:/ref -w /data ```

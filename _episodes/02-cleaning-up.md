@@ -84,5 +84,5 @@ Cleaning up containers and images is a two-step process. Now you should be able 
 
 ### Best practices ###
 
-- use `docker run` with the `--rm` flag when you know you won't want to re-start a container
-- if you use containers heavily, clean up the images from time to time
+- Use `docker run` with the `--rm` flag when you know you won't want to re-start a container
+- If you use containers heavily, clean up the images from time to time
