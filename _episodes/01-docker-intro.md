@@ -4,7 +4,7 @@ teaching: 20
 exercises: 0
 questions:
 objectives:
-- Learn how to run images, either one-off or as a running service
+- Learn how to download and run images
 
 keypoints:
 ---
