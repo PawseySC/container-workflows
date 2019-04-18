@@ -4,13 +4,13 @@ teaching: 20
 exercises: 0
 questions:
 objectives:
-- Learn how to run images, either one-off or as a running service
+- Learn how to start containers for a running (web) service
 
 keypoints:
 ---
 
 ### Starting a long-running service in a container ###
-Containers are useful for running services, like web-servers etc. Many come packaged from the developers, so you can start one easily, but first you need to find the one you want to run. You can either search on [Docker Hub](https://hub.docker.com), or you can use the **docker search** command. Nginx is a popular web-server, let's look for that:
+Containers are useful for running services, like web-servers etc. Many come packaged from the developers, so you can start one easily, but first you need to find the one you want to run. You can either search on [Docker Hub](https://hub.docker.com), or you can use the `docker search` command. Nginx is a popular web-server, let's look for that:
 
 ```
 > docker search nginx
@@ -45,8 +45,8 @@ unblibraries/nginx        Baseline non-PHP nginx container                0     
 The official build of Nginx seems to be very popular, let's go with that:
 
 ```
-> docker run -p 8080:80 --name=nginx nginx
-Unable to find image 'nginx:latest' locally
+> docker pull nginx
+Using default tag: latest
 latest: Pulling from library/nginx
 386a066cd84a: Pull complete
 386dc9762af9: Pull complete
@@ -55,14 +55,26 @@ Digest: sha256:3861a20a81e4ba699859fe0724dc6afb2ce82d21cd1ddc27fff6ec76e4c2824e
 Status: Downloaded newer image for nginx:latest
 ```
 
-Note the ```-p 8080:80``` option. That tells docker to map port 80 in the container to port 8080 on the host, so you can communicate with it.
+Now, in order to run a web server such as a Nginx, we are going to use some additional Docker options, to:
+* open up communication ports
+* run the container in background
+* give the container a specific name
+We will also use a number of new Docker commands.
 
-We've also introduced a new option: `--name`
-Docker will automatically name containers, but the names don't reflect the purpose of the container (e.g. pensive_booth was the name of the nginx container I ran for this example without the `--name` option).  You can name your container whatever you want, but it's helpful to give it a name similar to the container you're using, or the specific service or application you're running in the container.  In this example, we've called our container `nginx`.
+Let's start with a known one:
+
+```
+> docker run -p 8080:80 --name=nginx nginx
+
+```
+
+The option `-p 8080:80` option tells Docker to map port 80 in the container to port 8080 on the host, so you can communicate with it.
+
+We've also introduced a second new option: `--name`. Docker automatically names containers, but these names don't reflect the purpose of the container (e.g. *pensive_booth* was the name of the nginx container I ran for this example without the `--name` option).  You can name your container whatever you want, but it's helpful to give it a name similar to the container you're using, or the specific service or application you're running in the container. This can be useful when we need to act on the container while it's running, e.g. to stop it, or to get logs, as wwe'll see soon. In this example, we've called our container `nginx`. 
 
 Note also that we didn't tell docker what program to run, that's baked into the container in this case. More on that later.
 
-Now, go to your browser and enter **localhost:8080** in the address bar (or your VM's IP address), you should see a page with a **Welcome to nginx!** message. On your terminal where you ran the docker command, you'll see some log information:
+Now, go to your browser and in the address bar enter `localhost:8080` if you are running Docker on your machine, or `<Your VM's IP Address>:8080` if you are running on a cloud service. You should see a page with a **Welcome to nginx!** message. On your terminal where you ran the docker command, you'll see some log information:
 
 ```
 172.17.0.1 - - [30/Nov/2016:18:07:59 +0000] "GET / HTTP/1.1" 200 612 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101 Firefox/49.0" "-"
@@ -72,34 +84,44 @@ Now, go to your browser and enter **localhost:8080** in the address bar (or your
 2016/11/30 18:07:59 [error] 7#7: *1 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 172.17.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080"
 ```
 
-That's a good start, but you now have a terminal tied up with nginx, and if you hit CTRL-C in that terminal, your web-server dies. We can run it in the background instead:
+That's a good start, but you now have a terminal tied up with nginx, and if you hit CTRL-C in that terminal, your web-server dies. 
+
+We can use the Docker option `-d` to run the container in the background instead (daemon mode):
 
 ```
 > docker run -d -p 8080:80 --name=nginx nginx
 48a2dca14407484ca4e7f564d6e8c226d8fdd8441e5196577b2942383b251106
 ```
 
-Go back to your browser, reload **localhost:8080** (or IP address), and you should get the page loaded again.
+Go back to your browser, reload `localhost:8080` (or `<Your VM's IP Address>:8080`), and you should get the page loaded again.
 
-We can view the logs of our nginx service with the `docker logs` command:
+We can view the logs of our nginx service with the `docker logs` command, followed by the container name, `nginx`:
 
 ```
 > docker logs --follow nginx
 172.17.0.1 - - [30/Nov/2016:18:18:40 +0000] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101 Firefox/49.0" "-"
 ```
 
-This gives us a live look at what is going on in our nginx container (try reloading your webpage and see what the logs look like).  Note that the `follow` option keeps the terminal open and will update the logs in real-time.  If you omit it, `docker logs` would simply display the last few lines of the log file.
+This gives us a live look at what is going on in our nginx container (try reloading your webpage and see what the logs look like).  Note that the `--follow` option keeps the terminal open and will update the logs in real-time.  If you omit it, `docker logs` would simply display the last few lines of the log file.
 
-If you hit CTRL-C now, your container is still running, in the background. You can see this with the **docker ps** command:
+If you hit CTRL-C now, your container is still running, in the background. You can see this with the `docker ps` command:
 
 ```
 > docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                           NAMES
-48a2dca14407        nginx               "nginx -g 'daemon off"   3 minutes ago       Up 3 minutes        443/tcp, 0.0.0.0:8080->80/tcp   pensive_booth
+48a2dca14407        nginx               "nginx -g 'daemon off"   3 minutes ago       Up 3 minutes        443/tcp, 0.0.0.0:8080->80/tcp   nginx
 ```
 
-You can open a shell into the running container, if you wish. This can be handy for debugging. Let's take a look at the processes running in our nginx server:
+You can open a shell into the running container, if you wish, using `docker exec`. This can be handy for debugging:
 
+```
+> docker exec -t -i nginx /bin/bash
+root@48a2dca14407:/# 
+
+root@48a2dca14407:/# exit
+```
+<!-- does not work with latest nginx images.. ps is not installed!
+Let's take a look at the processes running in our nginx server:
 ```
 > docker exec -t -i nginx /bin/bash
 root@48a2dca14407:/# ps auxww | grep ngin                                                                                                                
@@ -107,8 +129,9 @@ root         1  0.0  0.0  31764  5164 ?        Ss   18:58   0:00 nginx: master p
 nginx        7  0.0  0.0  32156  2900 ?        S    18:58   0:00 nginx: worker process
 root        15  0.0  0.0  11128  1036 ?        S+   18:59   0:00 grep ngin
 ```
+-->
 
-So now you've started it, how do you stop it? Use the **docker stop** command! 
+So now you've started it, how do you stop it? Use the `docker stop` command! 
 
 ```
 > docker stop nginx
@@ -120,7 +143,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 ### Docker-Compose ###
 
-Sometimes we may need to run and manage multiple containers (e.g., running an Nginx webserver in front of some other application we are running in a container).
+Sometimes we may need to run and manage multiple containers (e.g., running an Nginx web-server in front of some other application we are running in a container).
 
 We can run all of these via `docker run` commands, but it may get cumbersome if you have lots of arguments and flags.  We can use a tool called `docker-compose` to orchestrate and manage containers for us.
 
@@ -181,6 +204,12 @@ To run this, you simply need to save the above file as `docker-compose.yml`, cd 
 
 ```
 docker-compose up -d
+```
+
+To shut it down, from the same directory run
+
+```
+docker-compose down
 ```
 
 
