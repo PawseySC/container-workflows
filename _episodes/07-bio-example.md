@@ -141,10 +141,9 @@ and then submit this script using SLURM:
 There are a lot of applications (not just bioinformatics) already wrapped up in container images.  Here's a small list of some of the repositories we use at Pawsey:
 
 * [Docker Hub](https://hub.docker.com)
-* [Bioboxes](bioboxes.org)
-* [Biocontainers](biocontainers.pro)
-* [Nvidia GPU Cloud (NGC)](ngc.nvidia.com)^
-* [quay.io](quay.io)^
+* [Biocontainers](https://biocontainers.pro)
+* [Quay](https://quay.io)^
+* [Nvidia GPU Cloud (NGC)](https://ngc.nvidia.com)^
 
 ^The last two require you to create an account and login to access containers.
 
