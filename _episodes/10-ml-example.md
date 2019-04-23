@@ -25,16 +25,16 @@ Checking connectivity... done.
 Checking out files: 100% (2248/2248), done.
 ```
 
-If this downloaded correctly you can have a look at the script we will use (called **convolutional.py**).  Do this and make sure that it's there:
+If this downloaded correctly you can have a look at the script we will use (called `convolutional.py`).  Do this and make sure that it's there:
 
 ```
 > ls models/tutorials/image/mnist
 BUILD  convolutional.py  __init__.py
 ```
 
-If you can see it, then we have some minor editing to complete. We need to edit **convolutional.py** to set NUM_EPOCS to 1 (since we don’t have a GPU here, this will take forever at the current value of 10).  If you need assistance with this in a class, call a class assistance, otherwise have a look at (link).
+If you can see it, then we have some minor editing to complete. We need to edit `convolutional.py` to set NUM_EPOCS to 1 (since we don’t have a GPU here, this will take forever at the current value of 10).  If you need assistance with this in a class, call a class assistance, otherwise have a look at (link).
 
-Find the line with the variable **NUM_EPOCHS**, you should see that it's set to 10. Make the change to 1 and save the file. It now will look like the following:
+Find the line with the variable `NUM_EPOCHS`, you should see that it's set to 10. Make the change to 1 and save the file. It now will look like the following:
 
 ```
 # CVDF mirror of http://yann.lecun.com/exdb/mnist/

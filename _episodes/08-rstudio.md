@@ -28,7 +28,7 @@ Here we're openning up a port so we can access the Rtudio server remotely.  You 
 <your-nimbus-ip>:8787
 ```
 
-You should see a password prompt, and the default login is **rstudio** for **both** the username and password.
+You should see a password prompt, and the default login is `rstudio` for **both** the username and password.
 
 ##Using RStudio images ##
 
@@ -151,7 +151,7 @@ This is annoying, though...we need our terminal back.  Luckily, Docker lets you 
 ```
 docker-compose up -d
 ```
-Shortly after that starts, open a webrowser and go to your **http://146.x.x.x:8787**, but with your Nimbus IP.  You should see an Rstudio login, and we've set the username and password to `rstudio`.
+Shortly after that starts, open a web browser and go to your **http://146.x.x.x:8787**, but with your Nimbus IP.  You should see an Rstudio login, and we've set the username and password to `rstudio`.
 
 Once logged in, you type:
 

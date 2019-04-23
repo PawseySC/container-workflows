@@ -12,7 +12,7 @@ keypoints:
 
 ### Directory and file defaults in Docker ###
 
-*Note*: we are going to use the bash syntax `bash -c '<..> ; <..>'` to run multiple commands at the same time within the same container.
+**Note**: we are going to use the bash syntax `bash -c '<..> ; <..>'` to run multiple commands at the same time within the same container.
 First, try and run the following to get to know what is the starting point in the Ubuntu container and what it contains:
 
 ```

@@ -19,7 +19,7 @@ Many of you have probably used a VM, so you're actually already familiar with so
 
 ![Containers vs. VMs]({{ page.root }}/fig/container_vs_vm.png)
 
-The key difference here is that VMs virtualise ***hardware*** while containers virtualise ***operating systems***.  There are other differences (and benefits)
+The key difference here is that VMs virtualise **hardware** while containers virtualise **operating systems**.  There are other differences (and benefits)
 
 * Containers are lighter weight (less CPU and memory usage, faster start-up times)
 * More portable
@@ -89,7 +89,7 @@ Here's what we've done:
 * Created a container from our Ubuntu image
 * The command we've run inside the Ubuntu container is `cat /etc/lsb-release`, which simply prints some info about the operating system
 
-Docker images have a _name_ and a _tag_. The default for the tag is 'latest', and can be omitted (but be careful...more on this later). If you ask docker to run an image that is not present on your system, it will download it from [Docker Hub](https://hub.docker.com) first, then run it.
+Docker images have a **name** and a **tag**. The default for the tag is 'latest', and can be omitted (but be careful...more on this later). If you ask docker to run an image that is not present on your system, it will download it from [Docker Hub](https://hub.docker.com) first, then run it.
 
 Most Linux distributions have pre-built images available on Docker Hub, so you can readily find something to get you started. Let's start with the official Ubuntu linux image, and run a simple 'hello world'. The `docker run` command takes options first, then the image name, then the command and arguments to run follow it on the command line:
 
