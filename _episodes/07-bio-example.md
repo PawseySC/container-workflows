@@ -4,7 +4,7 @@ teaching: 10
 exercises: 0
 questions:
 objectives:
-- Run a real-world bioinformatics application in a docker container
+- Run a real-world bioinformatics application in a Docker container
 
 keypoints:
 ---
