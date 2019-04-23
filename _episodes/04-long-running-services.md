@@ -212,4 +212,4 @@ docker-compose down
 
 
 ### Conclusion ###
-In this lesson you've learned how to run Docker containers in the background, allowing you to have long-running services (like a web server).  You can also use options like `--name` and `docker logs` to manage and query your containers.
+You've learned how to run Docker containers in the background, allowing you to have long-running services (like a web server).  You can also use options like `--name` and `docker logs` to manage and query your containers.
