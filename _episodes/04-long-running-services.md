@@ -59,13 +59,11 @@ Now, in order to run a web server such as a Nginx, we are going to use some addi
 * open up communication ports
 * run the container in background
 * give the container a specific name
-We will also use a number of new Docker commands.
 
-Let's start with a known one:
+We will also use a number of new Docker commands. Let's start with a known one:
 
 ```
 > docker run -p 8080:80 --name=nginx nginx
-
 ```
 
 The option `-p 8080:80` option tells Docker to map port 80 in the container to port 8080 on the host, so you can communicate with it.
@@ -200,13 +198,13 @@ Here we can define different services and options.  There are a lot of options, 
 * networks - we define a virtual network for containers to connect to
 * volumes - Docker volumes are persistent data stores we can use to store app data after a container ends
 
-To run this, you simply need to save the above file as `docker-compose.yml`, cd to that directory and run
+To run this, you simply need to save the above file as `docker-compose.yml`, cd to that directory and run:
 
 ```
 docker-compose up -d
 ```
 
-To shut it down, from the same directory run
+To shut it down, from the same directory run:
 
 ```
 docker-compose down
