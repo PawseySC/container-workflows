@@ -13,6 +13,7 @@ keypoints:
 
 Docker is a tool that allows you to easily create, deploy, and run applications on any architecture.  It does this via something called **containers**, which is a way for you to package up an application and all of its dependecies, into a single object that's easy to track, manage, share, and deploy.
 
+
 ### Containers vs Virtual Machines ###
 
 Many of you have probably used a VM, so you're actually already familiar with some of the concepts of a container.
@@ -24,6 +25,7 @@ The key difference here is that VMs virtualise **hardware** while containers vir
 * Containers are lighter weight (less CPU and memory usage, faster start-up times)
 * More portable
 * Modular (can easily combine multiple containers that work together)
+
 
 ### Containers and your workflow ###
 
@@ -49,6 +51,7 @@ A few examples of how containers are being used at Pawsey
 Here's an overview of what a workflow might look like:
 
 ![Docker Workflow]({{ page.root }}/fig/docker_workflow.png)
+
 
 ### Terminology ###
 
@@ -152,6 +155,7 @@ lablup/kernel-python-tensorflow     TensorFlow container imager for Backend.Ai  
 bitnami/tensorflow-inception        Bitnami Docker Image for TensorFlow Inception   2                                       [OK]
 ```
 
+
 ### Running an interactive command in an image ###
 Docker has the option to run containers interactively.  While this is convenient (and useful for debugging), in general you shouldn't use this model as your standard way of working with containers.  To run interactively, we just need to use the `-i` and `-t` flags, or `-it` for brevity:
 
@@ -178,6 +182,7 @@ docker run
 docker pull
 docker search
 ```
+
 
 ### Best practices ###
 

@@ -79,8 +79,10 @@ bf0a1726909a        nginx               "nginx -g 'daemon of…"   18 minutes ag
 Error response from daemon: conflict: unable to remove repository reference "nginx" (must force) - container bf0a1726909a is using its referenced image 71c43202b8ac
 ```
 
+
 ### Conclusion ###
 Cleaning up containers and images is a two-step process. Now you should be able to keep your system tidy.
+
 
 ### Best practices ###
 
