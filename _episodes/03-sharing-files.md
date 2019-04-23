@@ -52,8 +52,8 @@ The file is owned by the root user!
 
 What we have just seen is a consequence of some Docker defaults:
 
-- a container hasn't got any access to directories in the host filesystem (i.e. directories in the computer where you're running the container from)
-- as by default a container is run as root, any created file is owned by the group user.
+* a container hasn't got any access to directories in the host filesystem (i.e. directories in the computer where you're running the container from)
+* as by default a container is run as root, any created file is owned by the group user.
 
 Let's see how these defaults can be overridden if you want to read/write on host directories effectively.
 
@@ -153,8 +153,8 @@ I have no name!@9bfdf83aed93:/data$
 These can typically be ignored.
 
 Finally, third-party containers might have been set-up so that permissions of standard users are more restricted compared to root. There are some critical cases here: only root can execute the application, or only root can write on certain locations that need to be modified at runtime. In these cases, the typical solutions are:
-- run the container as root, then fix output file ownerships;
-- build your own container for that application, with appropriate priviligies for non-root users.
+* run the container as root, then fix output file ownerships;
+* build your own container for that application, with appropriate priviligies for non-root users.
 
 
 ### Conclusion ###
@@ -163,8 +163,8 @@ Docker provides flags to map host directories in the containers, and to match fi
 
 ### Best practices ###
 
-- Figuring out a standard way to consistently map host directories in container can help scripting and automation. For instance:
-    - ``` -v `pwd`:/data -w /data ``` can be useful when just working in the current directory
-    - ``` -v /<DATA-DIRECTORY>:/data -w /data ``` can be useful if your workstation/cluster is organised with one directory called `<DATA-DIRECTORY>` that contains all sample data and reference data
-- Eventually, multiple volume mappings are allowed at the same time, for instance:
+* Figuring out a standard way to consistently map host directories in container can help scripting and automation. For instance:
+    * ``` -v `pwd`:/data -w /data ``` can be useful when just working in the current directory
+    * ``` -v /<DATA-DIRECTORY>:/data -w /data ``` can be useful if your workstation/cluster is organised with one directory called `<DATA-DIRECTORY>` that contains all sample data and reference data
+* Eventually, multiple volume mappings are allowed at the same time, for instance:
         ```-v `pwd`:/data -v /reference-database:/ref -w /data ```

@@ -150,6 +150,6 @@ Dockerfiles use specific instructions to direct the image building process. Once
 
 ### Best practices ###
 
-- for stand-alone packages, it is suggested to use the policy of one container per package
-- for Python or R pipelines, it may be handier to use the policy of a single container for the entire pipeline
-- [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) are found in the Docker website
+* for stand-alone packages, it is suggested to use the policy of one container per package
+* for Python or R pipelines, it may be handier to use the policy of a single container for the entire pipeline
+* [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) are found in the Docker website
