@@ -78,13 +78,13 @@ removed image index.docker.io/library/busybox/latest
 
 ### Running images with Shifter ###
 
-Let us change directory to our group directory with
+Let us change directory to our group directory with:
 
 ```
 > cd $MYGROUP
 ```
 
-and then run `ls` using the Ubuntu image we just pulled:
+and then run `ls` using the Ubuntu image we just pulled, via `shifter run`:
 
 ```
 > shifter run ubuntu ls
@@ -94,11 +94,11 @@ The output will display the content of the current host directory!
 
 A few differences in behaviour can be noticed compared to Docker, such that using Shifter typically requires to specify less options and flags:
 
-- by default, some relevant directories in the Pawsey HPC filesystems are mounted in the containers; these include `/group`, `/scratch`, `/pawsey` and `/tmp`.
+- by default, some relevant directories in the Pawsey HPC filesystems are mounted in the containers; these include `/group`, `/scratch`, `/pawsey` and `/tmp`.  
   **Note**: `/home` is NOT mounted instead;
 - if running from a mapped host directory, this becomes the working directory at container runtime;
 - the host user is automatically set for the container;
-- Shifter automatically removes containers after execution is terminated;
+- Shifter automatically removes containers after execution is terminated.
 
 As additional examples, you might want to run:
 
@@ -108,7 +108,7 @@ As additional examples, you might want to run:
 > shifter run ubuntu whoami
 ```
 
-Finally, no flag is required to run a container interactively. To launch an interactive shell from within the container, just run it without any commands, for isntance:
+Finally, no flag is required to run a container interactively. To launch an interactive shell from within the container, just run it without any commands, for instance:
 
 ```
 > shifter run ubuntu
@@ -149,7 +149,7 @@ and then submit this script using SLURM:
 
 ### Building container images for HPC ###
 
-Shifter does not allow to build container images. The best way to create an image to be pulled and run on HPC is to use Docker on a distinct machine.
+Shifter does not allow to build container images. The best way to create an image to be pulled and run on HPC is to use Docker on a distinct machine (see previous episode).
 
 
 ### Conclusion ###
