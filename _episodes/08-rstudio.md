@@ -16,11 +16,10 @@ Instead we can use an R container to simplify the process.
 
 ### Rocker ###
 
-The group [Rocker](https://hub.docker.com/r/rocker) has published a large number of R images we can use, including an Rstudio image.  To begin, we'll create a new directory to work in and start up an Rstudio container:
+The group [Rocker](https://hub.docker.com/r/rocker) has published a large number of R images we can use, including an Rstudio image.  To begin, we'll pull a Tidyverse container image (contains R, RStudio, data science packages):
 
 ```
-> mkdir rstudio_example
-> cd rstudio_example
+> docker pull rocker/tidyverse:3.5
 ```
 
 We can now start this up:
@@ -186,7 +185,7 @@ To stop your Rstudio image, simply type from the `rstudio_ex` directory:
 
 ### Running a scripted R workflow on HPC with Shifter ###
 
-We can run the same analysis on HPC through command line using Shifter (no RStudio GUI..for now).
+We can run the same analysis on HPC through command line using Shifter. We can use the same container image, but rather than an RStudio GUI we'll use the `Rscript` command to execute the script.
 
 To get started let's pull the required R container image:
 
@@ -195,15 +194,15 @@ To get started let's pull the required R container image:
 > sg $PAWSEY_PROJECT -c 'shifter pull 'bskjerven/oz_sc:latest
 ```
 
-Now let's clone the Git repo with the example:
+Now let's create a working directory either in `$MYSCRATCH` or `$MYGROUP`, e.g.
 
 ```
 > cd $MYSCRATCH
-> git clone https://github.com/skjerven/rstudio_ex.git
-> cd rstudio_ex
+> mkdir rstudio_example
+> cd rstudio_example
 ```
 
-With your favourite text editor, create a SLURM script within the `rstudio_ex` directory, we'll call it `rscript.sh` (remember to specify your Pawsey project ID in the script!):
+With your favourite text editor, create a SLURM script, we'll call it `rscript.sh` (remember to specify your Pawsey project ID in the script!):
 
 ```
 #!/bin/bash -l
@@ -217,8 +216,12 @@ With your favourite text editor, create a SLURM script within the `rstudio_ex` d
 
 module load shifter
 
+# clone Git repo with sample data and script
+git clone https://github.com/skjerven/rstudio_ex.git
+cd rstudio_ex
+
 # run R script
-srun --export=all shifter run bskjerven/oz_sc:latest R -e "source('data/SC_Rscript.r')"
+srun --export=all shifter run bskjerven/oz_sc:latest Rscript data/SC_Rscript.r
 ```
 
 Let's submit the script via SLURM:
