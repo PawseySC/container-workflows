@@ -29,6 +29,7 @@ cd python-demo
 There a few files here:
 
 * `Dockerfile` - Outlines how we'll build our container
+
 ```
 \# Use an official Python runtime as a parent image
 FROM python:3.6-slim
@@ -48,12 +49,15 @@ ENV NAME World
 \# Run app.py when the container launches
 CMD ["python", "my_app.py"]
 ```
+
 * `requirements.txt` - What python packages we want to install with pip
+
 ```
 numpy
 scipy
 scikit-learn
 ```
+
 * `my_app.py` - A simple python app that builds a decision tree using Scikit
 
 
