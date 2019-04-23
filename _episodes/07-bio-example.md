@@ -1,5 +1,5 @@
 ---
-title: "Docker: A Bioinformatics Example"
+title: "A bioinformatics example: BLAST"
 teaching: 10
 exercises: 0
 questions:

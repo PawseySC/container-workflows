@@ -1,5 +1,5 @@
 ---
-title: "Build your own container image"
+title: "Build your own container image with Docker"
 teaching: 20
 exercises: 0
 questions:

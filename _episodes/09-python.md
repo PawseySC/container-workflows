@@ -1,5 +1,5 @@
 ---
-title: "Making Python Not Awful with Containers"
+title: "Making Python not awful with containers"
 teaching: 10
 exercises: 0
 questions:
