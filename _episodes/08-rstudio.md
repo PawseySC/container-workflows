@@ -196,12 +196,10 @@ To get started let's pull the required R container image:
 > sg $PAWSEY_PROJECT -c 'shifter pull 'bskjerven/oz_sc:latest
 ```
 
-Now let's create a working directory either in `$MYSCRATCH` or `$MYGROUP`, e.g.
+Now let's change directory to either `$MYSCRATCH` or `$MYGROUP`, e.g.
 
 ```
 > cd $MYSCRATCH
-> mkdir rstudio_example
-> cd rstudio_example
 ```
 
 With your favourite text editor, create a SLURM script, we'll call it `rscript.sh` (remember to specify your Pawsey project ID in the script!):
