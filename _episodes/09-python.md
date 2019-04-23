@@ -4,7 +4,7 @@ teaching: 10
 exercises: 0
 questions:
 objectives:
-- build and run a Python container
+- embed a Python app in a container and run it
 
 keypoints:
 ---
@@ -16,14 +16,13 @@ Python is a great language for doing all kinds of work.
 ![Python can get messy]({{ page.root }}/fig/python-complexity-cartoon.png)
 
 
-### An example of Dockerfile for a Python Container ###
+### An example of Dockerfile for a Python container ###
 
 This is a quick Python data science example.  We'll build a Python container, add a simple Python app, and run it.
 
 To begin, let's clone another repo:
 
 ```
-> cd $HOME
 > git clone https://github.com/skjerven/python-demo.git
 > cd python-demo
 ```
@@ -72,24 +71,23 @@ There are some aspects of this Dockerfile that are worth mentioning:
 
 ### Build and run a dockerised Python app ###
 
-We can simply run
+We can simply run:
 
 ```
 > docker build -t python-demo .
 ```
 to build our container.
 
-After that, you can run it with
+After that, we can run it with:
 
 ```
 > docker run python-demo
 ```
 
-### Run a Python app on HPC with Shifter
 
-We could push the container we created above to Docker Hub, and then pull it on HPC using Shifter; this requires a Docker account, though.
+### Run a Python app on HPC with Shifter ###
 
-Instead, let us run the same app using a publicly available container for scientific Python:
+We could push the container we created above to Docker Hub, and then pull it on HPC using Shifter; this requires a Docker account, though. Instead, let us run the same app using a publicly available container for scientific Python:
 
 ```
 > module load shifter
@@ -111,7 +109,7 @@ Let us write a SLURM script to execute our Python app using this container. Cont
 module load shifter
 
 # clone Git repo with the app
-https://github.com/skjerven/python-demo.git
+git clone https://github.com/skjerven/python-demo.git
 cd python-demo
 
 # run Python app
