@@ -104,17 +104,22 @@ As additional examples, you might want to run:
 
 ```
 > shifter run ubuntu ls /
-
 > shifter run ubuntu whoami
 ```
 
-Finally, no flag is required to run a container interactively. To launch an interactive shell from within the container, just run it without any commands, for instance:
+Note how no flag is required to run a container interactively. To launch an interactive shell from within the container, just run it without any commands, for instance:
 
 ```
 > shifter run ubuntu
 
 > exit
 ```
+
+Shifter has support to run containers exploiting MPI parallelism and GPU acceleration (the latter only through CSCS Shifter).
+
+* `shifter run --mpi` allows containers to take advantage on inter-node communication on the host fabric. The container image needs to have been built with MPI libraries thatare ABI compatible with the host MPI libraries;
+
+* to run GPU enabled containers, no extra flags are required.
 
 
 ### Using Shifter with a job scheduler ###
