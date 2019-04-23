@@ -143,7 +143,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 Sometimes we may need to run and manage multiple containers (e.g., running an Nginx web-server in front of some other application we are running in a container).
 
-We can run all of these via `docker run` commands, but it may get cumbersome if you have lots of arguments and flags.  We can use a tool called `docker-compose` to orchestrate and manage containers for us.
+We can run all of these via `docker run` commands, but it may get cumbersome if you have lots of arguments and flags.  We can use a tool called `docker-compose` to orchestrate and manage multiple containers for us.
 
 All we need to do is define the various options and properties for our containers in a YAML file.  Let's create a simple, containerised MySQL/Nginx setup:
 

@@ -84,7 +84,7 @@ Sequences producing significant alignments:                          (Bits)  Val
 We can see that several proteins in the zebrafish genome match those in the human prion (interesting?).
 
 
-### Run BLAST on HPC with Shifter ###
+### Running BLAST on HPC with Shifter ###
 
 The following script permits to execute the same bioinformatics example using Shifter and the SLURM scheduler:
 
@@ -112,9 +112,10 @@ srun --export=all shifter run biocontainers/blast:v2.2.31_cv2 makeblastdb -in ze
 srun --export=all shifter run biocontainers/blast:v2.2.31_cv2 blastp -query P04156.fasta -db zebrafish.1.protein.faa -out results.txt
 ```
 
-Now you can create a test directory,
+Now you can create a test directory somewhere under `$MYSCRATCH` or `$MYGROUP`, e.g.
 
 ```
+> cd $MYSCRATCH
 > mkdir blast_example
 > cd blast_example
 ```

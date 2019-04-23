@@ -138,7 +138,7 @@ module load shifter
 srun --export=all shifter run ubuntu hostname
 ```
 
-Now use your favourite text editor to copy paste the script above in a file called `hostname.sh` (remember to specify your Pawsey Project ID in the script!),
+Now use your favourite text editor to copy paste the script above in a file called `hostname.sh` somewhere under `$MYSCRATCH` or `$MYGROUP` (remember to specify your Pawsey Project ID in the script!),
 
 and then submit this script using SLURM:
 
