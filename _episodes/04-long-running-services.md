@@ -139,7 +139,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 ```
 
 
-### Docker-Compose ###
+### Advanced use: Docker Compose ###
 
 Sometimes we may need to run and manage multiple containers (e.g., running an Nginx web-server in front of some other application we are running in a container).
 
@@ -193,7 +193,7 @@ services:
 Here we can define different services and options.  There are a lot of options, so I'll touch on a few:
 
 * image - this is the Docker image you want to pull
-* restart - we can tell Docker-Compose to restart containers unders certain conditions
+* restart - we can tell docker-compose to restart containers unders certain conditions
 * ports - open up different ports to a container
 * networks - we define a virtual network for containers to connect to
 * volumes - Docker volumes are persistent data stores we can use to store app data after a container ends

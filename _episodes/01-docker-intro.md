@@ -41,9 +41,10 @@ A few examples of how containers are being used at Pawsey
 * Bioinformatics workflows
 * RStudio & JupyterHub
 * Machine Learning 
-* HPC workflows (via Shifter)
-* Webservers
 * Python apps in radio astronomy
+* Webservers
+* Cloud workflows (via Docker)
+* HPC workflows (via Shifter)
 
 Here's an overview of what a workflow might look like:
 
