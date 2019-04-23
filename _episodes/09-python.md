@@ -127,6 +127,6 @@ Then, with your favourite text editor, create a `python.sh` script (remember to 
 and submit it with SLURM:
 
 ```
-sbatch python.sh
+> sbatch python.sh
 ```
 
