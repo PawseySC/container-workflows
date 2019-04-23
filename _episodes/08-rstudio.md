@@ -6,42 +6,54 @@ questions:
 objectives:
 keypoints:
 ---
-## RStudio Example  ##
 
-R is a popular language in bioinformatics, particularly because of its statistical packages.  It often requires installing a large number of dependencies, and installing these on an HPC system can be tedious.
+### RStudio Example ###
+
+R is a popular language in several domains of science, particularly because of its statistical packages.  It often requires installing a large number of dependencies, and installing these on an HPC system can be tedious.
 
 Instead we can use an R container to simplify the process.
 
-## Rocker ##
 
-The group [Rocker](https://hub.docker.com/r/rocker) has published a large number of R images we can use, including a Rstudio image.  To begin, we'll create a new directory to work in and start up an Rstudio container:
+### Rocker ###
+
+The group [Rocker](https://hub.docker.com/r/rocker) has published a large number of R images we can use, including an Rstudio image.  To begin, we'll create a new directory to work in and start up an Rstudio container:
+
+```
+> mkdir rstudio_example
+> cd rstudio_example
+```
 
 We can now start this up:
 
 ```
-docker run -d -p 8787:8787 -v `pwd`/data:/home/rstudio/data rocker/tidyverse:3.5
+> docker run -d -p 8787:8787 --name rstudio -v `pwd`/data:/home/rstudio/data -e PASSWORD=<Pick your password> rocker/tidyverse:3.5
 ```
 
-Here we're openning up a port so we can access the Rtudio server remotely.  You just need to open a web browser and point it to
+Here we're opening up port `8787` so we can access the Rtudio server remotely. Note you need to store a password in a variable; it will be required below for the web login.
+
+You just need to open a web browser and point it to `localhost:8787` if you are running Docker on your machine, or `<Your VM's IP Address>:8787` if you are running on a cloud service.
+
+You should see a prompt for credentials, with user defaulting to `rstudio`, and password..
+
+Once you're done, stop the container with:
 
 ```
-<your-nimbus-ip>:8787
+> docker stop rstudio
 ```
 
-You should see a password prompt, and the default login is `rstudio` for **both** the username and password.
 
-##Using RStudio images ##
+### Using RStudio images ###
 
-The above example only provides a bare-bones RStudio image...we want to actually use some R packages.  The following example is based on a workshop at [OzSingleCell2018](https://github.com/IMB-Computational-Genomics-Lab/SingleCells2018Workshop).  We'll use their data for our Docker/Rstudio example.
+The above example only provides a bare-bones RStudio image, but now we want to actually use some R packages.  The following example is based on a bioinformatics workshop at [OzSingleCell2018](https://github.com/IMB-Computational-Genomics-Lab/SingleCells2018Workshop).  We'll use their data for our Docker/Rstudio example.
 
-To begin, let's clone the data (I've created a trimmed down repo with their data)
+To begin, let's clone the data (A trimmed down repo with their data has been created for this tutorial)
 
 ```
-git clone https://github.com/skjerven/rstudio_ex.git
-cd rstudio_ex
+> git clone https://github.com/skjerven/rstudio_ex.git
+> cd rstudio_ex
 ```
 
-For this example, we'll use an RStudio image I've already built.  R images can take a while to build sometimes, depending on the number of packages and dependencies you're installing.  The Dockerfile I've used is included, and we'll go through it to explain how Docker builds images.
+For this example, we'll use an RStudio image thas has already been built.  R images can take a while to build sometimes, depending on the number of packages and dependencies you're installing.  The Dockerfile used here is included, and we'll go through it to explain how Docker builds images.
  
 ```
 FROM rocker/tidyverse:3.5
@@ -92,7 +104,7 @@ The first line, `FROM`, specifies a base image to use.  We could build up a full
 
 `RUN apt-get update` is installing some packages we'll need via Ubuntu's package manager.  Really all we're installing here are compilers.
 
-The next section adds some flags and optionns we want to use when building R packages (`Makvevars`).
+The next section adds some flags and options we want to use when building R packages, by copying a file from the build context, `Makvevars`.
 
 The last section is the main R package installation section.  Here we run several different installation methods:
 
@@ -101,7 +113,7 @@ The last section is the main R package installation section.  Here we run severa
 * `BiocManager` is a [CRAN package](https://cran.r-project.org/package=BiocManager) for installing bioinformatics software
 * `install_github()` is method for installing R packages from GitHub.
 
-We'll skip building this image for now, but we'll show how to do that later.  For now, we'll just use a prebuilt image.  We're also going to use something called `docker-compose` to help with setting up our container.  `docker-compose` is a tool for container orchestration (having multiple containers work together).  Here we'll use it for managing several options we want to use for our Rstudio image.
+We'll skip building this image for now, and just pull and use a prebuilt image.  We're also going to use `docker-compose` to help with setting up our container (see previous episode on long running servies). Here we'll use it for managing several options we want to use for our Rstudio image.
 
 ```
 version: "2"
@@ -117,18 +129,21 @@ services:
       - 8787:8787
     environment:
       - USER=rstudio
-      - PASSWORD=rstudio
+      - PASSWORD=rstudiopwd
 ```
+
 This yaml file simple tells Docker what image we want to run along with some options (like which volumes to mount, username/password, and what network ports to use).
 
-To begin, make sure you're in the `rstudio_ex` directory (where we cloned the repo).  Simply type
+To begin, make sure you're in the `rstudio_ex` directory in your home (where we cloned the repo).  Simply type:
 
 ```
-docker-compose up
+> docker-compose up
 ```
-Docker will pull the `oz_sc` image first (as it's not present on your system); once that's complete you'll see output from the RStudio server:
+
+Docker will pull the `oz_sc:latest` image first (if it's not present on your system yet); once that's complete you'll see output from the RStudio server:
+
 ```
-skj002@turing ~/rstudio_ex ❯❯❯ docker-compose up
+> docker-compose up
 Recreating rstudio ... done
 Attaching to rstudio
 rstudio    | [fix-attrs.d] applying owners & permissions fixes...
@@ -146,25 +161,73 @@ rstudio    | [services.d] starting services
 rstudio    | [services.d] done.
 ```
 
-This is annoying, though...we need our terminal back.  Luckily, Docker lets you run processes in the background.  Kill the RStudio process with `Ctl-C`, and the rerun `docker-compose` with the `-d` flag:
+This is annoying, though...we need our terminal back.  Luckily, Docker lets you run processes in the background.  Kill the RStudio process with `CTRL-C`, and the rerun `docker-compose` with the `-d` flag:
 
 ```
 docker-compose up -d
 ```
-Shortly after that starts, open a web browser and go to your **http://146.x.x.x:8787**, but with your Nimbus IP.  You should see an Rstudio login, and we've set the username and password to `rstudio`.
+
+Shortly after that starts, open a web browser and go to `localhost:8787` if you are running Docker on your machine, or `<Your VM's IP Address>:8787` if you are running on a cloud service. You should see an Rstudio login, and we've set the username to `rstudio` and password to `rstudiopwd`.
 
 Once logged in, you type:
 
 ```
-source(`data/SC_script.r`)
+> source('data/SC_script.r')
 ```
 
 to run the tutorial (it may take a few minutes).  We can refer to the [OzSingleCell2018](https://github.com/IMB-Computational-Genomics-Lab/SingleCells2018Workshop) repo for details on each step.
 
-To stop your Rstudio image, simply type
+To stop your Rstudio image, simply type from the `rstudio_ex` directory:
+
 ```
-docker-compose down
+> docker-compose down
 ```
+
+
+### Running a scripted R workflow on HPC with Shifter ###
+
+We can run the same analysis on HPC through command line using Shifter (no RStudio GUI..for now).
+
+To get started let's pull the required R container image:
+
+```
+> module load shifter
+> sg $PAWSEY_PROJECT -c 'shifter pull 'bskjerven/oz_sc:latest
+```
+
+Now let's clone the Git repo with the example:
+
+```
+> cd $MYSCRATCH
+> git clone https://github.com/skjerven/rstudio_ex.git
+> cd rstudio_ex
+```
+
+With your favourite text editor, create a SLURM script within the `rstudio_ex` directory, we'll call it `rscript.sh` (remember to specify your Pawsey project ID in the script!):
+
+```
+#!/bin/bash -l
+
+#SBATCH --account=<your-pawsey-project>
+#SBATCH --partition=workq
+#SBATCH --ntasks=1
+#SBATCH --time=01:00:00
+#SBATCH --export=NONE
+#SBATCH --job-name=rstudio
+
+module load shifter
+
+# run R script
+srun --export=all shifter run bskjerven/oz_sc:latest R -e "source('data/SC_Rscript.r')"
+```
+
+Let's submit the script via SLURM:
+
+```
+> sbatch rscript.sh
+```
+
+
 ### Conclusion ###
 Containers are great way to manage R workflows.  You likely still want to have a local installation of R/Rstudio for some testing, but if you have set workflows, you can use containers to manage them.  You can also provide Rstudio servers for collaborators.
 
