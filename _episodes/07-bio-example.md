@@ -86,6 +86,13 @@ We can see that several proteins in the zebrafish genome match those in the huma
 
 ### Running BLAST on HPC with Shifter ###
 
+First, let us pull the BLAST container:
+
+```
+module load shifter
+sg $PAWSEY_PROJECT -c 'shifter pull biocontainers/blast:v2.2.31_cv2'
+```
+
 The following script permits to execute the same bioinformatics example using Shifter and the SLURM scheduler:
 
 ```
