@@ -4,22 +4,37 @@ teaching: 10
 exercises: 0
 questions:
 objectives:
-- Learn how to manage and run containers with Shifter
+- Learn how to manage and run containers on a HPC cluster with Shifter
 
 keypoints:
 ---
 
+### Why not Docker on HPC? ###
+
+There are a few issues preventing Docker from being used as a container engine on HPC systems:
+
+* Security: Docker requires root privileges
+* Batch systems: doesn't integrate well with schedulers
+* Underlying kernel: usually requires an up-to-date kernel
+
+Fortunately, a number of alternatives are available to run containers at HPC facilities, including:
+
+* [Shifter](https://docs.nersc.gov/programming/shifter/overview/): developed by NERSC and Cray, Docker-like interface, MPI support 
+* [CSCS Shifter](https://user.cscs.ch/tools/containers/): forked by CSCS, adds features including GPU support 
+* [Singularity](https://www.sylabs.io/singularity/): originally developed by LBL, has its own image format and can run Docker containers as well
+
+At the moment, Pawsey is using CSCS Shifter on its HPC systems, and therefore this will be the tool of choice in this tutorial.
+
+
 ### Pulling and managing images with Shifter ###
 
-At present Docker has some features that make it unsuitable for running on HPC sytems, most notably the requirement to run as root. To enable the use of containers on Pawsey HPC systems, Shifter is made available.
-
-To use it, we need first to load the corresponding module:
+To use Shifter on Pawsey HPC systems, we need first to load the corresponding module:
 
 ```
 > module load shifter
 ```
 
-In principle, the command to pull container images is very similar to Docker: `shifter pull ubuntu`.  
+In principle, the command to pull container images is very similar to Docker, `shifter pull`.  
 However, to avoid disk quota issues on Pawsey HPC systems, the following syntax is recommended, that makes use of the `sg` linux command, for instance:
 
 ```
@@ -44,7 +59,7 @@ However, to avoid disk quota issues on Pawsey HPC systems, the following syntax 
 > sg $PAWSEY_PROJECT -c 'shifter pull busybox'
 ```
 
-Similar again to Docker, we can list locally pulled images with:
+Similar again to Docker, we can list locally pulled images with `shifter images`:
 
 ```
 > shifter images
@@ -53,7 +68,7 @@ library/busybox                  latest                       7dc9d60af829   201
 library/ubuntu                   latest                       d71fc6939e16   2018-12-19T22:30:41   29.94MB      index.docker.io
 ```
 
-and remove undesired images with:
+and remove undesired images with `shifter rmi`:
 
 ```
 > shifter rmi busybox
@@ -80,7 +95,7 @@ The output will display the content of the current host directory!
 A few differences in behaviour can be noticed compared to Docker, such that using Shifter typically requires to specify less options and flags:
 
 - by default, some relevant directories in the Pawsey HPC filesystems are mounted in the containers; these include `/group`, `/scratch`, `/pawsey` and `/tmp`.
-  **NOTE**: `/home` is NOT mounted instead;
+  **Note**: `/home` is NOT mounted instead;
 - if running from a mapped host directory, this becomes the working directory at container runtime;
 - the host user is automatically set for the container;
 - Shifter automatically removes containers after execution is terminated;
@@ -101,11 +116,12 @@ Finally, no flag is required to run a container interactively. To launch an inte
 > exit
 ```
 
+
 ### Using Shifter with a job scheduler ###
 
-Shifter is compatible with _SLURM_, the job scheduler installed on Pawsey HPC systems.
+Shifter is compatible with **SLURM**, the job scheduler installed on Pawsey HPC systems.
 
-The following script permits to execute the bioinformatics example of a previous lesson using the Shifter and the job scheduler:
+As an example, the following script uses a Ubuntu container to output the machine hostname:
 
 ```
 #!/bin/bash -l
@@ -119,32 +135,21 @@ The following script permits to execute the bioinformatics example of a previous
 
 module load shifter
 
-# download sample inputs
-wget http://www.uniprot.org/uniprot/P04156.fasta
-curl -O ftp://ftp.ncbi.nih.gov/refseq/D_rerio/mRNA_Prot/zebrafish.1.protein.faa.gz
-gunzip zebrafish.1.protein.faa.gz
-
-# prepare database
-srun --export=all shifter run biocontainers/blast:v2.2.31_cv2 makeblastdb -in zebrafish.1.protein.faa -dbtype prot
-
-# align with BLAST
-srun --export=all shifter run biocontainers/blast:v2.2.31_cv2 blastp -query P04156.fasta -db zebrafish.1.protein.faa -out results.txt
+srun --export=all shifter run ubuntu hostname
 ```
 
-Now you can create a test directory,
-
-```
-> mkdir blast_example
-> cd blast_example
-```
-
-use your favourite text editor to copy paste the script above in a file called `blast.sh` (remember to specify your Pawsey account ID!),
+Now use your favourite text editor to copy paste the script above in a file called `hostname.sh` (remember to specify your Pawsey Project ID in the script!),
 
 and then submit this script using SLURM:
 
 ```
-> sbatch blast.sh
+> sbatch hostname.sh
 ```
+
+
+### Building container images for HPC ###
+
+Shifter does not allow to build container images. The best way to create an image to be pulled and run on HPC is to use Docker on a distinct machine.
 
 
 ### Conclusion ###
