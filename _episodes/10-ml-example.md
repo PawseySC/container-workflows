@@ -180,7 +180,7 @@ Let us submit the script to SLURM:
 
 TensorFlow developers are making available on Docker Hub container images not only for the CPU version of TensorFlow, but for the GPU version as well; the corresponding version tags end with a `-gpu` suffix. Let's give them a try. 
 
-If your Docker machine has got an Nvidia GPU installed, then you can install the `nvidia-docker` (e.g. see this [site](https://devblogs.nvidia.com/gpu-containers-runtime/)). For this tutorial, we are instead going to use Shifter and the GPU nodes available on the Zeus HPC system at Pawsey.
+If your Docker machine has got an Nvidia GPU installed, then you can install the `nvidia-docker` (e.g. see https://devblogs.nvidia.com/gpu-containers-runtime ). For this tutorial, we are instead going to use Shifter and the GPU nodes available on the Zeus HPC system at Pawsey.
 
 Let's create a working directory and pull the GPU enabled container image (note the `-gpu` suffix):
 

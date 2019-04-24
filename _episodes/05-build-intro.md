@@ -5,7 +5,7 @@ exercises: 0
 questions:
 objectives:
 - Learn what is a Dockerfile and its basic syntax
-- Learn how to build a container and push it to a web repository
+- Learn how to build a container and push it to a web registry
 
 keypoints:
 ---
@@ -82,7 +82,7 @@ The build will take a few minutes, meanwhile we'll go on to discuss some aspects
 In the command above, `.` is the location of the build context (i.e. the directory for the Dockerfile).  
 The `-t` flag is used to specify the image name (compulsory) and tag (optional).
 
-Any lowercase alphanumeric string can be used as image name. Using the format `<Your Docker Hub account>/<Image name>` as in this example allows to push the built image to your Docker Hub repository.  
+Any lowercase alphanumeric string can be used as image name. Using the format `<Your Docker Hub account>/<Image name>` as in this example allows to push the built image to your Docker Hub registry.  
 The image tag (following the colon) can be used to maintain a set of different image versions on Docker Hub, and is a key feature in enabling reproducibility of your computations through containers.
 
 
@@ -116,7 +116,7 @@ Several other instructions are available, that we haven't covered in this introd
 
 ### Pushing the image to Docker Hub ###
 
-If you have a (free) Docker Hub account, `marcodelapierre` in this case, you are now ready to push your newly created image to the Docker Hub web repository, using `docker push`:
+If you have a (free) Docker Hub account, `marcodelapierre` in this case, you are now ready to push your newly created image to the Docker Hub web registry, using `docker push`:
 
 ```
 > docker push marcodelapierre/texlive:2019Apr23 

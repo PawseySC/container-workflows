@@ -138,7 +138,7 @@ and then submit this script using SLURM:
 
 ### Conclusion ###
 
-There are a lot of applications (not just bioinformatics) already wrapped up in container images.  Here's a small list of some of the repositories we use at Pawsey:
+There are a lot of applications (not just bioinformatics) already wrapped up in container images.  Here's a small list of some of the registries we use at Pawsey:
 
 * [Docker Hub](https://hub.docker.com)
 * [Biocontainers](https://biocontainers.pro)
