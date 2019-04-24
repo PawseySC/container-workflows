@@ -1,7 +1,7 @@
 ---
 title: "A bioinformatics example: BLAST"
-teaching: 15
-exercises: 0
+teaching: 0
+exercises: 15
 questions:
 objectives:
 - Run a real-world bioinformatics application in a Docker container

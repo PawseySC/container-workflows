@@ -1,7 +1,7 @@
 ---
 title: "Making Python not awful with containers"
-teaching: 15
-exercises: 0
+teaching: 0
+exercises: 20
 questions:
 objectives:
 - Embed a Python app in a container and run it
