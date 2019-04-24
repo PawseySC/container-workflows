@@ -80,6 +80,19 @@ Error response from daemon: conflict: unable to remove repository reference "ngi
 ```
 
 
+### Clean up Miniconda containers from previous episode ###
+
+Find and remove the stopped Miniconda containers you ran in the previous episode. 
+
+Hint: you can identify them as they will correspond to the image `continuumio/miniconda3:4.5.12`.
+
+#### Solution ####
+
+Display stopped containers: `docker ps -a`
+
+Remove `miniconda3` stopped containers: identify their IDs from previous output, then `docker rm <list of IDs>`
+
+
 ### Conclusion ###
 Cleaning up containers and images is a two-step process. Now you should be able to keep your system tidy.
 
