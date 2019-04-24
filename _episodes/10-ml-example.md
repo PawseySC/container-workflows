@@ -1,7 +1,7 @@
 ---
 title: "Containers for machine learning"
-teaching: 20
-exercises: 0
+teaching: 0
+exercises: 20
 questions:
 objectives:
 - Deploy a machine learning framework with containers, exploiting CPUs and GPUs
@@ -133,4 +133,99 @@ Now let us re-run the same command as before, just with our new container:
 
 ### Run a ML container on HPC ###
 
+Let us pull the TensorFlow container, then create a working directory:
 
+```
+> module load shifter
+> sg $PAWSEY_PROJECT -c 'shifter pull tensorflow/tensorflow:1.13.1'
+
+> cd $MYSCRATCH
+> mkdir ml_example
+> cd ml_example
+```
+
+then create the SLURM script file `ml.sh` using a text editor (remember to specify your Pawsey project ID in the script!):
+
+```
+#!/bin/bash -l
+
+#SBATCH --account=<your-pawsey-project>
+#SBATCH --partition=workq
+#SBATCH --ntasks=1
+#SBATCH --time=00:10:00
+#SBATCH --export=NONE
+#SBATCH --job-name=ml
+
+module load shifter
+
+# download sample files
+wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/BUILD 
+wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/__init__.py
+wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/convolutional.py
+
+# edit python script to reduce runtime
+sed -i 's/NUM_EPOCHS *=.*/NUM_EPOCHS = 1/' convolutional.py
+
+# run the ML script
+srun --export=all shifter run tensorflow/tensorflow:1.13.1 python convolutional.py
+```
+
+Let us submit the script to SLURM:
+
+```
+> sbatch ml.sh
+```
+
+### Run a ML container on HPC ... using GPUs ###
+
+TensorFlow developers are making available on Docker Hub container images not only for the CPU version of TensorFlow, but for the GPU version as well; the corresponding version tags end with a `-gpu` suffix. Let's give them a try. 
+
+If your Docker machine has got an Nvidia GPU installed, then you can install the `nvidia-docker` (e.g. see this [site](https://devblogs.nvidia.com/gpu-containers-runtime/)). For this tutorial, we are instead going to use Shifter and the GPU nodes available on the Zeus HPC system at Pawsey.
+
+Let's create a working directory and pull the GPU enabled container image (note the `-gpu` suffix):
+
+```
+> cd $MYSCRATCH
+> mkdir ml_example_gpu
+> cd ml_example_gpu
+
+> module load shifter
+> sg $PAWSEY_PROJECT -c 'shifter pull tensorflow/tensorflow:1.13.1-gpu'
+```
+
+We'll need just minor modifications to the SLURM script, which we'll call `ml-gpu.sh`:
+
+* the GPU partition on Zeus is called `gpuq`, this is in substitution for the `workq` we've used so far;
+* we need to set an additional SBATCH flag, `--gres=gpu:1`, to request use of a GPU;
+* remember to use the GPU enabled image.
+
+```
+#!/bin/bash -l
+
+#SBATCH --account=<your-pawsey-project>
+#SBATCH --partition=gpuq
+#SBATCH --gres=gpu:1
+#SBATCH --ntasks=1
+#SBATCH --time=00:10:00
+#SBATCH --export=NONE
+#SBATCH --job-name=ml-gpu
+
+module load shifter
+
+# download sample files
+wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/BUILD
+wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/__init__.py
+wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/convolutional.py
+
+# edit python script to reduce runtime
+sed -i 's/NUM_EPOCHS *=.*/NUM_EPOCHS = 1/' convolutional.py
+
+# run the ML script
+srun --export=all shifter run tensorflow/tensorflow:1.13.1-gpu python convolutional.py
+```
+
+Let's submit with:
+
+```
+> sbatch ml-gpu.sh
+```
