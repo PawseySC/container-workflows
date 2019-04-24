@@ -105,7 +105,7 @@ Test error: 2.0%
 
 Let's assume we need some additional Python packages for our ML code to run, but they are present in the stock PyTorch image.  We can simply build our image and add them.  To do this, we'll need to write a Dockerfile.
 
-Create a new file named `Dockerfile` and add the following lines to it:
+With your favourite text editor create a new file named `Dockerfile` and add the following lines to it:
 
 ```
 FROM tensorflow/tensorflow:1.13.1
