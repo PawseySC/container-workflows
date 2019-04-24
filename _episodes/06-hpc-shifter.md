@@ -112,7 +112,7 @@ Note how no flag is required to run a container interactively. To launch an inte
 ```
 > shifter run ubuntu
 
-mdelapierre@zeus-1:/group/pawsey0001/mdelapierre$ exit # or hit CTRL-D
+mdelapierre@zeus-1:/group/pawsey0001/mdelapierre$ exit   # or hit CTRL-D
 ```
 
 Shifter has support to run containers exploiting MPI parallelism and GPU acceleration (the latter only through CSCS Shifter).

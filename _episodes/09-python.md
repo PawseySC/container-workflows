@@ -16,7 +16,7 @@ Python is a great language for doing all kinds of work.
 ![Python can get messy]({{ page.root }}/fig/python-complexity-cartoon.png)
 
 
-### An example of Dockerfile for a Python container ###
+### Build and run a dockerised Python app ###
 
 This is a quick Python data science example.  We'll build a Python container, add a simple Python app, and run it.
 
@@ -68,15 +68,11 @@ There are some aspects of this Dockerfile that are worth mentioning:
 * the `CMD` instruction sets the default behaviour for this container: running the embedded Python app;
 * finally, note from the requirement libraries that this is quite a standard scientific Python stack.
 
-
-### Build and run a dockerised Python app ###
-
-We can simply run:
+Now to build our container we can simply run:
 
 ```
 > docker build -t python-demo .
 ```
-to build our container.
 
 After that, we can run it with:
 
@@ -87,14 +83,37 @@ After that, we can run it with:
 
 ### Run a Python app on HPC with Shifter ###
 
-We could push the container we created above to Docker Hub, and then pull it on HPC using Shifter; this requires a Docker account, though. Instead, let us run the same app using a publicly available container for scientific Python:
+#### a) re-use the image we have just built ####
+
+On our Docker machine let us push the container image we created above to Docker Hub. You'll need a free account (`marcodelapierre` in this example).
+
+First we must give the image a name that complies with the Hub's nomenclature (see previous episode on build). To this end we'll use `docker tag`:
+
+```
+> docker tag python-demo marcodelapierre/python-demo
+```
+
+Now let's push the image:
+
+```
+> docker push marcodelapierre/python-demo
+The push refers to repository [docker.io/marcodelapierre/python-demo]
+862d6710cd15: Pushed 
+302ce4960403: Pushed 
+
+latest: digest: sha256:4db5f0f69cc888d47f4c4b4cac33fad6b004a8e333b36a699ebd43f5b44a7241 size: 1999
+```
+
+We are now moving to Pawsey HPC system. Let's pull the image, then change directory to either `$MYSCRATCH` or `$MYGROUP`:
 
 ```
 > module load shifter
-> sg $PAWSEY_PROJECT -c 'shifter pull jupyter/scipy-notebook'
+> sg $PAWSEY_PROJECT -c 'shifter pull marcodelapierre/python-demo'
+
+> cd $MYSCRATCH
 ```
 
-Let us write a SLURM script to execute our Python app using this container. Contrary to Docker example above, we'll need to explicitly run the app with the Python interpreter:
+Let us write a SLURM script to execute our Python app using this container, we'll use our favourite text editor to save it as `python.sh` (remember to specify your Pawsey project ID in the script!): 
 
 ```
 #!/bin/bash -l
@@ -108,6 +127,41 @@ Let us write a SLURM script to execute our Python app using this container. Cont
 
 module load shifter
 
+# run Python app
+srun --export=all shifter run marcodelapierre/python-demo
+```
+
+Let's submit it to the SLURM scheduler:
+
+```
+> sbatch python.sh
+```
+
+#### b) use a publicly available image for scientific Python ####
+
+In this case we are going to use `jupyter/scipy-notebook`:
+
+```
+> module load shifter
+> sg $PAWSEY_PROJECT -c 'shifter pull jupyter/scipy-notebook'
+
+> cd $MYSCRATCH
+```
+
+Let us write a second SLURM script, we'll call it `python2.sh`. Contrary to Docker example above, our Python app is not embedded in the image, so we'll need to explicitly download it from the Git repo, and then run it through the Python interpreter in the container:
+
+```
+#!/bin/bash -l
+
+#SBATCH --account=<your-pawsey-project>
+#SBATCH --partition=workq
+#SBATCH --ntasks=1
+#SBATCH --time=00:05:00
+#SBATCH --export=NONE
+#SBATCH --job-name=python2
+
+module load shifter
+
 # clone Git repo with the app
 git clone https://github.com/skjerven/python-demo.git
 cd python-demo
@@ -116,17 +170,9 @@ cd python-demo
 srun --export=all shifter run jupyter/scipy-notebook python my_app.py
 ```
 
-Let's change directory to either `$MYSCRATCH` or `$MYGROUP`, e.g.
+Finally we are submitting the script with SLURM:
 
 ```
-> cd $MYSCRATCH
-```
-
-Then, with your favourite text editor, create a `python.sh` script (remember to specify your Pawsey project ID in the script!),
-
-and submit it with SLURM:
-
-```
-> sbatch python.sh
+> sbatch python2.sh
 ```
 

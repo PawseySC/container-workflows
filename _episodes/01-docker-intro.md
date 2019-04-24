@@ -180,7 +180,7 @@ root@c69d6f8d89bd:/# ls
 bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
 boot  etc  lib   media  opt  root  sbin  sys  usr
 
-root@c69d6f8d89bd:/#  exit # or hit CTRL-D
+root@c69d6f8d89bd:/# exit   # or hit CTRL-D
 ```
 
 The `-t` and `-i` options make sure we allocate a terminal to the container, and keep its STDIN (standard input) open.
