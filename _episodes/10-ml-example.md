@@ -11,57 +11,48 @@ keypoints:
 
 ### Running a container for machine learning ###
 
-Now we're going to run a container to perform a machine learning benchmark application.  We'll use the popular ML package [TensorFlow](tensorflow.org) to build a convolutional neural network that classifies the [MNIST dataset](http://yann.lecun.com/exdb/mnist/), which is just a large collection of handwritten digits.  It's good dataset to get started with because the data has been formatted and cleaned, so you can focus on learning CNNs instead of dealing with data issues.
+Now we're going to run a container to perform a machine learning benchmark application.  We'll use the popular ML package [TensorFlow](https://www.tensorflow.org) to build a convolutional neural network (CNN) that classifies the [MNIST dataset](http://yann.lecun.com/exdb/mnist/), which is just a large collection of handwritten digits.  It's good dataset to get started with because the data has been formatted and cleaned, so you can focus on learning CNNs instead of dealing with data issues.
 
-First let's get a sample program and the data that it needs:
-
-```
-> git clone https://github.com/tensorflow/models.git
-
-Cloning into 'models'...
-remote: Counting objects: 17327, done.
-remote: Compressing objects: 100% (2/2), done.
-remote: Total 17327 (delta 2), reused 2 (delta 2), pack-reused 17323
-Receiving objects: 100% (17327/17327), 469.82 MiB | 5.41 MiB/s, done.
-Resolving deltas: 100% (10311/10311), done.
-Checking connectivity... done.
-Checking out files: 100% (2248/2248), done.
-```
-
-If this downloaded correctly you can have a look at the script we will use (called `convolutional.py`).  Do this and make sure that it's there:
+First let's get a sample program and the data that it needs, from the tensorflow/models Git repo:
 
 ```
-> ls models/tutorials/image/mnist
-BUILD  convolutional.py  __init__.py
+> mkdir ml_example
+> cd ml_example
+
+> wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/BUILD 
+> wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/__init__.py
+> wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/convolutional.py
 ```
 
-If you can see it, then we have some minor editing to complete. We need to edit `convolutional.py` to set NUM_EPOCS to 1 (since we don’t have a GPU here, this will take forever at the current value of 10).  If you need assistance with this in a class, call a class assistance, otherwise have a look at (link).
-
-Find the line with the variable `NUM_EPOCHS`, you should see that it's set to 10. Make the change to 1 and save the file. It now will look like the following:
+We now have some minor editing to complete. We need to edit `convolutional.py` to set `NUM_EPOCHS` to `1` (down from the current value of 10, to make the calculation run in a reasonably short amount of time). We can make the change from the shell using the tool `sed`, noting that on a Mac, note that `sed -i` needs to be changed to `sed -i ""`:
 
 ```
-# CVDF mirror of http://yann.lecun.com/exdb/mnist/
-SOURCE_URL = 'https://storage.googleapis.com/cvdf-datasets/mnist/'
-WORK_DIRECTORY = 'data'
-IMAGE_SIZE = 28
-NUM_CHANNELS = 1
-PIXEL_DEPTH = 255
-NUM_LABELS = 10
-VALIDATION_SIZE = 5000  # Size of the validation set.
-SEED = 66478  # Set to None for random seed.
-BATCH_SIZE = 64
-NUM_EPOCHS = 1
-EVAL_BATCH_SIZE = 64
-EVAL_FREQUENCY = 100  # Number of steps between evaluations.
+> sed -i 's/NUM_EPOCHS *=.*/NUM_EPOCHS = 1/' convolutional.py
 ```
 
-Now we can get Docker involved, and there's only one command to start Docker, get the container (Tensorflow) and have it see our data directory and it's this:
+In alternative, you can use your favourite text editor to edit the value assigned to `NUM_EPOCHS` from `10` to `1`.
+
+Now we can get Docker involved. Eventually a single command is required to start Docker, get the container for Tensorflow and have it work on our data directory and it's this:
 
 ```
-> docker run --rm -it -v /home/ubuntu/models/tutorials/image/mnist/:/notebooks tensorflow/tensorflow python convolutional.py
-
-/usr/local/lib/python2.7/dist-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
-  from ._conv import register_converters as _register_converters
+> docker run --rm -v `pwd`:/notebooks -w /notebooks tensorflow/tensorflow:1.13.1 python convolutional.py
+Unable to find image 'tensorflow/tensorflow:1.13.1' locally
+1.13.1: Pulling from tensorflow/tensorflow
+7b722c1070cd: Pull complete 
+5fbf74db61f1: Pull complete 
+...
+Digest: sha256:40844012558fe881ec58faf1627fd4bb3f64fe9d46a2fd8af70f139244cfb538
+Status: Downloaded newer image for tensorflow/tensorflow:1.13.1
+WARNING:tensorflow:From /usr/local/lib/python2.7/dist-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+WARNING:tensorflow:From convolutional.py:226: calling dropout (from tensorflow.python.ops.nn_ops) with keep_prob is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `rate` instead of `keep_prob`. Rate should be set to `rate = 1 - keep_prob`.
+2019-04-24 06:32:26.488531: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: FMA
+2019-04-24 06:32:26.506593: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2299950000 Hz
+2019-04-24 06:32:26.507967: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x44cad90 executing computations on platform Host. Devices:
+2019-04-24 06:32:26.508337: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
 Successfully downloaded train-images-idx3-ubyte.gz 9912422 bytes.
 Successfully downloaded train-labels-idx1-ubyte.gz 28881 bytes.
 Successfully downloaded t10k-images-idx3-ubyte.gz 1648877 bytes.
@@ -70,45 +61,44 @@ Extracting data/train-images-idx3-ubyte.gz
 Extracting data/train-labels-idx1-ubyte.gz
 Extracting data/t10k-images-idx3-ubyte.gz
 Extracting data/t10k-labels-idx1-ubyte.gz
-2018-05-26 08:59:55.416198: I tensorflow/core/platform/cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: FMA
 Initialized!
-Step 0 (epoch 0.00), 8.6 ms
+Step 0 (epoch 0.00), 6.9 ms
 Minibatch loss: 8.334, learning rate: 0.010000
 Minibatch error: 85.9%
 Validation error: 84.6%
-Step 100 (epoch 0.12), 449.7 ms
-Minibatch loss: 3.240, learning rate: 0.010000
+Step 100 (epoch 0.12), 268.1 ms
+Minibatch loss: 3.237, learning rate: 0.010000
 Minibatch error: 4.7%
-Validation error: 7.6%
-Step 200 (epoch 0.23), 443.6 ms
-Minibatch loss: 3.371, learning rate: 0.010000
-Minibatch error: 10.9%
-Validation error: 4.7%
-Step 300 (epoch 0.35), 443.7 ms
-Minibatch loss: 3.170, learning rate: 0.010000
-Minibatch error: 6.2%
+Validation error: 7.3%
+Step 200 (epoch 0.23), 263.1 ms
+Minibatch loss: 3.357, learning rate: 0.010000
+Minibatch error: 9.4%
+Validation error: 4.4%
+Step 300 (epoch 0.35), 292.6 ms
+Minibatch loss: 3.143, learning rate: 0.010000
+Minibatch error: 3.1%
 Validation error: 3.2%
-Step 400 (epoch 0.47), 444.7 ms
-Minibatch loss: 3.222, learning rate: 0.010000
-Minibatch error: 6.2%
-Validation error: 2.6%
-Step 500 (epoch 0.58), 443.5 ms
-Minibatch loss: 3.173, learning rate: 0.010000
+Step 400 (epoch 0.47), 264.3 ms
+Minibatch loss: 3.224, learning rate: 0.010000
 Minibatch error: 6.2%
 Validation error: 2.7%
-Step 600 (epoch 0.70), 452.4 ms
-Minibatch loss: 3.125, learning rate: 0.010000
+Step 500 (epoch 0.58), 264.5 ms
+Minibatch loss: 3.184, learning rate: 0.010000
 Minibatch error: 4.7%
-Validation error: 2.1%
-Step 700 (epoch 0.81), 444.8 ms
-Minibatch loss: 3.006,learning rate: 0.010000
+Validation error: 2.4%
+Step 600 (epoch 0.70), 268.9 ms
+Minibatch loss: 3.136, learning rate: 0.010000
 Minibatch error: 3.1%
-Validation error: 2.2%
-Step 800 (epoch 0.93), 446.5 ms
-Minibatch loss: 3.065, learning rate: 0.010000
-Minibatch error: 6.2%
-Validation error: 1.9%
-Test error: 1.8%
+Validation error: 2.1%
+Step 700 (epoch 0.81), 268.4 ms
+Minibatch loss: 2.958, learning rate: 0.010000
+Minibatch error: 0.0%
+Validation error: 2.1%
+Step 800 (epoch 0.93), 267.0 ms
+Minibatch loss: 3.076, learning rate: 0.010000
+Minibatch error: 7.8%
+Validation error: 2.1%
+Test error: 2.0%
 ```
 
 ### Building our own ML container ###
@@ -118,7 +108,7 @@ Let's assume we need some additional Python packages for our ML code to run, but
 Create a new file named `Dockerfile` and add the following lines to it:
 
 ```
-FROM tensorflow/tensorflow:latest
+FROM tensorflow/tensorflow:1.13.1
 
 RUN pip install astropy matplotlib pandas
 ```
@@ -126,19 +116,21 @@ RUN pip install astropy matplotlib pandas
 To build our new image we'll use the `docker build` command:
 
 ```
-> docker build -t bskjerven/tensorflow-ex .
+> docker build -t tensorflow-ex .
 ```
 
-Here were giving our image a title; the naming format is `<Docker Hub Account>/<Image Name>`, so you can substitute in your own details.  You'll need to set up your own DockerHub account if you want to push this image to the cloud later.
-
-We can now run the container just as before, but let's test it first:
+We can now run the container just as before, but let's test it first, by running the Python interpreter inside our ML container and importing a few modules to test that it works:
 
 ```
-> docker run bskjerven/tensorflow-ex python -c "import astropy; import pandas; import matplotlib"
+> docker run tensorflow-ex python -c "import astropy; import pandas; import matplotlib"
 ```
 
-All we're doing in this example is running the Python interpreter inside our PyTorch container and importing a few modules to test that it works.  We can use the same command as before, just with our new container:
+Now let us re-run the same command as before, just with our new container:
 
 ```
-> docker run --rm -it -v /home/ubuntu/models/tutorials/image/mnist/:/notebooks bskjerven/tensorflow-ex python convolutional.py
+> docker run --rm -v `pwd`:/notebooks -w /notebooks tensorflow-ex python convolutional.py
 ```
+
+### Run a ML container on HPC ###
+
+

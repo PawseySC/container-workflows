@@ -105,7 +105,7 @@ Finally, Docker has a flag to change working directory in the container, to avoi
 This can be useful to make your workflow uniform, as different container providers may have different default working directories.
 
 
-### More on Volumes ###
+### More on volumes ###
 
 Docker has several ways to mount data into containers:
 
