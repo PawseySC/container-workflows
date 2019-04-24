@@ -29,7 +29,7 @@ To begin, let's clone another repo:
 
 There a few files here:
 
-* `Dockerfile` - Outlines how we'll build our container
+* `Dockerfile`: outlines how we'll build our container
 
 ```
 # Use an official Python runtime as a parent image
@@ -51,7 +51,7 @@ ENV NAME World
 CMD ["python", "my_app.py"]
 ```
 
-* `requirements.txt` - What python packages we want to install with pip
+* `requirements.txt`: what python packages we want to install with pip
 
 ```
 numpy
@@ -59,7 +59,7 @@ scipy
 scikit-learn
 ```
 
-* `my_app.py` - A simple python app that builds a decision tree using Scikit-Learn
+* `my_app.py`: a simple python app that builds a decision tree using Scikit-Learn
 
 There are some aspects of this Dockerfile that are worth mentioning:
 

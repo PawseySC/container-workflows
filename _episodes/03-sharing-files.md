@@ -94,7 +94,7 @@ The file created in the container is actually available from the host, as a cons
 Finally, Docker has a flag to change working directory in the container, to avoid using full paths, `-w` or `--workdir`; for instance let us use it to change dir to the mapped host directory:
 
 ```
-docker run -v `pwd`:/data -w /data ubuntu touch container2
+> docker run -v `pwd`:/data -w /data ubuntu touch container2
 ```
 
 ```
@@ -147,7 +147,7 @@ When running a container interactively with host IDs, you might get warnings of 
 groups: cannot find name for group ID 1000
 I have no name!@9bfdf83aed93:/data$
 
-> exit
+I have no name!@9bfdf83aed93:/data$ exit
 ```
 
 These can typically be ignored.

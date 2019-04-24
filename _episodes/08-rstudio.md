@@ -1,6 +1,6 @@
 ---
 title: "RStudio deployment for fun and profit"
-teaching: 10
+teaching: 20
 exercises: 0
 questions:
 objectives:
@@ -165,12 +165,12 @@ rstudio    | [services.d] done.
 This is annoying, though...we need our terminal back.  Luckily, Docker lets you run processes in the background.  Kill the RStudio process with `CTRL-C`, and the rerun `docker-compose` with the `-d` flag:
 
 ```
-docker-compose up -d
+> docker-compose up -d
 ```
 
 Shortly after that starts, open a web browser and go to `localhost:8787` if you are running Docker on your machine, or `<Your VM's IP Address>:8787` if you are running on a cloud service. You should see an Rstudio login, and we've set the username to `rstudio` and password to `rstudiopwd`.
 
-Once logged in, you type:
+Once logged in, you type (note this is the R shell):
 
 ```
 > source('data/SC_script.r')

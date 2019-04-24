@@ -201,13 +201,13 @@ Here we can define different services and options.  There are a lot of options, 
 To run this, you simply need to save the above file as `docker-compose.yml`, cd to that directory and run:
 
 ```
-docker-compose up -d
+> docker-compose up -d
 ```
 
 To shut it down, from the same directory run:
 
 ```
-docker-compose down
+> docker-compose down
 ```
 
 

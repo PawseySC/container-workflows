@@ -172,12 +172,15 @@ Docker has the option to run containers interactively.  While this is convenient
 
 ```
 > docker run -i -t ubuntu /bin/bash
+
 root@c69d6f8d89bd:/# id
 uid=0(root) gid=0(root) groups=0(root)
+
 root@c69d6f8d89bd:/# ls
 bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
 boot  etc  lib   media  opt  root  sbin  sys  usr
-> exit # or hit control-D
+
+root@c69d6f8d89bd:/#  exit # or hit CTRL-D
 ```
 
 The `-t` and `-i` options make sure we allocate a terminal to the container, and keep its STDIN (standard input) open.
@@ -189,9 +192,9 @@ As you can see, you have root access in your container, and you are in what look
 You've learned the basic commands for running, downloading, and searching for docker images:
 
 ```
-docker run
-docker pull
-docker search
+> docker run
+> docker pull
+> docker search
 ```
 
 
