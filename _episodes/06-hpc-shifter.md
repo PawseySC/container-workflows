@@ -1,6 +1,6 @@
 ---
 title: "Run containers on HPC with Shifter"
-teaching: 10
+teaching: 20
 exercises: 0
 questions:
 objectives:
