@@ -4,7 +4,7 @@ teaching: 15
 exercises: 0
 questions:
 objectives:
-- embed a Python app in a container and run it
+- Embed a Python app in a container and run it
 
 keypoints:
 ---

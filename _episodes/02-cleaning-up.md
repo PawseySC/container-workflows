@@ -9,7 +9,7 @@ objectives:
 keypoints:
 ---
 
-### Cleaning Up ###
+### Cleaning up ###
 Eventually, you may want to clean out unnecessary images and the cache of containers, to reclaim space or just keep things tidy. Cleaning up involves two steps, removing the containers that you've run first, then removing the images themselves.
 
 To remove the containers, including those that have exited and are still in the cache, use `docker ps --all` to get the IDs, then `docker rm` followed by the container ID(s) or the container name(s):

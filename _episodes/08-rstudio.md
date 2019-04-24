@@ -4,7 +4,7 @@ teaching: 20
 exercises: 0
 questions:
 objectives:
-- run an R workflow both through RStudio and the terminal using containers
+- Run an R workflow both through RStudio and the terminal using containers
 
 keypoints:
 ---
