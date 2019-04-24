@@ -167,6 +167,7 @@ bitnami/tensorflow-inception        Bitnami Docker Image for TensorFlow Inceptio
 
 
 ### Running an interactive command in an image ###
+
 Docker has the option to run containers interactively.  While this is convenient (and useful for debugging), in general you shouldn't use this model as your standard way of working with containers.  To run interactively, we just need to use the `-i` and `-t` flags, or `-it` for brevity:
 
 ```
@@ -219,6 +220,7 @@ docker run -it continuumio/miniconda3:4.5.12 python
 
 
 ### Conclusion ###
+
 You've learned the basic commands for running, downloading, and searching for docker images:
 
 ```

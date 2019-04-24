@@ -211,5 +211,48 @@ To shut it down, from the same directory run:
 ```
 
 
+### Start a Jupyter web server using a container ###
+
+How would you use the container image `jupyter/scipy-notebook` to start a Jupyter webserver with container name `jupyter`?
+
+Some hints:
+
+* by default, that image wants to use port `8888`
+* specify the right port both when launching the container and when looking up the corresponding page in the web browser
+* no command needs to be specified for that container, the default behaviour is to start the webserver
+
+After you have have started it, use `docker logs` to look for an access `token` string.
+
+Once you are done, stop the container.
+
+#### Solution ####
+
+Pull the container:
+
+```
+docker pull jupyter/scipy-notebook
+```
+
+Start the webserver:
+
+```
+docker run --rm -d -p 8888:8888 --name=jupyter jupyter/scipy-notebook
+```
+
+Inspect the logs:
+
+```
+docker logs jupyter
+```
+
+Use your web browser to go to `localhost:8888` if you are running Docker on your machine, or `<Your VM's IP Address>:8888` if you are running on a cloud service.
+
+Stop the container:
+
+```
+docker stop jupyter
+```
+
+
 ### Conclusion ###
 You've learned how to run Docker containers in the background, allowing you to have long-running services (like a web server).  You can also use options like `--name` and `docker logs` to manage and query your containers.
