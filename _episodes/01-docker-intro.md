@@ -188,6 +188,31 @@ The `-t` and `-i` options make sure we allocate a terminal to the container, and
 As you can see, you have root access in your container, and you are in what looks like a normal linux system. Now you can do whatever you like, e.g. install software and develop applications, all within the container of your choice.
 
 
+> ### Pull and run a Python Miniconda container ###
+> 
+> How would you pull the following container, `continuumio/miniconda3:4.5.12`?
+> 
+> Once you've pulled it, enquire the Python version inside the container by running `python --version`.
+> 
+> Finally, open and then close an interactive Python console.
+> 
+> > ### Solution ###
+> > 
+> > Pull: `docker pull continuumio/miniconda3:4.5.12`
+> > 
+> > Get Python version: `docker run continuumio/miniconda3:4.5.12 python --version`
+> > 
+> > Open and close an interactive console:
+> > 
+> > ```
+> > docker run -it continuumio/miniconda3:4.5.12 python
+> > 
+> > >>> exit   # or hit CTRL-D
+> > ```
+> {: .solution}
+{: .challenge}
+
+
 ### Conclusion ###
 You've learned the basic commands for running, downloading, and searching for docker images:
 
