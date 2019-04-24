@@ -1,6 +1,6 @@
 ---
 title: "A bioinformatics example: BLAST"
-teaching: 10
+teaching: 15
 exercises: 0
 questions:
 objectives:

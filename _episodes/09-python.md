@@ -1,6 +1,6 @@
 ---
 title: "Making Python not awful with containers"
-teaching: 10
+teaching: 15
 exercises: 0
 questions:
 objectives:
@@ -104,7 +104,7 @@ The push refers to repository [docker.io/marcodelapierre/python-demo]
 latest: digest: sha256:4db5f0f69cc888d47f4c4b4cac33fad6b004a8e333b36a699ebd43f5b44a7241 size: 1999
 ```
 
-We are now moving to Pawsey HPC system. Let's pull the image, then change directory to either `$MYSCRATCH` or `$MYGROUP`:
+We are now moving to the Pawsey HPC system. Let's pull the image, then change directory to either `$MYSCRATCH` or `$MYGROUP`:
 
 ```
 > module load shifter
