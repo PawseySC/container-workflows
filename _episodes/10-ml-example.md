@@ -1,12 +1,15 @@
 ---
-title: "Running a container for machine learning"
-teaching: 10
+title: "Containers for machine learning"
+teaching: 20
 exercises: 0
 questions:
 objectives:
+- Deploy a machine learning framework with containers, exploiting CPUs and GPUs
+
 keypoints:
 ---
-## Running a container for machine learning
+
+### Running a container for machine learning ###
 
 Now we're going to run a container to perform a machine learning benchmark application.  We'll use the popular ML package [TensorFlow](tensorflow.org) to build a convolutional neural network that classifies the [MNIST dataset](http://yann.lecun.com/exdb/mnist/), which is just a large collection of handwritten digits.  It's good dataset to get started with because the data has been formatted and cleaned, so you can focus on learning CNNs instead of dealing with data issues.
 
@@ -108,7 +111,7 @@ Validation error: 1.9%
 Test error: 1.8%
 ```
 
-## Building our own ML container ##
+### Building our own ML container ###
 
 Let's assume we need some additional Python packages for our ML code to run, but they are present in the stock PyTorch image.  We can simply build our image and add them.  To do this, we'll need to write a Dockerfile.
 
