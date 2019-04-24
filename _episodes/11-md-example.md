@@ -1,5 +1,5 @@
 ---
-title: "Computational chemistry with GPU containers"
+title: "Molecular dynamics with GPU containers"
 teaching: 20
 exercises: 0
 questions:
