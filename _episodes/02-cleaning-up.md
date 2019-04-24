@@ -88,9 +88,17 @@ Hint: you can identify them as they will correspond to the image `continuumio/mi
 
 #### Solution ####
 
-Display stopped containers: `docker ps -a`
+Display stopped containers: 
 
-Remove `miniconda3` stopped containers: identify their IDs from previous output, then `docker rm <list of IDs>`
+```
+docker ps -a
+```
+
+Remove `miniconda3` stopped containers: identify their IDs from previous output, then 
+
+```
+docker rm <list of IDs>
+```
 
 
 ### Conclusion ###

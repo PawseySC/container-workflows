@@ -95,7 +95,6 @@ DISTRIB_ID=Ubuntu
 DISTRIB_RELEASE=18.04
 DISTRIB_CODENAME=bionic
 DISTRIB_DESCRIPTION="Ubuntu 18.04.2 LTS"
-
 ```
 Here's what we've done:
 
@@ -190,17 +189,25 @@ As you can see, you have root access in your container, and you are in what look
 
 ### Pull and run a Python Miniconda container ###
 
-How would you pull the following container, `continuumio/miniconda3:4.5.12`?
+How would you pull the following container image, `continuumio/miniconda3:4.5.12`?
 
 Once you've pulled it, enquire the Python version inside the container by running `python --version`.
 
-Finally, open and then close an interactive Python console.
+Finally, open and then close an interactive Python console through the container.
 
 #### Solution ####
 
-Pull: `docker pull continuumio/miniconda3:4.5.12`
+Pull: 
 
-Get Python version: `docker run continuumio/miniconda3:4.5.12 python --version`
+```
+docker pull continuumio/miniconda3:4.5.12
+```
+
+Get Python version
+
+```
+docker run continuumio/miniconda3:4.5.12 python --version
+```
 
 Open and close an interactive console:
 
