@@ -148,7 +148,7 @@ Other more basic images are [rocker/r-ver](https://hub.docker.com/r/rocker/r-ver
 
 ### Build your own Scientific Python container ###
 
-Using `continuumio/miniconda3:4.5.12` as base image, create an image called `mypython`, which includes the Python packages **numpy**, **scipy** and **pandas**. Hint: you can use `pip install` in the Dockerfile to this end. If you have a Docker Hub account, for the image name use the format `<Your Docker Hub account>/<Image name>:<Version tag>`.
+Using `continuumio/miniconda3:4.5.12` as base image, create an image called `mypython`, which includes the Python packages **numpy**, **scipy** and **pandas**. Hint: you can use `pip install` or `conda install -y` in the Dockerfile to this end. If you have a Docker Hub account, for the image name use the format `<Your Docker Hub account>/<Image name>:<Version tag>`.
 
 Then, if you have a Docker Hub account, push the image to the web registry.
 
@@ -175,7 +175,7 @@ Build the image:
 docker build -t marcodelapierre/mypython:2019Apr23 .
 ```
 
-Push the image:
+Push the image (optional):
 
 ```
 docker push marcodelapierre/mypython:2019Apr23
