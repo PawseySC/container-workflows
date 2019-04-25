@@ -204,7 +204,7 @@ Pull:
 docker pull continuumio/miniconda3:4.5.12
 ```
 
-Get Python version
+Get Python version:
 
 ```
 docker run continuumio/miniconda3:4.5.12 python --version

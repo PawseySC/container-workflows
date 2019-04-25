@@ -213,7 +213,12 @@ To shut it down, from the same directory run:
 
 ### Start a Jupyter web server using a container ###
 
-How would you use the container image `jupyter/scipy-notebook` to start a Jupyter webserver with container name `jupyter`?
+How would you use the container image `jupyter/scipy-notebook` to start a Jupyter webserver?
+
+A couple of extra requirements:
+
+* assign the name `jupyter` to the container
+* map the current host working directory as `/home/jovyan/data`
 
 Some hints:
 
@@ -236,7 +241,7 @@ docker pull jupyter/scipy-notebook
 Start the webserver:
 
 ```
-docker run --rm -d -p 8888:8888 --name=jupyter jupyter/scipy-notebook
+docker run --rm -d -p 8888:8888 --name=jupyter -v `pwd`:/home/jovyan/data jupyter/scipy-notebook
 ```
 
 Inspect the logs:

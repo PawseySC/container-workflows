@@ -83,7 +83,7 @@ Error response from daemon: conflict: unable to remove repository reference "ngi
 
 ### Clean up Miniconda containers from previous episode ###
 
-Find and remove the stopped Miniconda containers you ran in the previous episode. 
+Find and remove the stopped Miniconda containers you ran in the previous episode. Do not remove the container image, we'll use it later.
 
 Hint: you can identify them as they will correspond to the image `continuumio/miniconda3:4.5.12`.
 
@@ -100,6 +100,8 @@ Remove `miniconda3` stopped containers: identify their IDs from previous output,
 ```
 docker rm <list of IDs>
 ```
+
+Do not use `docker rmi` as we don't want to remove the container image.
 
 
 ### Conclusion ###
