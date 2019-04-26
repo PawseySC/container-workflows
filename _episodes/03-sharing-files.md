@@ -120,6 +120,41 @@ There are some subtle differences, but here are the key points:
 In general, start with `-v`.
 
 
+### Input redirection with Docker ###
+
+Suppose you need to redirect input to a Docker container, either using an input file with `<` or piping from another execution with `|`. If you just run the container as usual you won't get the expected result. As an example, let's use the unix command `wc -w` to count the number of words received in input; we'll produce the words with `echo`:
+
+```
+> echo "one two three" | docker run ubuntu wc -w
+0
+```
+
+We are getting `0` instead of `3`, suggesting input redirection is not happening. To make it work, we need to use the additional flag `-i`, which keeps Docker `STDIN` (standard input) open:
+
+```
+> echo "one two three" | docker run -i ubuntu wc -w
+3
+``` 
+
+Here we go!
+
+The same flag is required when receiving input from a file, for instance let's create a file with some words:
+
+```
+echo "one two three" > words
+```
+
+and then try and count them:
+
+```
+> docker run ubuntu wc -w < words
+0
+
+> docker run -i ubuntu wc -w < words
+3
+```
+
+
 ### Matching user permissions with the host ###
 
 So far we have seen that files created by the container belong to the root user. This can be annoying, in that the host user might then have limitations in editing/deleting those files. 
