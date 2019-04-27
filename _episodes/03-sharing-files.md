@@ -139,7 +139,7 @@ Here we go!
 The same flag is required when receiving input from a file, for instance let's create a file with some words:
 
 ```
-echo "one two three" > words
+> echo "one two three" > words
 ```
 
 and then try and count them:
@@ -188,6 +188,66 @@ These can typically be ignored.
 Finally, third-party containers might have been set-up so that permissions of standard users are more restricted compared to root. There are some critical cases here: only root can execute the application, or only root can write on certain locations that need to be modified at runtime. In these cases, the typical solutions are:
 * run the container as root, then fix output file ownerships;
 * build your own container for that application, with appropriate priviligies for non-root users.
+
+
+### Run a Python app through containers with I/O ###
+
+With your favourite text editor create a file called `app.py` with the following content:
+
+```
+import sys
+  
+def print_sums(data):
+    with open("row_sums",'w') as output:
+        for line in data:
+            row = 0
+            for word in line.strip().split():
+                row += int(word)
+            output.write(str(row)+"\n")
+            print("Sum of the row is ",row)
+
+if len(sys.argv) > 1 and sys.argv[1] != "-":
+    with open(sys.argv[1], 'r') as infile:
+        print_sums(infile)
+else:
+    print_sums(sys.stdin)
+```
+
+and an input file `input` containing:
+
+```
+1 2 3
+4 5 6
+7 8 9
+```
+
+The app reads rows containing integers and outputs their sums line by line. Input can be given through file or via standard input. The output is produced both in formatted form through standard output and in raw form written to a file named `row_sums`.
+
+Now, run `python app.py` using the the container image `continuumio/miniconda3:4.5.12` you previously pulled. Give the input filename as an argument to the app.
+
+Then, run it again by giving the input file through redirection with `<`.
+
+Finally, if your are on a Linux system, have a look at the file ownership of the output file `row_sums`. Who's the owner? Now remove the file with `rm -f row_sums`, and adjust your container execution so that the output file belongs to the host user.
+
+#### Solution ####
+
+Run with input file as argument:
+
+```
+docker run --rm -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py input
+```
+
+Run with input redirection:
+
+```
+docker run --rm -i -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py < input
+```
+
+Run as host user, so that output file belongs to them, not to root:
+
+```
+docker run --rm -i -v `pwd`:/data -w /data -u $(id -u):$(id -g) continuumio/miniconda3:4.5.12 python app.py < input
+```
 
 
 ### Conclusion ###
