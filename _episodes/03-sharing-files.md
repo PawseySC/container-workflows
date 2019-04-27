@@ -107,17 +107,15 @@ This can be useful to make your workflow uniform, as different container provide
 
 ### More on volumes ###
 
-Docker has several ways to mount data into containers:
+Docker has several ways to mount data into containers. Here we've only partially covered the first one:
 
-* `-v` (or `--volume`)
-* `--mount`
+1. **bind mounts**: map a host directory inside the container. There are two possible syntaxes for this option, `-v` (or `--volume`) and `--mount`, the most significant difference being that `-v` is able to create the host directory to be mapped, if this doesn't exist, whereas `--mount` will throw an error. Docker is currently promoting `--mount` as the preferred syntax for mounting data.
 
-There are some subtle differences, but here are the key points:
+2. **Docker volumes**: use storage spaces completely managed by Docker; they offer extra features compared to bind mounts.
 
-* Volume mounts (`-v`) will create a new directory in the container, and mount your external directory there, even if the container directory doesn't exist. On the other hand, `--mount` will generate an error if the internal directory isn't present;
-* `--mount` is generally more performant, but requires you to be explicit in your mount command, and requires that your host machine has a specific directory structure.
+3. **tmpfs mounts**: store data temporarily in the host memory.
 
-In general, start with `-v`.
+[Manage data in Docker](https://docs.docker.com/storage/) contains detailed information on these options.
 
 
 ### Input redirection with Docker ###
