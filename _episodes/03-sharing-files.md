@@ -190,7 +190,7 @@ Finally, third-party containers might have been set-up so that permissions of st
 * build your own container for that application, with appropriate priviligies for non-root users.
 
 
-### Run a Python app through containers with I/O ###
+### Run a Python app in a container with I/O ###
 
 With your favourite text editor create a file called `app.py` with the following content:
 

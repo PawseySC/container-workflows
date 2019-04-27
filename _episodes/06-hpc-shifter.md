@@ -94,11 +94,12 @@ The output will display the content of the current host directory!
 
 A few differences in behaviour can be noticed compared to Docker, such that using Shifter typically requires to specify less options and flags:
 
-- by default, some relevant directories in the Pawsey HPC filesystems are mounted in the containers; these include `/group`, `/scratch`, `/pawsey` and `/tmp`.  
+* by default, some relevant directories in the Pawsey HPC filesystems are mounted in the containers; these include `/group`, `/scratch`, `/pawsey` and `/tmp`.  
   **Note**: `/home` is NOT mounted instead;
-- if running from a mapped host directory, this becomes the working directory at container runtime;
-- the host user is automatically set for the container;
-- Shifter automatically removes containers after execution is terminated.
+* if running from a mapped host directory, this becomes the working directory at container runtime;
+* standard input is always open, allowing redirection;
+* the host user is automatically set for the container;
+* Shifter automatically removes containers after execution is terminated.
 
 As additional examples, you might want to run:
 
@@ -124,7 +125,7 @@ Shifter has support to run containers exploiting MPI parallelism and GPU acceler
 
 ### Using Shifter with a job scheduler ###
 
-Shifter is compatible with **SLURM**, the job scheduler installed on Pawsey HPC systems.
+Shifter is compatible with **SLURM**, the job scheduler installed on Pawsey HPC systems. In particular, SLURM job executor `srun` is compatible with `shifter run`, and the two syntaxes can be combined together.
 
 As an example, the following script uses a Ubuntu container to output the machine hostname:
 
@@ -155,6 +156,83 @@ and then submit this script using SLURM:
 ### Building container images for HPC ###
 
 Shifter does not allow to build container images. The best way to create an image to be pulled and run on HPC is to use Docker on a distinct machine (see previous episode).
+
+
+### Run a Python app in a container on HPC ###
+
+First, pull the container `continuumio/miniconda3:4.5.12`.
+
+Then, with your favourite text editor create a file called `app.py` with the following content:
+
+```
+import sys
+
+def print_sums(data):
+    with open("row_sums",'w') as output:
+        for line in data:
+            row = 0
+            for word in line.strip().split():
+                row += int(word)
+            output.write(str(row)+"\n")
+            print("Sum of the row is ",row)
+
+if len(sys.argv) > 1 and sys.argv[1] != "-":
+    with open(sys.argv[1], 'r') as infile:
+        print_sums(infile)
+else:
+    print_sums(sys.stdin)
+```
+
+and an input file `input` containing:
+
+```
+1 2 3
+4 5 6
+7 8 9
+```
+
+The app reads rows containing integers and outputs their sums line by line. Input can be given through file or via standard input. The output is produced both in formatted form through standard output and in raw form written to a file named `row_sums`.
+
+Now, run `python app.py` using the the container image you have just pulled. For instance, give the input filename as an argument to the app.
+
+Finally, re-run it by means of a SLURM script called `python_slurm.sh`.
+
+#### Solution ####
+
+Pull the container image:
+
+```
+sg $PAWSEY_PROJECT -c 'shifter pull continuumio/miniconda3:4.5.12'
+```
+
+Run the app:
+
+```
+shifter run continuumio/miniconda3:4.5.12 python app.py input
+```
+
+SLURM script for scheduler submission, `python_slurm.sh` (insert Pawsey Project ID!):
+
+```
+#!/bin/bash -l
+
+#SBATCH --account=<your-pawsey-project>
+#SBATCH --partition=workq
+#SBATCH --ntasks=1
+#SBATCH --time=00:05:00
+#SBATCH --export=NONE
+#SBATCH --job-name=python
+
+module load shifter
+
+srun --export=all shifter run continuumio/miniconda3:4.5.12 python app.py input
+```
+
+SLURM submission:
+
+```
+sbatch python_slurm.sh
+```
 
 
 ### Conclusion ###
