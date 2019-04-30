@@ -1,10 +1,10 @@
 ---
-title: "RStudio deployment for fun and profit"
+title: "Bioinformatics meets RStudio in containers"
 teaching: 0
 exercises: 20
 questions:
 objectives:
-- Run an R workflow both through RStudio and the terminal using containers
+- Deploy a customised RStudio container for bioinformatics
 
 keypoints:
 ---
