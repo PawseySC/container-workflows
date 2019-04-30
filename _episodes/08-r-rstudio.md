@@ -9,7 +9,7 @@ objectives:
 keypoints:
 ---
 
-### RStudio Example ###
+### RStudio example ###
 
 R is a popular language in several domains of science, particularly because of its statistical packages.  It often requires installing a large number of dependencies, and installing these on an HPC system can be tedious.
 
@@ -79,7 +79,7 @@ Let us download and unzip the required sample dataset:
 Now, we can run the R script using the R container we pulled; we're going to compute average values in this example:
 
 ```
-> docker run --rm -v `pwd`:/data -w /data rocker/tidyverse:3.5 Rscript readings-06.R --mean data/inflammation-*.csv
+> docker run -v `pwd`:/data -w /data rocker/tidyverse:3.5 Rscript readings-06.R --mean data/inflammation-*.csv
 ```
 
 

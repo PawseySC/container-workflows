@@ -9,7 +9,7 @@ objectives:
 keypoints:
 ---
 
-### RStudio Example ###
+### RStudio example ###
 
 R is a popular language in several domains of science, particularly because of its statistical packages.  It often requires installing a large number of dependencies, and installing these on an HPC system can be tedious.
 
