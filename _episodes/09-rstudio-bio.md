@@ -193,7 +193,7 @@ To get started let's pull the required R container image:
 
 ```
 > module load shifter
-> sg $PAWSEY_PROJECT -c 'shifter pull 'bskjerven/oz_sc:latest
+> sg $PAWSEY_PROJECT -c 'shifter pull bskjerven/oz_sc:latest'
 ```
 
 Now let's change directory to either `$MYSCRATCH` or `$MYGROUP`, e.g.
@@ -202,7 +202,7 @@ Now let's change directory to either `$MYSCRATCH` or `$MYGROUP`, e.g.
 > cd $MYSCRATCH
 ```
 
-With your favourite text editor, create a SLURM script, we'll call it `rscript.sh` (remember to specify your Pawsey project ID in the script!):
+With your favourite text editor, create a SLURM script, we'll call it `rscript-bio.sh` (remember to specify your Pawsey project ID in the script!):
 
 ```
 #!/bin/bash -l
@@ -212,7 +212,7 @@ With your favourite text editor, create a SLURM script, we'll call it `rscript.s
 #SBATCH --ntasks=1
 #SBATCH --time=01:00:00
 #SBATCH --export=NONE
-#SBATCH --job-name=rstudio
+#SBATCH --job-name=rstudio-bio
 
 module load shifter
 
@@ -227,7 +227,7 @@ srun --export=all shifter run bskjerven/oz_sc:latest Rscript data/SC_Rscript.r
 Let's submit the script via SLURM:
 
 ```
-> sbatch rscript.sh
+> sbatch rscript-bio.sh
 ```
 
 
