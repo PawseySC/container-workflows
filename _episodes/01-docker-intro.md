@@ -84,9 +84,9 @@ Third, to run Docker commands with `root` privileges on a Linux box, you will ne
 
 Let's run a simple command:
 
-~~~
+```
 $ docker run ubuntu cat /etc/os-release
-~~~
+```
 {: .bash}
 
 ~~~
