@@ -7,9 +7,9 @@ objectives:
 - Learn how to download and run images
 keypoints:
 - You've learned some basic Docker commands for running, downloading, and searching for docker images
-- `docker run` for running images
-- `docker pull` for downloading images
-- `docker search` for searching images
+- "`docker run` for running images"
+- "`docker pull` for downloading images"
+- "`docker search` for searching images"
 ---
 
 ## Docker Containers ##
