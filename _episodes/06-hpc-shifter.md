@@ -1,7 +1,7 @@
 ---
 title: "Run containers on HPC with Shifter"
-teaching: 20
-exercises: 0
+teaching: 15
+exercises: 5
 questions:
 objectives:
 - Learn how to manage and run containers on a HPC cluster with Shifter
