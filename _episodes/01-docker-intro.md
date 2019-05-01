@@ -7,12 +7,11 @@ objectives:
 - Learn how to download and run images
 
 keypoints:
-You've learned the basic commands for running, downloading, and searching for docker images:
+* You've learned the basic commands for running, downloading, and searching for docker images:
 * `docker run`
 * `docker pull`
 * `docker search`
-
-**Best practices**
+* Best practices
 * Prefer official images over those built by third-parties. Docker runs with privileges, so you have to be a bit careful what you run
 * Good online documentation on Docker commands can be found at [Docker run reference](https://docs.docker.com/engine/reference/run/) and related pages
 ---
