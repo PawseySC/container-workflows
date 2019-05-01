@@ -89,7 +89,7 @@ $ docker run ubuntu cat /etc/os-release
 ```
 {: .bash}
 
-~~~
+```
 Unable to find image 'ubuntu:latest' locally
 latest: Pulling from library/ubuntu
 898c46f3b1a1: Pull complete 
@@ -110,7 +110,7 @@ BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
 PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
 VERSION_CODENAME=bionic
 UBUNTU_CODENAME=bionic
-~~~
+```
 {: .output}
 
 Here's what we've done:
@@ -128,6 +128,10 @@ Note in our example Docker uses the 'ubuntu:latest' tag, since we didn't specify
 
 ```
 $ docker run ubuntu:17.04 cat /etc/os-release
+```
+{: .bash}
+
+```
 NAME="Ubuntu"
 VERSION="17.04 (Zesty Zapus)"
 ID=ubuntu
@@ -141,19 +145,26 @@ PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-poli
 VERSION_CODENAME=zesty
 UBUNTU_CODENAME=zesty
 ```
+{: .output}
 
 Docker caches images on your local disk, so the next time you need to run your container it will be faster:
 
 ```
 $ docker run ubuntu /bin/echo 'hello world'
+```
+{: .bash}
+
+```
 hello world
 ```
+{: .output}
 
 You can list all Docker containers on your system with
 
 ```
 $ docker ps -a
 ```
+{: .bash}
 
 The `-a` (or `--all`) flag prints all containers, i.e. those currently running and any stopped containers.
 
@@ -162,18 +173,23 @@ Similarly, you can list all docker images you have with
 ```
 $ docker images
 ```
+{: .bash}
 
 In the example above, Docker automatically downloaded the Ubuntu image.  If you want to explicity download an image, you can use the `docker pull` command:
 
 ```
 $ docker pull ubuntu
 ```
+{: .bash}
 
 Another handy Docker command line option is `docker search`.  You can use it to quickly search for available images on Docker Hub.  Note that you may still want to visit the [Docker Hub](https://hub.docker.com) webpage to find out more information about a particular image (e.g. run commands, configuration instructions, etc.).
 
 ```
 $ docker search tensorflow
+```
+{: .bash}
 
+```
 NAME                                DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
 tensorflow/tensorflow               Official Docker images for the machine learn…   1236
 jupyter/tensorflow-notebook         Jupyter Notebook Scientific Python Stack w/ …   100
@@ -189,6 +205,7 @@ mikebirdgeneau/r-tensorflow         RStudio and Tensorflow                      
 lablup/kernel-python-tensorflow     TensorFlow container imager for Backend.Ai      2
 bitnami/tensorflow-inception        Bitnami Docker Image for TensorFlow Inception   2                                       [OK]
 ```
+{: .output}
 
 
 ### Running an interactive command in an image ###
@@ -197,16 +214,34 @@ Docker has the option to run containers interactively.  While this is convenient
 
 ```
 $ docker run -i -t ubuntu /bin/bash
+```
+{: .bash}
 
+```
 root@c69d6f8d89bd:/# id
-uid=0(root) gid=0(root) groups=0(root)
+```
+{: .bash}
 
+```
+uid=0(root) gid=0(root) groups=0(root)
+```
+{: .output}
+
+```
 root@c69d6f8d89bd:/# ls
+```
+{: .bash}
+
+```
 bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
 boot  etc  lib   media  opt  root  sbin  sys  usr
+```
+{: .output}
 
+```
 root@c69d6f8d89bd:/# exit   # or hit CTRL-D
 ```
+{: .bash}
 
 The `-t` and `-i` options make sure we allocate a terminal to the container, and keep its STDIN (standard input) open.
 
@@ -228,20 +263,27 @@ As you can see, you have root access in your container, and you are in what look
 > > ```
 > > docker pull continuumio/miniconda3:4.5.12
 > > ```
+> > {: .bash}
 > > 
 > > Get Python version:
 > > 
 > > ```
 > > docker run continuumio/miniconda3:4.5.12 python --version
 > > ```
+> > {: .bash}
 > > 
 > > Open and close an interactive console:
 > > 
 > > ```
 > > docker run -it continuumio/miniconda3:4.5.12 python
+> > {: .bash}
+> > ```
+> > {: .bash}
 > > 
+> > ```
 > > >>> exit   # or hit CTRL-D
 > > ```
+> > {: .python}
 > {: .solution}
 {: .challenge}
 
