@@ -204,7 +204,7 @@ The `-t` and `-i` options make sure we allocate a terminal to the container, and
 As you can see, you have root access in your container, and you are in what looks like a normal linux system. Now you can do whatever you like, e.g. install software and develop applications, all within the container of your choice.
 
 
-> ### Pull and run a Python Miniconda container
+> ## Pull and run a Python Miniconda container
 > 
 > How would you pull the following container image, `continuumio/miniconda3:4.5.12`?
 > 
@@ -212,7 +212,7 @@ As you can see, you have root access in your container, and you are in what look
 > 
 > Finally, open and then close an interactive Python console through the container.
 > 
-> > #### Solution
+> > ## Solution
 > > 
 > > Pull: 
 > > 
