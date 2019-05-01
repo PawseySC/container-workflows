@@ -5,7 +5,6 @@ exercises: 2
 questions:
 objectives:
 - Learn how to remove containers and images from your machine when you no longer need them
-
 keypoints:
 - "Cleaning up containers and images is a two-step process"
 - "Remove stopped containers with `docker rm`"

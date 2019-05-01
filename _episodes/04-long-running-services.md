@@ -5,8 +5,11 @@ exercises: 5
 questions:
 objectives:
 - Learn how to start containers for a running (web) service
-
 keypoints:
+- "You-ve learned how to run long-running services (like a web server) through containers"
+- "Use the flag `-d` to run the containers in background"
+- "Use the flag `-p <host port:<container port>` to map communication ports"
+- "Additional options to manage and query containers include `--name` and `docker logs`"
 ---
 
 ### Starting a long-running service in a container ###
@@ -259,7 +262,3 @@ $ docker-compose down
 > > ```
 > {: .solution}
 {: .challenge}
-
-
-### Conclusion ###
-You've learned how to run Docker containers in the background, allowing you to have long-running services (like a web server).  You can also use options like `--name` and `docker logs` to manage and query your containers.

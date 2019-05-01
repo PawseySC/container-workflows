@@ -5,8 +5,9 @@ exercises: 0
 questions:
 objectives:
 - Learn how to manage and run containers on a HPC cluster with Shifter
-
 keypoints:
+- "Shifter has a quite simple syntax that allows to pull, manage and run containers on HPC systems"
+- "`shifter pull` and `shifter run` are the key commands"
 ---
 
 ### Why not Docker on HPC? ###
@@ -235,7 +236,3 @@ Shifter does not allow to build container images. The best way to create an imag
 > > ```
 > {: .solution}
 {: .challenge}
-
-
-### Conclusion ###
-Shifter has a quite simple syntax that allows to pull, manage and run containers on HPC systems.

@@ -6,8 +6,10 @@ questions:
 objectives:
 - Learn what is a Dockerfile and its basic syntax
 - Learn how to build a container and push it to a web registry
-
 keypoints:
+- "A Dockerfile is a recipe that uses specific instructions to direct the image building process"
+- "`docker build` is used to build images"
+- "`docker push` is used to push images to a web registry"
 ---
 
 ### What is a Dockerfile? ###
@@ -184,12 +186,9 @@ Other more basic images are [rocker/r-ver](https://hub.docker.com/r/rocker/r-ver
 {: .challenge}
 
 
-### Conclusion ###
-Dockerfiles use specific instructions to direct the image building process. Once created, a container image can be pushed to a Web repository for release.
-
-
-### Best practices ###
-
-* for stand-alone packages, it is suggested to use the policy of one container per package
-* for Python or R pipelines, it may be handier to use the policy of a single container for the entire pipeline
-* [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) are found in the Docker website
+> ## Best practices ##
+> 
+> * for stand-alone packages, it is suggested to use the policy of one container per package
+> * for Python or R pipelines, it may be handier to use the policy of a single container for the entire pipeline
+> * [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) are found in the Docker website
+{: .callout}

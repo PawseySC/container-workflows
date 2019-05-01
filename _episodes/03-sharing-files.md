@@ -6,7 +6,6 @@ questions:
 objectives:
 - Learn how to mount host directories in a container
 - Learn how to set custom user and group IDs in a container
-
 keypoints:
 - "Map host directories in the containers with the flag `-v <host dir>:<container dir>`"
 - "Change user that runs the container with the flag `-u <user>:<group>`"
