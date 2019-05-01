@@ -16,18 +16,18 @@ Now we're going to run a container to perform a machine learning benchmark appli
 First let's get a sample program and the data that it needs, from the tensorflow/models Git repo:
 
 ```
-> mkdir ml_example
-> cd ml_example
+$ mkdir ml_example
+$ cd ml_example
 
-> wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/BUILD 
-> wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/__init__.py
-> wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/convolutional.py
+$ wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/BUILD 
+$ wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/__init__.py
+$ wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/convolutional.py
 ```
 
 We now have some minor editing to complete. We need to edit `convolutional.py` to set `NUM_EPOCHS` to `1` (down from the current value of 10, to make the calculation run in a reasonably short amount of time). We can make the change from the shell using the tool `sed`, noting that on a Mac, note that `sed -i` needs to be changed to `sed -i ""`:
 
 ```
-> sed -i 's/NUM_EPOCHS *=.*/NUM_EPOCHS = 1/' convolutional.py
+$ sed -i 's/NUM_EPOCHS *=.*/NUM_EPOCHS = 1/' convolutional.py
 ```
 
 In alternative, you can use your favourite text editor to edit the value assigned to `NUM_EPOCHS` from `10` to `1`.
@@ -35,7 +35,7 @@ In alternative, you can use your favourite text editor to edit the value assigne
 Now we can get Docker involved. Eventually a single command is required to start Docker, get the container for Tensorflow and have it work on our data directory and it's this:
 
 ```
-> docker run --rm -v `pwd`:/notebooks -w /notebooks tensorflow/tensorflow:1.13.1 python convolutional.py
+$ docker run --rm -v `pwd`:/notebooks -w /notebooks tensorflow/tensorflow:1.13.1 python convolutional.py
 Unable to find image 'tensorflow/tensorflow:1.13.1' locally
 1.13.1: Pulling from tensorflow/tensorflow
 7b722c1070cd: Pull complete 
@@ -116,19 +116,19 @@ RUN pip install astropy matplotlib pandas
 To build our new image we'll use the `docker build` command:
 
 ```
-> docker build -t tensorflow-ex .
+$ docker build -t tensorflow-ex .
 ```
 
 We can now run the container just as before, but let's test it first, by running the Python interpreter inside our ML container and importing a few modules to test that it works:
 
 ```
-> docker run tensorflow-ex python -c "import astropy; import pandas; import matplotlib"
+$ docker run tensorflow-ex python -c "import astropy; import pandas; import matplotlib"
 ```
 
 Now let us re-run the same command as before, just with our new container:
 
 ```
-> docker run --rm -v `pwd`:/notebooks -w /notebooks tensorflow-ex python convolutional.py
+$ docker run --rm -v `pwd`:/notebooks -w /notebooks tensorflow-ex python convolutional.py
 ```
 
 ### Run a ML container on HPC ###
@@ -136,12 +136,12 @@ Now let us re-run the same command as before, just with our new container:
 Let us pull the TensorFlow container, then create a working directory:
 
 ```
-> module load shifter
-> sg $PAWSEY_PROJECT -c 'shifter pull tensorflow/tensorflow:1.13.1'
+$ module load shifter
+$ sg $PAWSEY_PROJECT -c 'shifter pull tensorflow/tensorflow:1.13.1'
 
-> cd $MYSCRATCH
-> mkdir ml_example
-> cd ml_example
+$ cd $MYSCRATCH
+$ mkdir ml_example
+$ cd ml_example
 ```
 
 then create the SLURM script file `ml.sh` using a text editor (remember to specify your Pawsey project ID in the script!):
@@ -173,7 +173,7 @@ srun --export=all shifter run tensorflow/tensorflow:1.13.1 python convolutional.
 Let us submit the script to SLURM:
 
 ```
-> sbatch ml.sh
+$ sbatch ml.sh
 ```
 
 ### Run a ML container on HPC ... using GPUs ###
@@ -185,12 +185,12 @@ If your Docker machine has got an Nvidia GPU installed, then you can install the
 Let's create a working directory and pull the GPU enabled container image (note the `-gpu` suffix):
 
 ```
-> cd $MYSCRATCH
-> mkdir ml_example_gpu
-> cd ml_example_gpu
+$ cd $MYSCRATCH
+$ mkdir ml_example_gpu
+$ cd ml_example_gpu
 
-> module load shifter
-> sg $PAWSEY_PROJECT -c 'shifter pull tensorflow/tensorflow:1.13.1-gpu'
+$ module load shifter
+$ sg $PAWSEY_PROJECT -c 'shifter pull tensorflow/tensorflow:1.13.1-gpu'
 ```
 
 We'll need just minor modifications to the SLURM script, which we'll call `ml-gpu.sh`:
@@ -227,5 +227,5 @@ srun --export=all shifter run tensorflow/tensorflow:1.13.1-gpu python convolutio
 Let's submit with:
 
 ```
-> sbatch ml-gpu.sh
+$ sbatch ml-gpu.sh
 ```

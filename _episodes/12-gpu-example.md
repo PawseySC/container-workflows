@@ -22,7 +22,7 @@ You can browse the available containerised packages by browsing the different ca
 One key aspect is that to pull containers from the Nvidia GPU Cloud you'll need to provide Docker/Shifter with some login credentials. The username is always `$oauthtoken`, whereas the password needs to be retrieved in your Nvidia account. This password can be regenerated, so don't worry if you lose it. On the left side of the page, click on the **Configuration** tab, then on the button **Get API Key**. Then in the new page click on the button **Generate API Key** (currently at the top right corner), and click on confirm. An API Key string will appear in the page, copy it in your clipboard, then store it somewhere useful for your shell session, for instance in an environment variable:
 
 ```
-> export NVIDIA_KEY=<Paste Key Here>
+$ export NVIDIA_KEY=<Paste Key Here>
 ```
 
 ### Run a molecular dynamics simulation on GPUs with containers ### 
@@ -32,8 +32,8 @@ For our example we are going to use Gromacs, a quite popular molecuar dynamics p
 Let us pull the Gromacs container on the Zeus HPC system at Pawsey. We'll need to use `shifter pull --login` in order to enter the Nvidia cloud credentials. Also note we are prepending `nvcr.io/` to the repository name, to tell Shifter we are pulling from the Nvidia GPU Cloud:
 
 ```
-> module load shifter
-> sg $PAWSEY_PROJECT -c 'shifter pull --login nvcr.io/hpc/gromacs:2018.2'
+$ module load shifter
+$ sg $PAWSEY_PROJECT -c 'shifter pull --login nvcr.io/hpc/gromacs:2018.2'
 ```
 
 When prompted, enter `$oauthtoken` as username, and the copied key as password; if you've forgotten the latter, retrieve it from the environment variable you exported, using `echo $NVIDIA_KEY`.
@@ -41,13 +41,13 @@ When prompted, enter `$oauthtoken` as username, and the copied key as password; 
 Now, let us create a working directory, and pull some example files:
 
 ```
-> cd $MYSCRATCH
-> mkdir gpu_example
-> cd gpu_example
+$ cd $MYSCRATCH
+$ mkdir gpu_example
+$ cd gpu_example
 
-> wget ftp://ftp.gromacs.org/pub/benchmarks/water_GMX50_bare.tar.gz
-> tar xzf water_GMX50_bare.tar.gz
-> cp water-cut1.0_GMX50_bare/1536/* .
+$ wget ftp://ftp.gromacs.org/pub/benchmarks/water_GMX50_bare.tar.gz
+$ tar xzf water_GMX50_bare.tar.gz
+$ cp water-cut1.0_GMX50_bare/1536/* .
 ```
 
 Similar to the GPU machine learning example in a previous episode, only minor modifications are required in the SLURM script to run on GPUs:
@@ -82,6 +82,6 @@ srun --export=all shifter run nvcr.io/hpc/gromacs:2018.2 \
 The script is ready for submission:
 
 ```
-> sbatch gpu.sh
+$ sbatch gpu.sh
 ```
 

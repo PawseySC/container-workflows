@@ -21,7 +21,7 @@ Instead we can use an R container to simplify the process.
 The group [Rocker](https://hub.docker.com/r/rocker) has published a large number of R images we can use, including an Rstudio image.  To begin, we'll pull a Tidyverse container image (contains R, RStudio, data science packages):
 
 ```
-> docker pull rocker/tidyverse:3.5
+$ docker pull rocker/tidyverse:3.5
 ```
 
 
@@ -30,8 +30,8 @@ The group [Rocker](https://hub.docker.com/r/rocker) has published a large number
 Let us create a dedicated directory for this example:
 
 ```
-> mkdir r_example
-> cd r_example
+$ mkdir r_example
+$ cd r_example
 ```
 
 We are going to use a minimalistic example taken from the workshop [Programming with R](http://swcarpentry.github.io/r-novice-inflammation/) by the Software Carpentry.
@@ -72,14 +72,14 @@ main()
 Let us download and unzip the required sample dataset:
 
 ```
-> wget http://swcarpentry.github.io/r-novice-inflammation/data/r-novice-inflammation-data.zip
-> unzip -q r-novice-inflammation-data.zip
+$ wget http://swcarpentry.github.io/r-novice-inflammation/data/r-novice-inflammation-data.zip
+$ unzip -q r-novice-inflammation-data.zip
 ```
 
 Now, we can run the R script using the R container we pulled; we're going to compute average values in this example:
 
 ```
-> docker run -v `pwd`:/data -w /data rocker/tidyverse:3.5 Rscript readings-06.R --mean data/inflammation-*.csv
+$ docker run -v `pwd`:/data -w /data rocker/tidyverse:3.5 Rscript readings-06.R --mean data/inflammation-*.csv
 ```
 
 
@@ -88,7 +88,7 @@ Now, we can run the R script using the R container we pulled; we're going to com
 Let us start up the web server using the following `docker` command:
 
 ```
-> docker run -d -p 8787:8787 --name rstudio -v `pwd`/data:/home/rstudio/data -e PASSWORD=<Pick your password> rocker/tidyverse:3.5
+$ docker run -d -p 8787:8787 --name rstudio -v `pwd`/data:/home/rstudio/data -e PASSWORD=<Pick your password> rocker/tidyverse:3.5
 ```
 
 Here we're opening up port `8787` so we can access the Rtudio server remotely. Note you need to store a password in a variable; it will be required below for the web login.
@@ -106,7 +106,7 @@ Now you can run the same analysis from the RStudio console:
 Once you're done, stop the container with:
 
 ```
-> docker stop rstudio
+$ docker stop rstudio
 ```
 
 
@@ -117,23 +117,23 @@ We can run the same analysis on HPC through command line using Shifter.
 To get started let's pull the required R container image:
 
 ```
-> module load shifter
-> sg $PAWSEY_PROJECT -c 'shifter pull rocker/tidyverse:3.5'
+$ module load shifter
+$ sg $PAWSEY_PROJECT -c 'shifter pull rocker/tidyverse:3.5'
 ```
 
 Now let's change directory to either `$MYSCRATCH` or `$MYGROUP`, e.g.
 
 ```
-> cd $MYSCRATCH
+$ cd $MYSCRATCH
 ```
 
 Let's create a dedicated directory and download the sample data:
 
 ```
-> mkdir r_example
-> cd r_example
-> wget http://swcarpentry.github.io/r-novice-inflammation/data/r-novice-inflammation-data.zip
-> unzip -q r-novice-inflammation-data.zip
+$ mkdir r_example
+$ cd r_example
+$ wget http://swcarpentry.github.io/r-novice-inflammation/data/r-novice-inflammation-data.zip
+$ unzip -q r-novice-inflammation-data.zip
 ```
 
 With your favourite text editor, create the R file `readings-06.R` (see contents above),
@@ -159,7 +159,7 @@ srun --export=all shifter run rocker/tidyverse:3.5 Rscript readings-06.R --mean 
 Let's submit the script via SLURM:
 
 ```
-> sbatch rscript.sh
+$ sbatch rscript.sh
 ```
 
 

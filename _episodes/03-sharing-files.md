@@ -16,7 +16,7 @@ keypoints:
 First, try and run the following to get to know what is the starting point in the Ubuntu container and what it contains:
 
 ```
-> docker run ubuntu bash -c 'pwd ; ls -l'
+$ docker run ubuntu bash -c 'pwd ; ls -l'
 /
 total 64
 drwxr-xr-x   2 root root 4096 Nov 12 20:56 bin
@@ -45,7 +45,7 @@ You are in the root `/` directory of the container, and if you compare the listi
 Now try and create an empty file and then see who is the owner:
 
 ```
-> docker run ubuntu bash -c 'touch empty-file ; ls -l empty-file'
+$ docker run ubuntu bash -c 'touch empty-file ; ls -l empty-file'
 -rw-r--r-- 1 root root 0 Dec 19 08:06 empty-file
 ```
 The file is owned by the root user!
@@ -71,7 +71,7 @@ The format is `-v /host/path:/container/path`.  Docker will create the directory
 As an example, let us run the following:
 
 ```
-> docker run -v `pwd`:/data ubuntu ls -l /data
+$ docker run -v `pwd`:/data ubuntu ls -l /data
 ```
 
 Here we are using ``` `pwd` ``` as a shortcut for the current working directory. As a result of using the mapping option `-v`, the `ls` command run inside the container will display the content of the current directory in the host.
@@ -79,13 +79,13 @@ Here we are using ``` `pwd` ``` as a shortcut for the current working directory.
 The `-v` flag maps host directories in the container, allowing to read/write within them. Let us use a container to create a file in a mapped directory:
 
 ```
-> docker run -v `pwd`:/data ubuntu touch /data/container1
+$ docker run -v `pwd`:/data ubuntu touch /data/container1
 ```
 
 Now, let us look for that file in the host:
 
 ```
-> ls -l container1 
+$ ls -l container1 
 -rw-r--r-- 1 root root 0 Dec 19 08:16 container1
 ```
 
@@ -94,11 +94,11 @@ The file created in the container is actually available from the host, as a cons
 Finally, Docker has a flag to change working directory in the container, to avoid using full paths, `-w` or `--workdir`; for instance let us use it to change dir to the mapped host directory:
 
 ```
-> docker run -v `pwd`:/data -w /data ubuntu touch container2
+$ docker run -v `pwd`:/data -w /data ubuntu touch container2
 ```
 
 ```
-> ls -l container2
+$ ls -l container2
 -rw-r--r-- 1 root root 0 Dec 19 08:19 container2
 ```
 
@@ -123,14 +123,14 @@ Docker has several ways to mount data into containers. Here we've only partially
 Suppose you need to redirect input to a Docker container, either using an input file with `<` or piping from another execution with `|`. If you just run the container as usual you won't get the expected result. As an example, let's use the unix command `wc -w` to count the number of words received in input; we'll produce the words with `echo`:
 
 ```
-> echo "one two three" | docker run ubuntu wc -w
+$ echo "one two three" | docker run ubuntu wc -w
 0
 ```
 
 We are getting `0` instead of `3`, suggesting input redirection is not happening. To make it work, we need to use the additional flag `-i`, which keeps Docker `STDIN` (standard input) open:
 
 ```
-> echo "one two three" | docker run -i ubuntu wc -w
+$ echo "one two three" | docker run -i ubuntu wc -w
 3
 ``` 
 
@@ -139,16 +139,16 @@ Here we go!
 The same flag is required when receiving input from a file, for instance let's create a file with some words:
 
 ```
-> echo "one two three" > words
+$ echo "one two three" > words
 ```
 
 and then try and count them:
 
 ```
-> docker run ubuntu wc -w < words
+$ docker run ubuntu wc -w < words
 0
 
-> docker run -i ubuntu wc -w < words
+$ docker run -i ubuntu wc -w < words
 3
 ```
 
@@ -159,13 +159,13 @@ So far we have seen that files created by the container belong to the root user.
 Docker has an option, `-u` or `--user`, to alter the user and group ID in the running container. It can be used in conjunction with the linux command `id` to pass the host user and group IDs directly to the container. For instance:
 
 ```
-> docker run -v `pwd`:/data -w /data -u `id -u`:`id -g` ubuntu touch container3
+$ docker run -v `pwd`:/data -w /data -u `id -u`:`id -g` ubuntu touch container3
 ```
 
 Now, let us inspect the ownerships of all the files created so far through containers:
 
 ```
-> ls -l container?
+$ ls -l container?
 -rw-r--r-- 1 root   root   0 Dec 19 08:16 container1
 -rw-r--r-- 1 root   root   0 Dec 19 08:19 container2
 -rw-r--r-- 1 ubuntu ubuntu 0 Dec 19 08:38 container3
@@ -176,7 +176,7 @@ As desired, the last created file is owned by the host user.
 When running a container interactively with host IDs, you might get warnings of this type:
 
 ```
-> docker run -it -u `id -u`:`id -g` ubuntu bash
+$ docker run -it -u `id -u`:`id -g` ubuntu bash
 groups: cannot find name for group ID 1000
 I have no name!@9bfdf83aed93:/data$
 

@@ -22,8 +22,8 @@ We will build a very simple container image: a Ubuntu box featuring the `TeX Liv
 First let us create a directory where we'll store the Dockerfile. This directory will be the so called Docker **build context**. Docker will include files in this directory in the build process and in the final image. As a by-product, this will make the build process longer and the image larger, so that we want to include only those strictly required for the build, even none if possible.
 
 ```
-> mkdir tex_dockerfile
-> cd tex_dockerfile
+$ mkdir tex_dockerfile
+$ cd tex_dockerfile
 ```
 
 Now use your favourite text editor to create a file named `Dockerfile` and edit it. Here is its contents:
@@ -64,7 +64,7 @@ CMD ["/bin/bash"]
 Once the Dockerfile is ready, let us build the image with `docker build`:
 
 ```
-> docker build -t marcodelapierre/texlive:2019Apr23 .
+$ docker build -t marcodelapierre/texlive:2019Apr23 .
 Sending build context to Docker daemon  2.048kB
 Step 1/6 : FROM ubuntu:18.04
  ---> 93fd78260bd1
@@ -119,7 +119,7 @@ Several other instructions are available, that we haven't covered in this introd
 If you have a (free) Docker Hub account, `marcodelapierre` in this case, you are now ready to push your newly created image to the Docker Hub web registry, using `docker push`:
 
 ```
-> docker push marcodelapierre/texlive:2019Apr23 
+$ docker push marcodelapierre/texlive:2019Apr23 
 The push refers to repository [docker.io/marcodelapierre/texlive]
 90f5135cec45: Pushed 
 eeec548f4430: Pushed 

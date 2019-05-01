@@ -21,13 +21,13 @@ Instead we can use an R container to simplify the process.
 The group [Rocker](https://hub.docker.com/r/rocker) has published a large number of R images we can use, including an Rstudio image.  To begin, we'll pull a Tidyverse container image (contains R, RStudio, data science packages):
 
 ```
-> docker pull rocker/tidyverse:3.5
+$ docker pull rocker/tidyverse:3.5
 ```
 
 We can now start this up:
 
 ```
-> docker run -d -p 8787:8787 --name rstudio -v `pwd`/data:/home/rstudio/data -e PASSWORD=<Pick your password> rocker/tidyverse:3.5
+$ docker run -d -p 8787:8787 --name rstudio -v `pwd`/data:/home/rstudio/data -e PASSWORD=<Pick your password> rocker/tidyverse:3.5
 ```
 
 Here we're opening up port `8787` so we can access the Rtudio server remotely. Note you need to store a password in a variable; it will be required below for the web login.
@@ -39,7 +39,7 @@ You should see a prompt for credentials, with user defaulting to `rstudio`, and 
 Once you're done, stop the container with:
 
 ```
-> docker stop rstudio
+$ docker stop rstudio
 ```
 
 
@@ -50,8 +50,8 @@ The above example only provides a bare-bones RStudio image, but now we want to a
 To begin, let's clone the data (A trimmed down repo with their data has been created for this tutorial)
 
 ```
-> git clone https://github.com/skjerven/rstudio_ex.git
-> cd rstudio_ex
+$ git clone https://github.com/skjerven/rstudio_ex.git
+$ cd rstudio_ex
 ```
 
 For this example, we'll use an RStudio image thas has already been built.  R images can take a while to build sometimes, depending on the number of packages and dependencies you're installing.  The Dockerfile used here is included, and we'll go through it to explain how Docker builds images.
@@ -138,13 +138,13 @@ This yaml file simple tells Docker what image we want to run along with some opt
 To begin, make sure you're in the `rstudio_ex` directory in your home (where we cloned the repo).  Simply type:
 
 ```
-> docker-compose up
+$ docker-compose up
 ```
 
 Docker will pull the `oz_sc:latest` image first (if it's not present on your system yet); once that's complete you'll see output from the RStudio server:
 
 ```
-> docker-compose up
+$ docker-compose up
 Recreating rstudio ... done
 Attaching to rstudio
 rstudio    | [fix-attrs.d] applying owners & permissions fixes...
@@ -165,7 +165,7 @@ rstudio    | [services.d] done.
 This is annoying, though...we need our terminal back.  Luckily, Docker lets you run processes in the background.  Kill the RStudio process with `CTRL-C`, and the rerun `docker-compose` with the `-d` flag:
 
 ```
-> docker-compose up -d
+$ docker-compose up -d
 ```
 
 Shortly after that starts, open a web browser and go to `localhost:8787` if you are running Docker on your machine, or `<Your VM's IP Address>:8787` if you are running on a cloud service. You should see an Rstudio login, and we've set the username to `rstudio` and password to `rstudiopwd`.
@@ -181,7 +181,7 @@ to run the tutorial (it may take a few minutes).  We can refer to the [OzSingleC
 To stop your Rstudio image, simply type from the `rstudio_ex` directory:
 
 ```
-> docker-compose down
+$ docker-compose down
 ```
 
 
@@ -192,14 +192,14 @@ We can run the same analysis on HPC through command line using Shifter. We can u
 To get started let's pull the required R container image:
 
 ```
-> module load shifter
-> sg $PAWSEY_PROJECT -c 'shifter pull bskjerven/oz_sc:latest'
+$ module load shifter
+$ sg $PAWSEY_PROJECT -c 'shifter pull bskjerven/oz_sc:latest'
 ```
 
 Now let's change directory to either `$MYSCRATCH` or `$MYGROUP`, e.g.
 
 ```
-> cd $MYSCRATCH
+$ cd $MYSCRATCH
 ```
 
 With your favourite text editor, create a SLURM script, we'll call it `rscript-bio.sh` (remember to specify your Pawsey project ID in the script!):
@@ -227,7 +227,7 @@ srun --export=all shifter run bskjerven/oz_sc:latest Rscript data/SC_Rscript.r
 Let's submit the script via SLURM:
 
 ```
-> sbatch rscript-bio.sh
+$ sbatch rscript-bio.sh
 ```
 
 

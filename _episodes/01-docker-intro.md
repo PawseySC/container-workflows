@@ -82,7 +82,7 @@ Third, to run Docker commands with `root` privileges on a Linux box, you will ne
 Let's run a simple command:
 
 ```
-> docker run ubuntu cat /etc/os-release
+$ docker run ubuntu cat /etc/os-release
 Unable to find image 'ubuntu:latest' locally
 latest: Pulling from library/ubuntu
 898c46f3b1a1: Pull complete 
@@ -118,7 +118,7 @@ Most Linux distributions have pre-built images available on Docker Hub, so you c
 Note in our example Docker uses the 'ubuntu:latest' tag, since we didn't specify what version we want.  We can specify a specific version of ubuntu like this:
 
 ```
-> docker run ubuntu:17.04 cat /etc/os-release
+$ docker run ubuntu:17.04 cat /etc/os-release
 NAME="Ubuntu"
 VERSION="17.04 (Zesty Zapus)"
 ID=ubuntu
@@ -136,14 +136,14 @@ UBUNTU_CODENAME=zesty
 Docker caches images on your local disk, so the next time you need to run your container it will be faster:
 
 ```
-> docker run ubuntu /bin/echo 'hello world'
+$ docker run ubuntu /bin/echo 'hello world'
 hello world
 ```
 
 You can list all Docker containers on your system with
 
 ```
-> docker ps -a
+$ docker ps -a
 ```
 
 The `-a` (or `--all`) flag prints all containers, i.e. those currently running and any stopped containers.
@@ -151,19 +151,19 @@ The `-a` (or `--all`) flag prints all containers, i.e. those currently running a
 Similarly, you can list all docker images you have with
 
 ```
-> docker images
+$ docker images
 ```
 
 In the example above, Docker automatically downloaded the Ubuntu image.  If you want to explicity download an image, you can use the `docker pull` command:
 
 ```
-> docker pull ubuntu
+$ docker pull ubuntu
 ```
 
 Another handy Docker command line option is `docker search`.  You can use it to quickly search for available images on Docker Hub.  Note that you may still want to visit the [Docker Hub](https://hub.docker.com) webpage to find out more information about a particular image (e.g. run commands, configuration instructions, etc.).
 
 ```
-> docker search tensorflow
+$ docker search tensorflow
 
 NAME                                DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
 tensorflow/tensorflow               Official Docker images for the machine learn…   1236
@@ -187,7 +187,7 @@ bitnami/tensorflow-inception        Bitnami Docker Image for TensorFlow Inceptio
 Docker has the option to run containers interactively.  While this is convenient (and useful for debugging), in general you shouldn't use this model as your standard way of working with containers.  To run interactively, we just need to use the `-i` and `-t` flags, or `-it` for brevity:
 
 ```
-> docker run -i -t ubuntu /bin/bash
+$ docker run -i -t ubuntu /bin/bash
 
 root@c69d6f8d89bd:/# id
 uid=0(root) gid=0(root) groups=0(root)
@@ -240,9 +240,9 @@ docker run -it continuumio/miniconda3:4.5.12 python
 You've learned the basic commands for running, downloading, and searching for docker images:
 
 ```
-> docker run
-> docker pull
-> docker search
+$ docker run
+$ docker pull
+$ docker search
 ```
 
 

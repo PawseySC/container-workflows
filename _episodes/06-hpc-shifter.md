@@ -31,14 +31,14 @@ At the moment, Pawsey is using CSCS Shifter on its HPC systems, and therefore th
 To use Shifter on Pawsey HPC systems, we need first to load the corresponding module:
 
 ```
-> module load shifter
+$ module load shifter
 ```
 
 In principle, the command to pull container images is very similar to Docker, `shifter pull`.  
 However, to avoid disk quota issues on Pawsey HPC systems, the following syntax is recommended, that makes use of the `sg` linux command, for instance:
 
 ```
-> sg $PAWSEY_PROJECT -c 'shifter pull ubuntu'
+$ sg $PAWSEY_PROJECT -c 'shifter pull ubuntu'
 # image     : index.docker.io/library/ubuntu/latest
 # cacheDir  : /group/shifterrepos/mdelapierre/.shifter/cache
 # tmpDir    : /tmp
@@ -55,14 +55,14 @@ However, to avoid disk quota issues on Pawsey HPC systems, the following syntax 
 ```
 
 ```
-> sg $PAWSEY_PROJECT -c 'shifter pull centos'
-> sg $PAWSEY_PROJECT -c 'shifter pull busybox'
+$ sg $PAWSEY_PROJECT -c 'shifter pull centos'
+$ sg $PAWSEY_PROJECT -c 'shifter pull busybox'
 ```
 
 Similar again to Docker, we can list locally pulled images with `shifter images`:
 
 ```
-> shifter images
+$ shifter images
 library/centos                   latest                       ea4b646d9000   2018-11-27T07:05:23   69.62MB      index.docker.io
 library/busybox                  latest                       7dc9d60af829   2018-12-19T22:31:48   704.00KB     index.docker.io
 library/ubuntu                   latest                       d71fc6939e16   2018-12-19T22:30:41   29.94MB      index.docker.io
@@ -71,7 +71,7 @@ library/ubuntu                   latest                       d71fc6939e16   201
 and remove undesired images with `shifter rmi`:
 
 ```
-> shifter rmi busybox
+$ shifter rmi busybox
 removed image index.docker.io/library/busybox/latest
 ```
 
@@ -81,13 +81,13 @@ removed image index.docker.io/library/busybox/latest
 Let us change directory to our group directory with:
 
 ```
-> cd $MYGROUP
+$ cd $MYGROUP
 ```
 
 and then run `ls` using the Ubuntu image we just pulled, via `shifter run`:
 
 ```
-> shifter run ubuntu ls
+$ shifter run ubuntu ls
 ```
 
 The output will display the content of the current host directory!
@@ -104,14 +104,14 @@ A few differences in behaviour can be noticed compared to Docker, such that usin
 As additional examples, you might want to run:
 
 ```
-> shifter run ubuntu ls /
-> shifter run ubuntu whoami
+$ shifter run ubuntu ls /
+$ shifter run ubuntu whoami
 ```
 
 Note how no flag is required to run a container interactively. To launch an interactive shell from within the container, just run it without any commands, for instance:
 
 ```
-> shifter run ubuntu
+$ shifter run ubuntu
 
 mdelapierre@zeus-1:/group/pawsey0001/mdelapierre$ exit   # or hit CTRL-D
 ```
@@ -149,7 +149,7 @@ Now use your favourite text editor to copy paste the script above in a file call
 and then submit this script using SLURM:
 
 ```
-> sbatch hostname.sh
+$ sbatch hostname.sh
 ```
 
 

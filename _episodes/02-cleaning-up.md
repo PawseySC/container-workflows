@@ -16,7 +16,7 @@ Eventually, you may want to clean out unnecessary images and the cache of contai
 To remove the containers, including those that have exited and are still in the cache, use `docker ps --all` to get the IDs, then `docker rm` followed by the container ID(s) or the container name(s):
 
 ```
-> docker ps --all
+$ docker ps --all
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                        PORTS               NAMES
 48a2dca14407        nginx               "nginx -g 'daemon off"   10 minutes ago      Exited (0) 4 minutes ago                          pensive_booth
 1bf15ca4ba89        nginx               "nginx -g 'daemon off"   20 minutes ago      Exited (0) 16 minutes ago                         amazing_hugle
@@ -26,15 +26,15 @@ c69d6f8d89bd        ubuntu              "/bin/bash"              41 minutes ago 
 960588723c36        ubuntu              "/bin/echo 'hello wor"   45 minutes ago      Exited (0) 45 minutes ago                         suspicious_mestorf
 ffbb0f60bda6        ubuntu              "/bin/echo 'hello wor"   51 minutes ago      Exited (0) 51 minutes ago                         mad_booth
 
-> docker rm ffbb0f60bda6 960588723c36 # cleaning by ID
+$ docker rm ffbb0f60bda6 960588723c36 # cleaning by ID
 ffbb0f60bda6
 960588723c36
 
-> docker rm sad_keller ecstatic_hugle # cleaning by name
+$ docker rm sad_keller ecstatic_hugle # cleaning by name
 sad_keller
 ecstatic_hugle
 
-> docker ps --all
+$ docker ps --all
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
 48a2dca14407        nginx               "nginx -g 'daemon off"   23 minutes ago      Exited (0) 17 minutes ago                       pensive_booth
 1bf15ca4ba89        nginx               "nginx -g 'daemon off"   33 minutes ago      Exited (0) 29 minutes ago                       amazing_hugle
@@ -44,7 +44,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 You can construct your own one-liner to clean up everything, if you wish. Docker will refuse to delete something that's actively in use, so you won't screw things up too badly this way.
 
 ```
-> docker rm `docker ps --all -q`
+$ docker rm `docker ps --all -q`
 48a2dca14407
 1bf15ca4ba89
 97b1e86df1f1
@@ -53,12 +53,12 @@ You can construct your own one-liner to clean up everything, if you wish. Docker
 Now that we've removed the containers, let's clean up the images they came from. This uses the `docker images` and `docker rmi` commands, in a similar manner:
 
 ```
-> docker images
+$ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 ubuntu              latest              4ca3a192ff2a        22 hours ago        128.2 MB
 nginx               latest              abf312888d13        2 days ago          181.5 MB
 
-> docker rmi ubuntu
+$ docker rmi ubuntu
 Untagged: ubuntu:latest
 Untagged: ubuntu@sha256:3b64c309deae7ab0f7dbdd42b6b326261ccd6261da5d88396439353162703fb5
 Deleted: sha256:4ca3a192ff2a5b7e225e81dc006b6379c10776ed3619757a65608cb72de0a7f6
@@ -72,11 +72,11 @@ Deleted: sha256:d29d52f94ad5aa750bd76d24effaf6aeec487d530e262597763e56065a06ee67
 You need to be sure to stop and remove a container before removing its image.  If not, you'll see an error about child images:
 
 ```
-> docker ps --all
+$ docker ps --all
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                        PORTS                  NAMES
 bf0a1726909a        nginx               "nginx -g 'daemon of…"   18 minutes ago      Exited (0) 16 minutes ago                            eloquent_raman
 
-> docker rmi nginx
+$ docker rmi nginx
 Error response from daemon: conflict: unable to remove repository reference "nginx" (must force) - container bf0a1726909a is using its referenced image 71c43202b8ac
 ```
 
