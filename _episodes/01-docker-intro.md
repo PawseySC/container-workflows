@@ -204,7 +204,7 @@ The `-t` and `-i` options make sure we allocate a terminal to the container, and
 As you can see, you have root access in your container, and you are in what looks like a normal linux system. Now you can do whatever you like, e.g. install software and develop applications, all within the container of your choice.
 
 
-> ## Pull and run a Python Miniconda container
+> ## Pull and run a Python Miniconda container ##
 > 
 > How would you pull the following container image, `continuumio/miniconda3:4.5.12`?
 > 
@@ -212,7 +212,7 @@ As you can see, you have root access in your container, and you are in what look
 > 
 > Finally, open and then close an interactive Python console through the container.
 > 
-> > ## Solution
+> > ## Solution ##
 > > 
 > > Pull: 
 > > 
@@ -235,31 +235,6 @@ As you can see, you have root access in your container, and you are in what look
 > > ```
 > {: .solution}
 {: .challenge}
-
-> ## Removing Unneeded Files
->
-> Suppose you want to delete your processed data files, and only keep
-> your raw files and processing script to save storage.
-> The raw files end in `.dat` and the processed files end in `.txt`.
-> Which of the following would remove all the processed data files,
-> and *only* the processed data files?
->
-> 1. `rm ?.txt`
-> 2. `rm *.txt`
-> 3. `rm * .txt`
-> 4. `rm *.*`
->
-> > ## Solution
-> > 1. This would remove `.txt` files with one-character names
-> > 2. This is correct answer
-> > 3. The shell would expand `*` to match everything in the current directory,
-> > so the command would try to remove all matched files and an additional
-> > file called `.txt`
-> > 4. The shell would expand `*.*` to match all files with any extension,
-> > so this command would delete all files
-> {: .solution}
-{: .challenge}
-
 
 
 ### Conclusion ###
