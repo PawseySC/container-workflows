@@ -8,12 +8,9 @@ objectives:
 
 keypoints:
 You've learned the basic commands for running, downloading, and searching for docker images:
-
-```
-$ docker run
-$ docker pull
-$ docker search
-```
+* `docker run`
+* `docker pull`
+* `docker search`
 
 **Best practices**
 * Prefer official images over those built by third-parties. Docker runs with privileges, so you have to be a bit careful what you run
