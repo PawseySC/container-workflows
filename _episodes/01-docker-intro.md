@@ -7,8 +7,6 @@ objectives:
 - Learn how to download and run images
 
 keypoints:
-- `cat` displays the contents of its inputs.
-  - keypoint 2
 ---
 
 ## Docker Containers ##
