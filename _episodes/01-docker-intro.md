@@ -82,7 +82,7 @@ Third, to run Docker commands with `root` privileges on a Linux box, you will ne
 Let's run a simple command:
 
 ```
-> docker run ubuntu cat /etc/lsb-release
+> docker run ubuntu cat /etc/os-release
 Unable to find image 'ubuntu:latest' locally
 latest: Pulling from library/ubuntu
 898c46f3b1a1: Pull complete 
@@ -91,16 +91,24 @@ latest: Pulling from library/ubuntu
 6e1bee0f8701: Pull complete 
 Digest: sha256:017eef0b616011647b269b5c65826e2e2ebddbe5d1f8c1e56b3599fb14fabec8
 Status: Downloaded newer image for ubuntu:latest
-DISTRIB_ID=Ubuntu
-DISTRIB_RELEASE=18.04
-DISTRIB_CODENAME=bionic
-DISTRIB_DESCRIPTION="Ubuntu 18.04.2 LTS"
+NAME="Ubuntu"
+VERSION="18.04.2 LTS (Bionic Beaver)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 18.04.2 LTS"
+VERSION_ID="18.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=bionic
+UBUNTU_CODENAME=bionic
 ```
 Here's what we've done:
 
 * Downloaded an Ubuntu Docker image
 * Created a container from our Ubuntu image
-* The command we've run inside the Ubuntu container is `cat /etc/lsb-release`, which simply prints some info about the operating system
+* The command we've run inside the Ubuntu container is `cat /etc/os-release`, which simply prints some info about the operating system
 
 Docker images have a **name** and a **tag**. The default for the tag is 'latest', and can be omitted (but be careful...more on this later). If you ask docker to run an image that is not present on your system, it will download it from [Docker Hub](https://hub.docker.com) first, then run it.
 
@@ -110,11 +118,19 @@ Most Linux distributions have pre-built images available on Docker Hub, so you c
 Note in our example Docker uses the 'ubuntu:latest' tag, since we didn't specify what version we want.  We can specify a specific version of ubuntu like this:
 
 ```
-> docker run ubuntu:17.04 cat /etc/lsb-release
-DISTRIB_ID=Ubuntu
-DISTRIB_RELEASE=17.04
-DISTRIB_CODENAME=zesty
-DISTRIB_DESCRIPTION="Ubuntu 17.04"
+> docker run ubuntu:17.04 cat /etc/os-release
+NAME="Ubuntu"
+VERSION="17.04 (Zesty Zapus)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 17.04"
+VERSION_ID="17.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=zesty
+UBUNTU_CODENAME=zesty
 ```
 
 Docker caches images on your local disk, so the next time you need to run your container it will be faster:
