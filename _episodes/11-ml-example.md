@@ -5,8 +5,8 @@ exercises: 20
 questions:
 objectives:
 - Deploy a machine learning framework with containers, exploiting CPUs and GPUs
-
 keypoints:
+- Ship machine learning frameworks through containers to simplify deployment and increase portability
 ---
 
 ### Running a container for machine learning ###

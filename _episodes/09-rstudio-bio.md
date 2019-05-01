@@ -5,8 +5,9 @@ exercises: 20
 questions:
 objectives:
 - Deploy a customised RStudio container for bioinformatics
-
 keypoints:
+- Containers are great way to manage R workflows.  You likely still want to have a local installation of R/Rstudio for some testing, but if you have set workflows, you can use containers to manage them.  You can also provide Rstudio servers for collaborators.
+- Also, docker-compose is a great way to manage complex Docker commands, as well as coordinating multiple containers.
 ---
 
 ### RStudio example ###
@@ -229,9 +230,3 @@ Let's submit the script via SLURM:
 ```
 $ sbatch rscript-bio.sh
 ```
-
-
-### Conclusion ###
-Containers are great way to manage R workflows.  You likely still want to have a local installation of R/Rstudio for some testing, but if you have set workflows, you can use containers to manage them.  You can also provide Rstudio servers for collaborators.
-
-Also, docker-compose is a great way to manage complex Docker commands, as well as coordinating multiple containers.

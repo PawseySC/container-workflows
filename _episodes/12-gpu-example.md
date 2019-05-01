@@ -5,8 +5,8 @@ exercises: 20
 questions:
 objectives:
 - Get started with Nvidia GPU containers for HPC applications
-
 keypoints:
+- You can use containers to ship GPU applications
 ---
 
 ### Nvidia GPU Cloud ###

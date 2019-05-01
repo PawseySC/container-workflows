@@ -5,8 +5,8 @@ exercises: 20
 questions:
 objectives:
 - Run an R workflow both through RStudio and the terminal using containers
-
 keypoints:
+- Containers are great way to manage R workflows.  You likely still want to have a local installation of R/Rstudio for some testing, but if you have set workflows, you can use containers to manage them.  You can also provide Rstudio servers for collaborators.
 ---
 
 ### RStudio example ###
@@ -161,7 +161,3 @@ Let's submit the script via SLURM:
 ```
 $ sbatch rscript.sh
 ```
-
-
-### Conclusion ###
-Containers are great way to manage R workflows.  You likely still want to have a local installation of R/Rstudio for some testing, but if you have set workflows, you can use containers to manage them.  You can also provide Rstudio servers for collaborators.

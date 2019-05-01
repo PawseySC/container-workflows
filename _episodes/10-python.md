@@ -5,8 +5,8 @@ exercises: 20
 questions:
 objectives:
 - Embed a Python app in a container and run it
-
 keypoints:
+- Containers are great way to manage Python workflows
 ---
 
 ### Why can Python be Awful? ###

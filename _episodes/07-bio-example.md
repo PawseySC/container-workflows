@@ -5,8 +5,14 @@ exercises: 15
 questions:
 objectives:
 - Run a real-world bioinformatics application in a Docker container
-
 keypoints:
+- "There are a lot of applications (not just bioinformatics) already wrapped up in container images"
+- "Here's a small list of some of the registries we use at Pawsey:"
+* "[Docker Hub](https://hub.docker.com)"
+* "[Biocontainers](https://biocontainers.pro)"
+* "[Quay](https://quay.io)^"
+* "[Nvidia GPU Cloud (NGC)](https://ngc.nvidia.com)^"
+- "^The last two require you to create an account and login to access containers"
 ---
 
 ### Running BLAST from a container with Docker ###
@@ -136,18 +142,7 @@ $ sbatch blast.sh
 ```
 
 
-### Conclusion ###
-
-There are a lot of applications (not just bioinformatics) already wrapped up in container images.  Here's a small list of some of the registries we use at Pawsey:
-
-* [Docker Hub](https://hub.docker.com)
-* [Biocontainers](https://biocontainers.pro)
-* [Quay](https://quay.io)^
-* [Nvidia GPU Cloud (NGC)](https://ngc.nvidia.com)^
-
-^The last two require you to create an account and login to access containers.
-
-
-### Best practices ###
-
-- don't re-invent the wheel, it's worth looking to see who's done what you want already
+> ## Best practices ##
+> 
+> - Don't re-invent the wheel, it's worth looking to see who's done what you want already
+{: .callout}
