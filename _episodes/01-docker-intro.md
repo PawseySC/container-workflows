@@ -84,8 +84,11 @@ Third, to run Docker commands with `root` privileges on a Linux box, you will ne
 
 Let's run a simple command:
 
-```
+```{bash}
 $ docker run ubuntu cat /etc/os-release
+```
+
+```{output}
 Unable to find image 'ubuntu:latest' locally
 latest: Pulling from library/ubuntu
 898c46f3b1a1: Pull complete 
