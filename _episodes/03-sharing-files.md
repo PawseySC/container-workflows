@@ -9,7 +9,7 @@ objectives:
 
 keypoints:
 - "Map host directories in the containers with the flag `-v <host dir>:<container dir>`"
-- "Change user that runs the container with the flag `-u`"
+- "Change user that runs the container with the flag `-u <user>:<group>`"
 - "Make the container accept input from STDIN with the flag `-i`"
 ---
 
