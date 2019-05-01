@@ -7,6 +7,10 @@ objectives:
 - Learn how to download and run images
 
 keypoints:
+- You've learned some basic Docker commands for running, downloading, and searching for docker images:
+- `docker run` for running images
+- `docker pull` for downloading images
+- `docker search` for searching images
 ---
 
 ## Docker Containers ##
@@ -237,18 +241,8 @@ As you can see, you have root access in your container, and you are in what look
 {: .challenge}
 
 
-### Conclusion ###
-
-You've learned the basic commands for running, downloading, and searching for docker images:
-
-```
-$ docker run
-$ docker pull
-$ docker search
-```
-
-
-### Best practices ###
-
-* Prefer official images over those built by third-parties. Docker runs with privileges, so you have to be a bit careful what you run
-* Good online documentation on Docker commands can be found at [Docker run reference](https://docs.docker.com/engine/reference/run/) and related pages
+> ## Best practices ##
+> 
+> * Prefer official images over those built by third-parties. Docker runs with privileges, so you have to be a bit careful what you run
+> * Good online documentation on Docker commands can be found at [Docker run reference](https://docs.docker.com/engine/reference/run/) and related pages
+{: .callout}
