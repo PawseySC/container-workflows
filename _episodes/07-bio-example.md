@@ -8,10 +8,10 @@ objectives:
 keypoints:
 - "There are a lot of applications (not just bioinformatics) already wrapped up in container images"
 - "Here's a small list of some of the registries we use at Pawsey:"
-* "[Docker Hub](https://hub.docker.com)"
-* "[Biocontainers](https://biocontainers.pro)"
-* "[Quay](https://quay.io)^"
-* "[Nvidia GPU Cloud (NGC)](https://ngc.nvidia.com)^"
+- "[Docker Hub](https://hub.docker.com)"
+- "[Biocontainers](https://biocontainers.pro)"
+- "[Quay](https://quay.io)^"
+- "[Nvidia GPU Cloud (NGC)](https://ngc.nvidia.com)^"
 - "^The last two require you to create an account and login to access containers"
 ---
 
