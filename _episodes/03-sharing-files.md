@@ -1,13 +1,16 @@
 ---
 title: "Sharing files with the host with Docker"
 teaching: 20
-exercises: 0
+exercises: 5
 questions:
 objectives:
 - Learn how to mount host directories in a container
 - Learn how to set custom user and group IDs in a container
 
 keypoints:
+- "Map host directories in the containers with the flag `-v <host dir>:<container dir>`"
+- "Change user that runs the container with the flag `-u`"
+- "Make the container accept input from STDIN with the flag `-i`"
 ---
 
 ### Directory and file defaults in Docker ###
@@ -252,14 +255,12 @@ Finally, third-party containers might have been set-up so that permissions of st
 {: .challenge}
 
 
-### Conclusion ###
-Docker provides flags to map host directories in the containers, and to match file ownerships. The syntax looks ugly, but once learnt it can be reused with minimal variations.
-
-
-### Best practices ###
-
-* Figuring out a standard way to consistently map host directories in container can help scripting and automation. For instance:
-    * ``` -v `pwd`:/data -w /data ``` can be useful when just working in the current directory
-    * ``` -v /<DATA-DIRECTORY>:/data -w /data ``` can be useful if your workstation/cluster is organised with one directory called `<DATA-DIRECTORY>` that contains all sample data and reference data
-* Eventually, multiple volume mappings are allowed at the same time, for instance:
-        ```-v `pwd`:/data -v /reference-database:/ref -w /data ```
+> ## Best practices ##
+> 
+> * Figuring out a standard way to consistently map host directories in container can help scripting and automation. For instance:
+>     * ``` -v `pwd`:/data -w /data ``` can be useful when just working in the current directory
+>     * ``` -v /<DATA-DIRECTORY>:/data -w /data ``` can be useful if your workstation/cluster is organised with one directory called `<DATA-DIRECTORY>` that contains all sample data and reference data
+> * Eventually, multiple volume mappings are allowed at the same time, for instance:
+>         ```-v `pwd`:/data -v /reference-database:/ref -w /data ```
+> * These syntaxes look ugly, but once learnt it can be reused with minimal variations
+{: .callout}

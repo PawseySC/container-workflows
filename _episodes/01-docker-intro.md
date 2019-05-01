@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Docker"
-teaching: 30
-exercises: 0
+teaching: 25
+exercises: 5
 questions:
 objectives:
 - Learn how to download and run images

@@ -1,12 +1,16 @@
 ---
 title: "Cleaning up Docker"
-teaching: 10
-exercises: 0
+teaching: 8
+exercises: 2
 questions:
 objectives:
 - Learn how to remove containers and images from your machine when you no longer need them
 
 keypoints:
+- "Cleaning up containers and images is a two-step process"
+- "Remove stopped containers with `docker rm`"
+- "Delete unnecessary images with `docker rmi`"
+- "`docker run --rm` allows to automatically remove containers at completion"
 ---
 
 ### Cleaning up ###
@@ -106,11 +110,8 @@ Error response from daemon: conflict: unable to remove repository reference "ngi
 {: .challenge}
 
 
-### Conclusion ###
-Cleaning up containers and images is a two-step process. Now you should be able to keep your system tidy.
-
-
-### Best practices ###
-
-* Use `docker run` with the `--rm` flag when you know you won't want to re-start a container
-* If you use containers heavily, clean up the images from time to time
+> ## Best practices ##
+> 
+> * Use `docker run` with the `--rm` flag when you know you won't want to re-start a container
+> * If you use containers heavily, clean up the images from time to time
+{: .callout}

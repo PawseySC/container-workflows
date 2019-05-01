@@ -1,7 +1,7 @@
 ---
 title: "Long running services with Docker"
-teaching: 20
-exercises: 0
+teaching: 10
+exercises: 5
 questions:
 objectives:
 - Learn how to start containers for a running (web) service
