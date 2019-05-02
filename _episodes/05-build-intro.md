@@ -76,7 +76,7 @@ $ docker build -t marcodelapierre/texlive:2019Apr23 .
 Sending build context to Docker daemon  2.048kB
 Step 1/6 : FROM ubuntu:18.04
  ---> 93fd78260bd1
-
+[..]
 Step 6/6 : CMD ["/bin/bash"]
  ---> Running in d4a53da2f605
 Removing intermediate container d4a53da2f605
@@ -136,7 +136,7 @@ $ docker push marcodelapierre/texlive:2019Apr23
 The push refers to repository [docker.io/marcodelapierre/texlive]
 90f5135cec45: Pushed 
 eeec548f4430: Pushed 
-
+[..]
 2019Apr23: digest: sha256:3aa21e925cf712e2d7a223e4918a2fc2c244749a3d0b397df87d91a9c55163d2 size: 1570
 ```
 {: .output}

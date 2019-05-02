@@ -271,7 +271,7 @@ Finally, third-party containers might have been set-up so that permissions of st
 > else:
 >     print_sums(sys.stdin)
 > ```
-> {: .source}
+> {: .python}
 > 
 > and an input file `input` containing:
 > 

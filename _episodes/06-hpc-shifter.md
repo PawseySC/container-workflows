@@ -52,7 +52,7 @@ $ sg $PAWSEY_PROJECT -c 'shifter pull ubuntu'
 > save image layers ...
 > pulling        : sha256:f85999a86bef2603a9e9a4fa488a7c1f82e471cbb76c3b5068e54e1a9320964a
 > pulling        : sha256:da1315cffa03c17988ae5c66f56d5f50517652a622afc1611a8bdd6c00b1fde3
-
+[..]
 > extracting     : /group/shifterrepos/mdelapierre/.shifter/cache/sha256:f85999a86bef2603a9e9a4fa488a7c1f82e471cbb76c3b5068e54e1a9320964a.tar
 > make squashfs ...
 > create metadata ...
@@ -168,7 +168,7 @@ module load shifter
 
 srun --export=all shifter run ubuntu hostname
 ```
-{: .source}
+{: .bash}
 
 Now use your favourite text editor to copy paste the script above in a file called `hostname.sh` somewhere under `$MYSCRATCH` or `$MYGROUP` (remember to specify your Pawsey Project ID in the script!),
 
@@ -209,7 +209,7 @@ Shifter does not allow to build container images. The best way to create an imag
 > else:
 >     print_sums(sys.stdin)
 > ```
-> {: .source}
+> {: .python}
 > 
 > and an input file `input` containing:
 > 
@@ -258,7 +258,7 @@ Shifter does not allow to build container images. The best way to create an imag
 > > 
 > > srun --export=all shifter run continuumio/miniconda3:4.5.12 python app.py input
 > > ```
-> > {: .source}
+> > {: .bash}
 > > 
 > > SLURM submission:
 > > 

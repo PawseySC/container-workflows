@@ -99,6 +99,7 @@ latest: Pulling from library/ubuntu
 6e1bee0f8701: Pull complete 
 Digest: sha256:017eef0b616011647b269b5c65826e2e2ebddbe5d1f8c1e56b3599fb14fabec8
 Status: Downloaded newer image for ubuntu:latest
+
 NAME="Ubuntu"
 VERSION="18.04.2 LTS (Bionic Beaver)"
 ID=ubuntu
