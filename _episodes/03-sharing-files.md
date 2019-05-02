@@ -101,8 +101,8 @@ Now, let us look for that file in the host:
 
 ```
 $ ls -l container1 
-{: .bash}
 ```
+{: .bash}
 
 ```
 -rw-r--r-- 1 root root 0 Dec 19 08:16 container1
@@ -115,10 +115,6 @@ Finally, Docker has a flag to change working directory in the container, to avoi
 
 ```
 $ docker run -v `pwd`:/data -w /data ubuntu touch container2
-```
-{: .bash}
-
-```
 $ ls -l container2
 ```
 {: .bash}
@@ -241,12 +237,12 @@ I have no name!@9bfdf83aed93:/data$
 ```
 {: .output}
 
+These can typically be ignored.
+
 ```
 I have no name!@9bfdf83aed93:/data$ exit   # or hit CTRL-D
 ```
 {: .bash}
-
-These can typically be ignored.
 
 Finally, third-party containers might have been set-up so that permissions of standard users are more restricted compared to root. There are some critical cases here: only root can execute the application, or only root can write on certain locations that need to be modified at runtime. In these cases, the typical solutions are:
 * run the container as root, then fix output file ownerships;
@@ -299,21 +295,21 @@ Finally, third-party containers might have been set-up so that permissions of st
 > > Run with input file as argument:
 > > 
 > > ```
-> > docker run --rm -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py input
+> > $ docker run --rm -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py input
 > > ```
 > > {: .bash}
 > > 
 > > Run with input redirection:
 > > 
 > > ```
-> > docker run --rm -i -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py < input
+> > $ docker run --rm -i -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py < input
 > > ```
 > > {: .bash}
 > > 
 > > Run as host user, so that output file belongs to them, not to root:
 > > 
 > > ```
-> > docker run --rm -i -v `pwd`:/data -w /data -u $(id -u):$(id -g) continuumio/miniconda3:4.5.12 python app.py < input
+> > $ docker run --rm -i -v `pwd`:/data -w /data -u $(id -u):$(id -g) continuumio/miniconda3:4.5.12 python app.py < input
 > > ```
 > > {: .bash}
 > {: .solution}

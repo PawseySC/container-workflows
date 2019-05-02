@@ -7,9 +7,10 @@ objectives:
 - Learn how to download and run images
 keypoints:
 - You've learned some basic Docker commands for running, downloading, and searching for docker images
-- "`docker run` for running images"
+- "`docker run` for running images (add `-it` for interactive mode)"
 - "`docker pull` for downloading images"
 - "`docker search` for searching images"
+- "Other useful commands to list current images and containers are `docker images` and `docker ps -a`"
 ---
 
 ## Docker Containers ##
@@ -261,21 +262,21 @@ As you can see, you have root access in your container, and you are in what look
 > > Pull: 
 > > 
 > > ```
-> > docker pull continuumio/miniconda3:4.5.12
+> > $ docker pull continuumio/miniconda3:4.5.12
 > > ```
 > > {: .bash}
 > > 
 > > Get Python version:
 > > 
 > > ```
-> > docker run continuumio/miniconda3:4.5.12 python --version
+> > $ docker run continuumio/miniconda3:4.5.12 python --version
 > > ```
 > > {: .bash}
 > > 
 > > Open and close an interactive console:
 > > 
 > > ```
-> > docker run -it continuumio/miniconda3:4.5.12 python
+> > $ docker run -it continuumio/miniconda3:4.5.12 python
 > > {: .bash}
 > > ```
 > > {: .bash}

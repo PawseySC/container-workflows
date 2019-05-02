@@ -150,14 +150,14 @@ Error response from daemon: conflict: unable to remove repository reference "ngi
 > > Display stopped containers: 
 > > 
 > > ```
-> > docker ps -a
+> > $ docker ps -a
 > > ```
 > > {: .bash}
 > > 
 > > Remove `miniconda3` stopped containers: identify their IDs from previous output, then 
 > > 
 > > ```
-> > docker rm <list of IDs>
+> > $ docker rm <list of IDs>
 > > ```
 > > {: .bash}
 > > 
