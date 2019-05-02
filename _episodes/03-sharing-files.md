@@ -19,6 +19,10 @@ First, try and run the following to get to know what is the starting point in th
 
 ```
 $ docker run ubuntu bash -c 'pwd ; ls -l'
+```
+{: .bash}
+
+```
 /
 total 64
 drwxr-xr-x   2 root root 4096 Nov 12 20:56 bin
@@ -41,6 +45,7 @@ drwxrwxrwt   2 root root 4096 Nov 12 20:56 tmp
 drwxr-xr-x   1 root root 4096 Nov 12 20:54 usr
 drwxr-xr-x   1 root root 4096 Nov 12 20:56 var
 ```
+{: .output}
 
 You are in the root `/` directory of the container, and if you compare the listing of directories with what you get in the host (type `ls -l /` for this), you will notice the two are different; even directories with the same name will have in general different timestamps, suggesting they are in fact distinct directories.
 
@@ -48,8 +53,14 @@ Now try and create an empty file and then see who is the owner:
 
 ```
 $ docker run ubuntu bash -c 'touch empty-file ; ls -l empty-file'
+```
+{: .bash}
+
+```
 -rw-r--r-- 1 root root 0 Dec 19 08:06 empty-file
 ```
+{: .output}
+
 The file is owned by the root user!
 
 What we have just seen is a consequence of some Docker defaults:
@@ -75,6 +86,7 @@ As an example, let us run the following:
 ```
 $ docker run -v `pwd`:/data ubuntu ls -l /data
 ```
+{: .bash}
 
 Here we are using ``` `pwd` ``` as a shortcut for the current working directory. As a result of using the mapping option `-v`, the `ls` command run inside the container will display the content of the current directory in the host.
 
@@ -83,13 +95,19 @@ The `-v` flag maps host directories in the container, allowing to read/write wit
 ```
 $ docker run -v `pwd`:/data ubuntu touch /data/container1
 ```
+{: .bash}
 
 Now, let us look for that file in the host:
 
 ```
 $ ls -l container1 
+{: .bash}
+```
+
+```
 -rw-r--r-- 1 root root 0 Dec 19 08:16 container1
 ```
+{: .output}
 
 The file created in the container is actually available from the host, as a consequence of volume mapping.
 
@@ -98,11 +116,17 @@ Finally, Docker has a flag to change working directory in the container, to avoi
 ```
 $ docker run -v `pwd`:/data -w /data ubuntu touch container2
 ```
+{: .bash}
 
 ```
 $ ls -l container2
+```
+{: .bash}
+
+```
 -rw-r--r-- 1 root root 0 Dec 19 08:19 container2
 ```
+{: .output}
 
 This can be useful to make your workflow uniform, as different container providers may have different default working directories.
 
@@ -126,15 +150,25 @@ Suppose you need to redirect input to a Docker container, either using an input 
 
 ```
 $ echo "one two three" | docker run ubuntu wc -w
+```
+{: .bash}
+
+```
 0
 ```
+{: .output}
 
 We are getting `0` instead of `3`, suggesting input redirection is not happening. To make it work, we need to use the additional flag `-i`, which keeps Docker `STDIN` (standard input) open:
 
 ```
 $ echo "one two three" | docker run -i ubuntu wc -w
+```
+{: .bash}
+
+```
 3
 ``` 
+{: .output}
 
 Here we go!
 
@@ -143,16 +177,29 @@ The same flag is required when receiving input from a file, for instance let's c
 ```
 $ echo "one two three" > words
 ```
+{: .bash}
 
 and then try and count them:
 
 ```
 $ docker run ubuntu wc -w < words
-0
+```
+{: .bash}
 
+```
+0
+```
+{: .output}
+
+```
 $ docker run -i ubuntu wc -w < words
+```
+{: .bash}
+
+```
 3
 ```
+{: .output}
 
 
 ### Matching user permissions with the host ###
@@ -163,15 +210,21 @@ Docker has an option, `-u` or `--user`, to alter the user and group ID in the ru
 ```
 $ docker run -v `pwd`:/data -w /data -u `id -u`:`id -g` ubuntu touch container3
 ```
+{: .bash}
 
 Now, let us inspect the ownerships of all the files created so far through containers:
 
 ```
 $ ls -l container?
+```
+{: .bash}
+
+```
 -rw-r--r-- 1 root   root   0 Dec 19 08:16 container1
 -rw-r--r-- 1 root   root   0 Dec 19 08:19 container2
 -rw-r--r-- 1 ubuntu ubuntu 0 Dec 19 08:38 container3
 ```
+{: .output}
 
 As desired, the last created file is owned by the host user.
 
@@ -179,11 +232,19 @@ When running a container interactively with host IDs, you might get warnings of 
 
 ```
 $ docker run -it -u `id -u`:`id -g` ubuntu bash
+```
+{: .bash}
+
+```
 groups: cannot find name for group ID 1000
 I have no name!@9bfdf83aed93:/data$
-
-I have no name!@9bfdf83aed93:/data$ exit
 ```
+{: .output}
+
+```
+I have no name!@9bfdf83aed93:/data$ exit   # or hit CTRL-D
+```
+{: .bash}
 
 These can typically be ignored.
 
@@ -214,6 +275,7 @@ Finally, third-party containers might have been set-up so that permissions of st
 > else:
 >     print_sums(sys.stdin)
 > ```
+> {: .source}
 > 
 > and an input file `input` containing:
 > 
@@ -222,6 +284,7 @@ Finally, third-party containers might have been set-up so that permissions of st
 > 4 5 6
 > 7 8 9
 > ```
+> {: .source}
 > 
 > The app reads rows containing integers and outputs their sums line by line. Input can be given through file or via standard input. The output is produced both in formatted form through standard output and in raw form written to a file named `row_sums`.
 > 
@@ -238,18 +301,21 @@ Finally, third-party containers might have been set-up so that permissions of st
 > > ```
 > > docker run --rm -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py input
 > > ```
+> > {: .bash}
 > > 
 > > Run with input redirection:
 > > 
 > > ```
 > > docker run --rm -i -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py < input
 > > ```
+> > {: .bash}
 > > 
 > > Run as host user, so that output file belongs to them, not to root:
 > > 
 > > ```
 > > docker run --rm -i -v `pwd`:/data -w /data -u $(id -u):$(id -g) continuumio/miniconda3:4.5.12 python app.py < input
 > > ```
+> > {: .bash}
 > {: .solution}
 {: .challenge}
 
