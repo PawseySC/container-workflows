@@ -64,6 +64,31 @@ scikit-learn
 
 * `my_app.py`: a simple python app that builds a decision tree using Scikit-Learn
 
+```
+from sklearn import tree
+#DataSet
+#[size,weight,texture]
+X = [[181, 80, 44], [177, 70, 43], [160, 60, 38], [154, 54, 37],[166, 65, 40],
+     [190, 90, 47], [175, 64, 39],
+     [177, 70, 40], [159, 55, 37], [171, 75, 42], [181, 85, 43]]
+
+Y = ['apple', 'apple', 'orange', 'orange', 'apple', 'apple', 'orange', 'orange',
+     'orange', 'apple', 'apple']
+
+#classifier - DecisionTreeClassifier
+clf_tree = tree.DecisionTreeClassifier();
+clf_tree = clf_tree.fit(X,Y);
+
+#test_data
+test_data = [[190,70,42],[172,64,39],[182,80,42]];
+
+#prediction
+prediction_tree = clf_tree.predict(test_data);
+
+print("Prediction of DecisionTreeClassifier:",prediction_tree);
+```
+{: .python}
+
 There are some aspects of this Dockerfile that are worth mentioning:
 
 * we are using the base image `python:3.6-slim`, which comes from the official Python repository on Docker Hub; images in this repo whose tag has `slim` are characterised by a very small size, in this case about 100 MB as opposed to about 400 MB for the `miniconda3` image;

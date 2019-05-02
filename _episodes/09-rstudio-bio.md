@@ -152,11 +152,7 @@ $ docker-compose up
 Docker will pull the `oz_sc:latest` image first (if it's not present on your system yet); once that's complete you'll see output from the RStudio server:
 
 ```
-$ docker-compose up
-```
-{: .bash}
-
-```
+[..]
 Recreating rstudio ... done
 Attaching to rstudio
 rstudio    | [fix-attrs.d] applying owners & permissions fixes...
