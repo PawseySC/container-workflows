@@ -97,7 +97,7 @@ Now, go to your browser and in the address bar enter `localhost:8080` if you are
 ```
 {: .output}
 
-That's a good start, but you now have a terminal tied up with nginx, and if you hit CTRL-C in that terminal, your web-server dies. 
+That's a good start, but you now have a terminal tied up with nginx, and if you hit `CTRL-C` in that terminal, your web-server dies. 
 
 We can use the Docker option `-d` to run the container in the background instead (daemon mode):
 
@@ -127,7 +127,7 @@ $ docker logs --follow nginx
 
 This gives us a live look at what is going on in our nginx container (try reloading your webpage and see what the logs look like).  Note that the `--follow` option keeps the terminal open and will update the logs in real-time.  If you omit it, `docker logs` would simply display the last few lines of the log file.
 
-If you hit CTRL-C now, your container is still running, in the background. You can see this with the `docker ps` command:
+If you hit `CTRL-C` now, your container is still running, in the background. You can see this with the `docker ps` command:
 
 ```
 $ docker ps
