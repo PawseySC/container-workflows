@@ -24,12 +24,14 @@ The group [Rocker](https://hub.docker.com/r/rocker) has published a large number
 ```
 $ docker pull rocker/tidyverse:3.5
 ```
+{: .bash}
 
 We can now start this up:
 
 ```
 $ docker run -d -p 8787:8787 --name rstudio -v `pwd`/data:/home/rstudio/data -e PASSWORD=<Pick your password> rocker/tidyverse:3.5
 ```
+{: .bash}
 
 Here we're opening up port `8787` so we can access the Rtudio server remotely. Note you need to store a password in a variable; it will be required below for the web login.
 
@@ -42,6 +44,7 @@ Once you're done, stop the container with:
 ```
 $ docker stop rstudio
 ```
+{: .bash}
 
 
 ### Using RStudio images ###
@@ -54,6 +57,7 @@ To begin, let's clone the data (A trimmed down repo with their data has been cre
 $ git clone https://github.com/skjerven/rstudio_ex.git
 $ cd rstudio_ex
 ```
+{: .bash}
 
 For this example, we'll use an RStudio image thas has already been built.  R images can take a while to build sometimes, depending on the number of packages and dependencies you're installing.  The Dockerfile used here is included, and we'll go through it to explain how Docker builds images.
  
@@ -101,6 +105,7 @@ RUN Rscript -e "library('devtools')" \
       -e "install_github('IMB-Computational-Genomics-Lab/ascend', ref = 'devel')" \
       && rm -rf /tmp/downloaded_packages
 ```
+{: .source}
 
 The first line, `FROM`, specifies a base image to use.  We could build up a full R image from scratch, but why waste the time.  We can use Rocker's pre-built image to start with and simplify our lives.
 
@@ -133,6 +138,7 @@ services:
       - USER=rstudio
       - PASSWORD=rstudiopwd
 ```
+{: .source}
 
 This yaml file simple tells Docker what image we want to run along with some options (like which volumes to mount, username/password, and what network ports to use).
 
@@ -141,11 +147,16 @@ To begin, make sure you're in the `rstudio_ex` directory in your home (where we 
 ```
 $ docker-compose up
 ```
+{: .bash}
 
 Docker will pull the `oz_sc:latest` image first (if it's not present on your system yet); once that's complete you'll see output from the RStudio server:
 
 ```
 $ docker-compose up
+```
+{: .bash}
+
+```
 Recreating rstudio ... done
 Attaching to rstudio
 rstudio    | [fix-attrs.d] applying owners & permissions fixes...
@@ -162,12 +173,14 @@ rstudio    | [cont-init.d] done.
 rstudio    | [services.d] starting services
 rstudio    | [services.d] done.
 ```
+{: .output}
 
 This is annoying, though...we need our terminal back.  Luckily, Docker lets you run processes in the background.  Kill the RStudio process with `CTRL-C`, and the rerun `docker-compose` with the `-d` flag:
 
 ```
 $ docker-compose up -d
 ```
+{: .bash}
 
 Shortly after that starts, open a web browser and go to `localhost:8787` if you are running Docker on your machine, or `<Your VM's IP Address>:8787` if you are running on a cloud service. You should see an Rstudio login, and we've set the username to `rstudio` and password to `rstudiopwd`.
 
@@ -176,6 +189,7 @@ Once logged in, you type (note this is the R shell):
 ```
 > source('data/SC_script.r')
 ```
+{: .r}
 
 to run the tutorial (it may take a few minutes).  We can refer to the [OzSingleCell2018](https://github.com/IMB-Computational-Genomics-Lab/SingleCells2018Workshop) repo for details on each step.
 
@@ -184,6 +198,7 @@ To stop your Rstudio image, simply type from the `rstudio_ex` directory:
 ```
 $ docker-compose down
 ```
+{: .bash}
 
 
 ### Running a scripted R workflow on HPC with Shifter ###
@@ -196,12 +211,14 @@ To get started let's pull the required R container image:
 $ module load shifter
 $ sg $PAWSEY_PROJECT -c 'shifter pull bskjerven/oz_sc:latest'
 ```
+{: .bash}
 
 Now let's change directory to either `$MYSCRATCH` or `$MYGROUP`, e.g.
 
 ```
 $ cd $MYSCRATCH
 ```
+{: .bash}
 
 With your favourite text editor, create a SLURM script, we'll call it `rscript-bio.sh` (remember to specify your Pawsey project ID in the script!):
 
@@ -224,9 +241,11 @@ cd rstudio_ex
 # run R script
 srun --export=all shifter run bskjerven/oz_sc:latest Rscript data/SC_Rscript.r
 ```
+{: .bash}
 
 Let's submit the script via SLURM:
 
 ```
 $ sbatch rscript-bio.sh
 ```
+{: .bash}

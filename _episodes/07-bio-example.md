@@ -23,24 +23,34 @@ To begin, we'll pull the BLAST container (this will take a little bit):
 
 ```
 $ docker pull biocontainers/blast:v2.2.31_cv2
+```
+{: .bash}
+
+```
 v2.2.31_cv2: Pulling from biocontainers/blast
 22dc81ace0ea: Pull complete 
 1a8b3c87dba3: Pull complete 
-...
+[..]
 Digest: sha256:238717ec69830ec62a19fc05c6f70183f218a13f7678864060f0157dc63dc54f
 Status: Downloaded newer image for biocontainers/blast:v2.2.31_cv2
 ```
+{: .output}
 
 We can run a simple command to verify the container works:
 
 ```
 $ docker run biocontainers/blast:v2.2.31_cv2 blastp -help
+```
+{: .bash}
+
+```
 USAGE
   blastp [-h] [-help] [-import_search_strategy filename]
-...
+[..]
  -use_sw_tback
    Compute locally optimal Smith-Waterman alignments?
 ```
+{: .output}
 
 Let's download some data to start blasting:
 
@@ -49,6 +59,7 @@ $ mkdir blast_example
 $ cd blast_example
 $ wget http://www.uniprot.org/uniprot/P04156.fasta
 ```
+{: .bash}
 
 This is a human prion FASTA sequence.  We'll also need a reference database to blast against:
 
@@ -56,24 +67,30 @@ This is a human prion FASTA sequence.  We'll also need a reference database to b
 $ curl -O ftp://ftp.ncbi.nih.gov/refseq/D_rerio/mRNA_Prot/zebrafish.1.protein.faa.gz
 $ gunzip zebrafish.1.protein.faa.gz
 ```
+{: .bash}
 
 We need to prepare the zebrafish database with `makeblastdb` for the search, so we'll run the following (see a previous episode for details on `-v`):
 
 ```
 $ docker run -v `pwd`:/data/ biocontainers/blast:v2.2.31_cv2 makeblastdb -in zebrafish.1.protein.faa -dbtype prot
 ```
+{: .bash}
 
 After the container has terminated, you should see several new files in the current directory.  We can now do the final alignment step using `blastp`:
 
 ```
 $ docker run -v `pwd`:/data/ biocontainers/blast:v2.2.31_cv2 blastp -query P04156.fasta -db zebrafish.1.protein.faa -out results.txt
 ```
+{: .bash}
 
 The final results are stored in `results.txt`;
 
 ```
 $ less results.txt
+```
+{: .bash}
 
+```
                                                                       Score     E
 Sequences producing significant alignments:                          (Bits)  Value
 
@@ -84,8 +101,9 @@ Sequences producing significant alignments:                          (Bits)  Val
   XP_021323433.1 protein piccolo isoform X1 [Danio rerio]             43.5    3e-04
   XP_009291733.1 protein piccolo isoform X1 [Danio rerio]             43.5    3e-04
   NP_001268391.1 chromodomain-helicase-DNA-binding protein 2 [Dan...  35.8    0.072
-...
+[..]
 ```
+{: .output}
 
 We can see that several proteins in the zebrafish genome match those in the human prion (interesting?).
 
@@ -98,6 +116,7 @@ First, let us pull the BLAST container:
 $ module load shifter
 $ sg $PAWSEY_PROJECT -c 'shifter pull biocontainers/blast:v2.2.31_cv2'
 ```
+{: .bash}
 
 The following script permits to execute the same bioinformatics example using Shifter and the SLURM scheduler:
 
@@ -124,6 +143,7 @@ srun --export=all shifter run biocontainers/blast:v2.2.31_cv2 makeblastdb -in ze
 # align with BLAST
 srun --export=all shifter run biocontainers/blast:v2.2.31_cv2 blastp -query P04156.fasta -db zebrafish.1.protein.faa -out results.txt
 ```
+{: .bash}
 
 Now you can create a test directory somewhere under `$MYSCRATCH` or `$MYGROUP`, e.g.
 
@@ -132,6 +152,7 @@ $ cd $MYSCRATCH
 $ mkdir blast_example
 $ cd blast_example
 ```
+{: .bash}
 
 use your favourite text editor to copy paste the script above in a file called `blast.sh` (remember to specify your Pawsey project ID in the script!),
 
@@ -140,6 +161,7 @@ and then submit this script using SLURM:
 ```
 $ sbatch blast.sh
 ```
+{: .bash}
 
 
 > ## Best practices ##

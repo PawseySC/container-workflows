@@ -24,6 +24,7 @@ One key aspect is that to pull containers from the Nvidia GPU Cloud you'll need 
 ```
 $ export NVIDIA_KEY=<Paste Key Here>
 ```
+{: .bash}
 
 ### Run a molecular dynamics simulation on GPUs with containers ### 
 
@@ -35,6 +36,7 @@ Let us pull the Gromacs container on the Zeus HPC system at Pawsey. We'll need t
 $ module load shifter
 $ sg $PAWSEY_PROJECT -c 'shifter pull --login nvcr.io/hpc/gromacs:2018.2'
 ```
+{: .bash}
 
 When prompted, enter `$oauthtoken` as username, and the copied key as password; if you've forgotten the latter, retrieve it from the environment variable you exported, using `echo $NVIDIA_KEY`.
 
@@ -49,6 +51,7 @@ $ wget ftp://ftp.gromacs.org/pub/benchmarks/water_GMX50_bare.tar.gz
 $ tar xzf water_GMX50_bare.tar.gz
 $ cp water-cut1.0_GMX50_bare/1536/* .
 ```
+{: .bash}
 
 Similar to the GPU machine learning example in a previous episode, only minor modifications are required in the SLURM script to run on GPUs:
 
@@ -78,10 +81,12 @@ srun --export=all shifter run nvcr.io/hpc/gromacs:2018.2 \
 srun --export=all shifter run nvcr.io/hpc/gromacs:2018.2 \
     gmx mdrun -ntmpi 1 -nb gpu -pin on -v -noconfout -nsteps 5000 -s topol.tpr -ntomp 1
 ```
+{: .bash}
 
 The script is ready for submission:
 
 ```
 $ sbatch gpu.sh
 ```
+{: .bash}
 

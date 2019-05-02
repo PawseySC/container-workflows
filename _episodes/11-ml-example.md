@@ -23,12 +23,14 @@ $ wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/model
 $ wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/__init__.py
 $ wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/convolutional.py
 ```
+{: .bash}
 
 We now have some minor editing to complete. We need to edit `convolutional.py` to set `NUM_EPOCHS` to `1` (down from the current value of 10, to make the calculation run in a reasonably short amount of time). We can make the change from the shell using the tool `sed`, noting that on a Mac, note that `sed -i` needs to be changed to `sed -i ""`:
 
 ```
 $ sed -i 's/NUM_EPOCHS *=.*/NUM_EPOCHS = 1/' convolutional.py
 ```
+{: .bash}
 
 In alternative, you can use your favourite text editor to edit the value assigned to `NUM_EPOCHS` from `10` to `1`.
 
@@ -36,13 +38,18 @@ Now we can get Docker involved. Eventually a single command is required to start
 
 ```
 $ docker run --rm -v `pwd`:/notebooks -w /notebooks tensorflow/tensorflow:1.13.1 python convolutional.py
+```
+{: .bash}
+
+```
 Unable to find image 'tensorflow/tensorflow:1.13.1' locally
 1.13.1: Pulling from tensorflow/tensorflow
 7b722c1070cd: Pull complete 
 5fbf74db61f1: Pull complete 
-...
+[..]
 Digest: sha256:40844012558fe881ec58faf1627fd4bb3f64fe9d46a2fd8af70f139244cfb538
 Status: Downloaded newer image for tensorflow/tensorflow:1.13.1
+
 WARNING:tensorflow:From /usr/local/lib/python2.7/dist-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
 Instructions for updating:
 Colocations handled automatically by placer.
@@ -53,6 +60,7 @@ Please use `rate` instead of `keep_prob`. Rate should be set to `rate = 1 - keep
 2019-04-24 06:32:26.506593: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2299950000 Hz
 2019-04-24 06:32:26.507967: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x44cad90 executing computations on platform Host. Devices:
 2019-04-24 06:32:26.508337: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
+
 Successfully downloaded train-images-idx3-ubyte.gz 9912422 bytes.
 Successfully downloaded train-labels-idx1-ubyte.gz 28881 bytes.
 Successfully downloaded t10k-images-idx3-ubyte.gz 1648877 bytes.
@@ -61,6 +69,7 @@ Extracting data/train-images-idx3-ubyte.gz
 Extracting data/train-labels-idx1-ubyte.gz
 Extracting data/t10k-images-idx3-ubyte.gz
 Extracting data/t10k-labels-idx1-ubyte.gz
+
 Initialized!
 Step 0 (epoch 0.00), 6.9 ms
 Minibatch loss: 8.334, learning rate: 0.010000
@@ -100,6 +109,7 @@ Minibatch error: 7.8%
 Validation error: 2.1%
 Test error: 2.0%
 ```
+{: .output}
 
 ### Building our own ML container ###
 
@@ -112,24 +122,28 @@ FROM tensorflow/tensorflow:1.13.1
 
 RUN pip install astropy matplotlib pandas
 ```
+{: .source}
 
 To build our new image we'll use the `docker build` command:
 
 ```
 $ docker build -t tensorflow-ex .
 ```
+{: .bash}
 
 We can now run the container just as before, but let's test it first, by running the Python interpreter inside our ML container and importing a few modules to test that it works:
 
 ```
 $ docker run tensorflow-ex python -c "import astropy; import pandas; import matplotlib"
 ```
+{: .bash}
 
 Now let us re-run the same command as before, just with our new container:
 
 ```
 $ docker run --rm -v `pwd`:/notebooks -w /notebooks tensorflow-ex python convolutional.py
 ```
+{: .bash}
 
 ### Run a ML container on HPC ###
 
@@ -143,6 +157,7 @@ $ cd $MYSCRATCH
 $ mkdir ml_example
 $ cd ml_example
 ```
+{: .bash}
 
 then create the SLURM script file `ml.sh` using a text editor (remember to specify your Pawsey project ID in the script!):
 
@@ -169,12 +184,14 @@ sed -i 's/NUM_EPOCHS *=.*/NUM_EPOCHS = 1/' convolutional.py
 # run the ML script
 srun --export=all shifter run tensorflow/tensorflow:1.13.1 python convolutional.py
 ```
+{: .bash}
 
 Let us submit the script to SLURM:
 
 ```
 $ sbatch ml.sh
 ```
+{: .bash}
 
 ### Run a ML container on HPC ... using GPUs ###
 
@@ -192,6 +209,7 @@ $ cd ml_example_gpu
 $ module load shifter
 $ sg $PAWSEY_PROJECT -c 'shifter pull tensorflow/tensorflow:1.13.1-gpu'
 ```
+{: .bash}
 
 We'll need just minor modifications to the SLURM script, which we'll call `ml-gpu.sh`:
 
@@ -223,9 +241,11 @@ sed -i 's/NUM_EPOCHS *=.*/NUM_EPOCHS = 1/' convolutional.py
 # run the ML script
 srun --export=all shifter run tensorflow/tensorflow:1.13.1-gpu python convolutional.py
 ```
+{: .bash}
 
 Let's submit with:
 
 ```
 $ sbatch ml-gpu.sh
 ```
+{: .bash}

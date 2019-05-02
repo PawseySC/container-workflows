@@ -26,6 +26,7 @@ To begin, let's clone another repo:
 $ git clone https://github.com/skjerven/python-demo.git
 $ cd python-demo
 ```
+{: .bash}
 
 There a few files here:
 
@@ -50,6 +51,7 @@ ENV NAME World
 # Run app.py when the container launches
 CMD ["python", "my_app.py"]
 ```
+{: .source}
 
 * `requirements.txt`: what python packages we want to install with pip
 
@@ -58,6 +60,7 @@ numpy
 scipy
 scikit-learn
 ```
+{: .source}
 
 * `my_app.py`: a simple python app that builds a decision tree using Scikit-Learn
 
@@ -73,12 +76,14 @@ Now to build our container we can simply run:
 ```
 $ docker build -t python-demo .
 ```
+{: .bash}
 
 After that, we can run it with:
 
 ```
 $ docker run python-demo
 ```
+{: .bash}
 
 
 ### Run a Python app on HPC with Shifter ###
@@ -92,17 +97,23 @@ First we must give the image a name that complies with the Hub's nomenclature (s
 ```
 $ docker tag python-demo marcodelapierre/python-demo
 ```
+{: .bash}
 
 Now let's push the image:
 
 ```
 $ docker push marcodelapierre/python-demo
+```
+{: .bash}
+
+```
 The push refers to repository [docker.io/marcodelapierre/python-demo]
 862d6710cd15: Pushed 
 302ce4960403: Pushed 
-
+[..]
 latest: digest: sha256:4db5f0f69cc888d47f4c4b4cac33fad6b004a8e333b36a699ebd43f5b44a7241 size: 1999
 ```
+{: .output}
 
 We are now moving to the Pawsey HPC system. Let's pull the image, then change directory to either `$MYSCRATCH` or `$MYGROUP`:
 
@@ -112,6 +123,7 @@ $ sg $PAWSEY_PROJECT -c 'shifter pull marcodelapierre/python-demo'
 
 $ cd $MYSCRATCH
 ```
+{: .bash}
 
 Let us write a SLURM script to execute our Python app using this container, we'll use our favourite text editor to save it as `python.sh` (remember to specify your Pawsey project ID in the script!): 
 
@@ -130,12 +142,14 @@ module load shifter
 # run Python app
 srun --export=all shifter run marcodelapierre/python-demo
 ```
+{: .bash}
 
 Let's submit it to the SLURM scheduler:
 
 ```
 $ sbatch python.sh
 ```
+{: .bash}
 
 #### b) use a publicly available image for scientific Python ####
 
@@ -147,6 +161,7 @@ $ sg $PAWSEY_PROJECT -c 'shifter pull jupyter/scipy-notebook'
 
 $ cd $MYSCRATCH
 ```
+{: .bash}
 
 Let us write a second SLURM script, we'll call it `python2.sh`. Contrary to Docker example above, our Python app is not embedded in the image, so we'll need to explicitly download it from the Git repo, and then run it through the Python interpreter in the container:
 
@@ -169,10 +184,12 @@ cd python-demo
 # run Python app
 srun --export=all shifter run jupyter/scipy-notebook python my_app.py
 ```
+{: .bash}
 
 Finally we are submitting the script with SLURM:
 
 ```
 $ sbatch python2.sh
 ```
+{: .bash}
 
