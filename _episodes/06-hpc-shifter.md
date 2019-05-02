@@ -34,12 +34,17 @@ To use Shifter on Pawsey HPC systems, we need first to load the corresponding mo
 ```
 $ module load shifter
 ```
+{: .bash}
 
 In principle, the command to pull container images is very similar to Docker, `shifter pull`.  
 However, to avoid disk quota issues on Pawsey HPC systems, the following syntax is recommended, that makes use of the `sg` linux command, for instance:
 
 ```
 $ sg $PAWSEY_PROJECT -c 'shifter pull ubuntu'
+```
+{: .bash}
+
+```
 # image     : index.docker.io/library/ubuntu/latest
 # cacheDir  : /group/shifterrepos/mdelapierre/.shifter/cache
 # tmpDir    : /tmp
@@ -54,27 +59,39 @@ $ sg $PAWSEY_PROJECT -c 'shifter pull ubuntu'
 # created: /group/shifterrepos/mdelapierre/.shifter/images/index.docker.io/library/ubuntu/latest.squashfs
 # created: /group/shifterrepos/mdelapierre/.shifter/images/index.docker.io/library/ubuntu/latest.meta
 ```
+{: .output}
 
 ```
 $ sg $PAWSEY_PROJECT -c 'shifter pull centos'
 $ sg $PAWSEY_PROJECT -c 'shifter pull busybox'
 ```
+{: .bash}
 
 Similar again to Docker, we can list locally pulled images with `shifter images`:
 
 ```
 $ shifter images
+```
+{: .bash}
+
+```
 library/centos                   latest                       ea4b646d9000   2018-11-27T07:05:23   69.62MB      index.docker.io
 library/busybox                  latest                       7dc9d60af829   2018-12-19T22:31:48   704.00KB     index.docker.io
 library/ubuntu                   latest                       d71fc6939e16   2018-12-19T22:30:41   29.94MB      index.docker.io
 ```
+{: .output}
 
 and remove undesired images with `shifter rmi`:
 
 ```
 $ shifter rmi busybox
+```
+{: .bash}
+
+```
 removed image index.docker.io/library/busybox/latest
 ```
+{: .output}
 
 
 ### Running images with Shifter ###
@@ -84,12 +101,14 @@ Let us change directory to our group directory with:
 ```
 $ cd $MYGROUP
 ```
+{: .bash}
 
 and then run `ls` using the Ubuntu image we just pulled, via `shifter run`:
 
 ```
 $ shifter run ubuntu ls
 ```
+{: .bash}
 
 The output will display the content of the current host directory!
 
@@ -108,14 +127,19 @@ As additional examples, you might want to run:
 $ shifter run ubuntu ls /
 $ shifter run ubuntu whoami
 ```
+{: .bash}
 
 Note how no flag is required to run a container interactively. To launch an interactive shell from within the container, just run it without any commands, for instance:
 
 ```
 $ shifter run ubuntu
+```
+{: .bash}
 
+```
 mdelapierre@zeus-1:/group/pawsey0001/mdelapierre$ exit   # or hit CTRL-D
 ```
+{: .bash}
 
 Shifter has support to run containers exploiting MPI parallelism and GPU acceleration (the latter only through CSCS Shifter).
 
@@ -144,6 +168,7 @@ module load shifter
 
 srun --export=all shifter run ubuntu hostname
 ```
+{: .source}
 
 Now use your favourite text editor to copy paste the script above in a file called `hostname.sh` somewhere under `$MYSCRATCH` or `$MYGROUP` (remember to specify your Pawsey Project ID in the script!),
 
@@ -152,6 +177,7 @@ and then submit this script using SLURM:
 ```
 $ sbatch hostname.sh
 ```
+{: .bash}
 
 
 ### Building container images for HPC ###
@@ -183,6 +209,7 @@ Shifter does not allow to build container images. The best way to create an imag
 > else:
 >     print_sums(sys.stdin)
 > ```
+> {: .source}
 > 
 > and an input file `input` containing:
 > 
@@ -191,6 +218,7 @@ Shifter does not allow to build container images. The best way to create an imag
 > 4 5 6
 > 7 8 9
 > ```
+> {: .source}
 > 
 > The app reads rows containing integers and outputs their sums line by line. Input can be given through file or via standard input. The output is produced both in formatted form through standard output and in raw form written to a file named `row_sums`.
 > 
@@ -203,14 +231,16 @@ Shifter does not allow to build container images. The best way to create an imag
 > > Pull the container image:
 > > 
 > > ```
-> > sg $PAWSEY_PROJECT -c 'shifter pull continuumio/miniconda3:4.5.12'
+> > $ sg $PAWSEY_PROJECT -c 'shifter pull continuumio/miniconda3:4.5.12'
 > > ```
+> > {: .bash}
 > > 
 > > Run the app:
 > > 
 > > ```
-> > shifter run continuumio/miniconda3:4.5.12 python app.py input
+> > $ shifter run continuumio/miniconda3:4.5.12 python app.py input
 > > ```
+> > {: .bash}
 > > 
 > > SLURM script for scheduler submission, `python_slurm.sh` (insert Pawsey Project ID!):
 > > 
@@ -228,11 +258,13 @@ Shifter does not allow to build container images. The best way to create an imag
 > > 
 > > srun --export=all shifter run continuumio/miniconda3:4.5.12 python app.py input
 > > ```
+> > {: .source}
 > > 
 > > SLURM submission:
 > > 
 > > ```
-> > sbatch python_slurm.sh
+> > $ sbatch python_slurm.sh
 > > ```
+> > {: .bash}
 > {: .solution}
 {: .challenge}

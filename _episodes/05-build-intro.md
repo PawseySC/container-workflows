@@ -27,6 +27,7 @@ First let us create a directory where we'll store the Dockerfile. This directory
 $ mkdir tex_dockerfile
 $ cd tex_dockerfile
 ```
+{: .bash}
 
 Now use your favourite text editor to create a file named `Dockerfile` and edit it. Here is its contents:
 
@@ -50,6 +51,7 @@ WORKDIR /data
 
 CMD ["/bin/bash"]
 ```
+{: .source}
 
 * `FROM`: compulsory, it provides the starting image we will use to build our customised one;
 * `MAINTAINER`: details of the person who wrote the Dockerfile, optional;
@@ -67,6 +69,10 @@ Once the Dockerfile is ready, let us build the image with `docker build`:
 
 ```
 $ docker build -t marcodelapierre/texlive:2019Apr23 .
+```
+{: .bash}
+
+```
 Sending build context to Docker daemon  2.048kB
 Step 1/6 : FROM ubuntu:18.04
  ---> 93fd78260bd1
@@ -78,6 +84,7 @@ Removing intermediate container d4a53da2f605
 Successfully built 4439098adf8a
 Successfully tagged marcodelapierre/texlive:2019Apr23
 ```
+{: .output}
 
 The build will take a few minutes, meanwhile we'll go on to discuss some aspects of building a container image.
 
@@ -122,12 +129,17 @@ If you have a (free) Docker Hub account, `marcodelapierre` in this case, you are
 
 ```
 $ docker push marcodelapierre/texlive:2019Apr23 
+```
+{: .bash}
+
+```
 The push refers to repository [docker.io/marcodelapierre/texlive]
 90f5135cec45: Pushed 
 eeec548f4430: Pushed 
 
 2019Apr23: digest: sha256:3aa21e925cf712e2d7a223e4918a2fc2c244749a3d0b397df87d91a9c55163d2 size: 1570
 ```
+{: .output}
 
 Congratulations! Your image is now publicly available for anyone to pull.
 
@@ -170,18 +182,21 @@ Other more basic images are [rocker/r-ver](https://hub.docker.com/r/rocker/r-ver
 > > 
 > > CMD ["/bin/bash"]
 > > ```
+> > {: .source}
 > > 
 > > Build the image:
 > > 
 > > ```
-> > docker build -t marcodelapierre/mypython:2019Apr23 .
+> > $ docker build -t marcodelapierre/mypython:2019Apr23 .
 > > ```
+> > {: .bash}
 > > 
 > > Push the image (optional):
 > > 
 > > ```
-> > docker push marcodelapierre/mypython:2019Apr23
+> > $ docker push marcodelapierre/mypython:2019Apr23
 > > ```
+> > {: .bash}
 > {: .solution}
 {: .challenge}
 

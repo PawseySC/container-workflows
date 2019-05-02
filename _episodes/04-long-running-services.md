@@ -17,6 +17,10 @@ Containers are useful for running services, like web-servers etc. Many come pack
 
 ```
 $ docker search nginx
+```
+{: .bash}
+
+```
 NAME                      DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
 nginx                     Official build of Nginx.                        4719      [OK]       
 jwilder/nginx-proxy       Automated Nginx reverse proxy for docker c...   877                  [OK]
@@ -44,11 +48,16 @@ tozd/nginx                Dockerized nginx.                               1     
 c4tech/nginx              Several nginx images for web applications.      0                    [OK]
 unblibraries/nginx        Baseline non-PHP nginx container                0                    [OK]
 ```
+{: .output}
 
 The official build of Nginx seems to be very popular, let's go with that:
 
 ```
 $ docker pull nginx
+```
+{: .bash}
+
+```
 Using default tag: latest
 latest: Pulling from library/nginx
 386a066cd84a: Pull complete
@@ -57,6 +66,7 @@ d685e39ac8a4: Pull complete
 Digest: sha256:3861a20a81e4ba699859fe0724dc6afb2ce82d21cd1ddc27fff6ec76e4c2824e
 Status: Downloaded newer image for nginx:latest
 ```
+{: .output}
 
 Now, in order to run a web server such as a Nginx, we are going to use some additional Docker options, to:
 * open up communication ports
@@ -68,6 +78,7 @@ We will also use a number of new Docker commands. Let's start with a known one:
 ```
 $ docker run -p 8080:80 --name=nginx nginx
 ```
+{: .bash}
 
 The option `-p 8080:80` option tells Docker to map port 80 in the container to port 8080 on the host, so you can communicate with it.
 
@@ -84,6 +95,7 @@ Now, go to your browser and in the address bar enter `localhost:8080` if you are
 172.17.0.1 - - [30/Nov/2016:18:07:59 +0000] "GET /favicon.ico HTTP/1.1" 404 169 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101 Firefox/49.0" "-"
 2016/11/30 18:07:59 [error] 7#7: *1 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 172.17.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080"
 ```
+{: .output}
 
 That's a good start, but you now have a terminal tied up with nginx, and if you hit CTRL-C in that terminal, your web-server dies. 
 
@@ -91,8 +103,13 @@ We can use the Docker option `-d` to run the container in the background instead
 
 ```
 $ docker run -d -p 8080:80 --name=nginx nginx
+```
+{: .bash}
+
+```
 48a2dca14407484ca4e7f564d6e8c226d8fdd8441e5196577b2942383b251106
 ```
+{: .output}
 
 Go back to your browser, reload `localhost:8080` (or `<Your VM's IP Address>:8080`), and you should get the page loaded again.
 
@@ -100,8 +117,13 @@ We can view the logs of our nginx service with the `docker logs` command, follow
 
 ```
 $ docker logs --follow nginx
+```
+{: .bash}
+
+```
 172.17.0.1 - - [30/Nov/2016:18:18:40 +0000] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101 Firefox/49.0" "-"
 ```
+{: .output}
 
 This gives us a live look at what is going on in our nginx container (try reloading your webpage and see what the logs look like).  Note that the `--follow` option keeps the terminal open and will update the logs in real-time.  If you omit it, `docker logs` would simply display the last few lines of the log file.
 
@@ -109,37 +131,73 @@ If you hit CTRL-C now, your container is still running, in the background. You c
 
 ```
 $ docker ps
+```
+{: .bash}
+
+```
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                           NAMES
 48a2dca14407        nginx               "nginx -g 'daemon off"   3 minutes ago       Up 3 minutes        443/tcp, 0.0.0.0:8080->80/tcp   nginx
 ```
+{: .output}
 
 You can open a shell into the running container, if you wish, using `docker exec`. This can be handy for debugging:
 
 ```
 $ docker exec -t -i nginx /bin/bash
-root@48a2dca14407:/# 
-
-root@48a2dca14407:/# exit
 ```
+{: .bash}
+
+```
+root@48a2dca14407:/# 
+```
+{: .output}
+
+```
+root@48a2dca14407:/# exit   # or hit CTRL-D
+```
+{: .bash}
+
 <!-- does not work with latest nginx images.. ps is not installed!
 Let's take a look at the processes running in our nginx server:
 ```
 $ docker exec -t -i nginx /bin/bash
+```
+{: .bash}
+
+```
 root@48a2dca14407:/# ps auxww | grep ngin                                                                                                                
+```
+{: .bash}
+
+```
 root         1  0.0  0.0  31764  5164 ?        Ss   18:58   0:00 nginx: master process nginx -g daemon off;
 nginx        7  0.0  0.0  32156  2900 ?        S    18:58   0:00 nginx: worker process
 root        15  0.0  0.0  11128  1036 ?        S+   18:59   0:00 grep ngin
 ```
+{: .output}
 -->
 
 So now you've started it, how do you stop it? Use the `docker stop` command! 
 
 ```
 $ docker stop nginx
+```
+{: .bash}
+
+```
 nginx
-$ docker ps # check that it's gone
+```
+{: .output}
+
+```
+$ docker ps   # check that it's gone
+```
+{: .bash}
+
+```
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
+{: .output}
 
 
 ### Advanced use: Docker Compose ###
@@ -192,6 +250,7 @@ services:
     appnet:
       driver: bridge
 ```
+{: .source}
 
 Here we can define different services and options.  There are a lot of options, so I'll touch on a few:
 
@@ -206,12 +265,14 @@ To run this, you simply need to save the above file as `docker-compose.yml`, cd 
 ```
 $ docker-compose up -d
 ```
+{: .bash}
 
 To shut it down, from the same directory run:
 
 ```
 $ docker-compose down
 ```
+{: .bash}
 
 
 > ## Start a Jupyter web server using a container ##
@@ -238,27 +299,31 @@ $ docker-compose down
 > > Pull the container:
 > > 
 > > ```
-> > docker pull jupyter/scipy-notebook
+> > $ docker pull jupyter/scipy-notebook
 > > ```
+> > {: .bash}
 > > 
 > > Start the webserver:
 > > 
 > > ```
-> > docker run --rm -d -p 8888:8888 --name=jupyter -v `pwd`:/home/jovyan/data jupyter/scipy-notebook
+> > $ docker run --rm -d -p 8888:8888 --name=jupyter -v `pwd`:/home/jovyan/data jupyter/scipy-notebook
 > > ```
+> > {: .bash}
 > > 
 > > Inspect the logs:
 > > 
 > > ```
-> > docker logs jupyter
+> > $ docker logs jupyter
 > > ```
+> > {: .bash}
 > > 
 > > Use your web browser to go to `localhost:8888` if you are running Docker on your machine, or `<Your VM's IP Address>:8888` if you are running on a cloud service.
 > > 
 > > Stop the container:
 > > 
 > > ```
-> > docker stop jupyter
+> > $ docker stop jupyter
 > > ```
+> > {: .bash}
 > {: .solution}
 {: .challenge}
