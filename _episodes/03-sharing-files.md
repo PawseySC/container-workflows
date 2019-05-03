@@ -306,6 +306,20 @@ Finally, third-party containers might have been set-up so that permissions of st
 > > ```
 > > {: .bash}
 > > 
+> > Check ownership of output:
+> > 
+> > ```
+> > $ ls -l row_sums
+> > ```
+> > {: .bash}
+> > 
+> > Delete output:
+> > 
+> > ```
+> > $ rm -f row_sums
+> > ```
+> > {: .bash}
+> > 
 > > Run as host user, so that output file belongs to them, not to root:
 > > 
 > > ```

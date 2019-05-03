@@ -281,7 +281,7 @@ This allows the NCI staff to inspect and sanitise the containers before use. For
 Once you have an image, you can run an interactive shell inside the container using the `singularity shell` command. Here, we are using a CentOS image:
  
 ```
-10:03 bjm900@raijin ~ > singularity shell /apps/singularity/images/centos7/centos7-latest.simg 
+$ singularity shell /apps/singularity/images/centos7/centos7-latest.simg 
 ```
 {: .bash}
 
@@ -312,7 +312,7 @@ Singularity centos7-2018051701.simg:~> exit
 You can run a specific command within the container using the `singularity exec` command:
 
 ```
-10:05 bjm900@raijin ~ > singularity exec /apps/singularity/images/centos7/centos7-latest.simg cat /etc/centos-release
+$ singularity exec /apps/singularity/images/centos7/centos7-latest.simg cat /etc/centos-release
 ```
 {: .bash}
 
@@ -324,7 +324,7 @@ CentOS Linux release 7.5.1804 (Core)
 Note that the CentOS version in the container image is 7.5, whereas Raijin’s native OS is (currently) CentOS 6.10:
 
 ```
-10:05 bjm900@raijin ~ > cat /etc/centos-release
+$ cat /etc/centos-release
 ```
 {: .bash}
 
