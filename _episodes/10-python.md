@@ -115,19 +115,19 @@ $ docker run python-demo
 
 #### a) re-use the image we have just built ####
 
-On our Docker machine let us push the container image we created above to Docker Hub. You'll need a free account (`marcodelapierre` in this example).
+On our Docker machine let us push the container image we created above to Docker Hub; you'll need a free account.
 
-First we must give the image a name that complies with the Hub's nomenclature (see previous episode on build). To this end we'll use `docker tag`:
+First we must give the image a name that complies with the Hub's nomenclature (see previous episode on build):
 
 ```
-$ docker tag python-demo marcodelapierre/python-demo
+$ docker tag python-demo <your-dockerhub-account>/python-demo
 ```
 {: .bash}
 
 Now let's push the image:
 
 ```
-$ docker push marcodelapierre/python-demo
+$ docker push <your-dockerhub-account>/python-demo
 ```
 {: .bash}
 
@@ -144,7 +144,7 @@ We are now moving to the Pawsey HPC system. Let's pull the image, then change di
 
 ```
 $ module load shifter
-$ sg $PAWSEY_PROJECT -c 'shifter pull marcodelapierre/python-demo'
+$ sg $PAWSEY_PROJECT -c 'shifter pull <your-dockerhub-account>/python-demo'
 
 $ cd $MYSCRATCH
 ```
@@ -165,7 +165,7 @@ Let us write a SLURM script to execute our Python app using this container, we'l
 module load shifter
 
 # run Python app
-srun --export=all shifter run marcodelapierre/python-demo
+srun --export=all shifter run <your-dockerhub-account>/python-demo
 ```
 {: .bash}
 

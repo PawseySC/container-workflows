@@ -68,7 +68,7 @@ CMD ["/bin/bash"]
 Once the Dockerfile is ready, let us build the image with `docker build`:
 
 ```
-$ docker build -t marcodelapierre/texlive:2019Apr23 .
+$ docker build -t texlive:2019Apr23 .
 ```
 {: .bash}
 
@@ -82,7 +82,7 @@ Step 6/6 : CMD ["/bin/bash"]
 Removing intermediate container d4a53da2f605
  ---> 4439098adf8a
 Successfully built 4439098adf8a
-Successfully tagged marcodelapierre/texlive:2019Apr23
+Successfully tagged texlive:2019Apr23
 ```
 {: .output}
 
@@ -91,9 +91,12 @@ The build will take a few minutes, meanwhile we'll go on to discuss some aspects
 In the command above, `.` is the location of the build context (i.e. the directory for the Dockerfile).  
 The `-t` flag is used to specify the image name (compulsory) and tag (optional).
 
-Any lowercase alphanumeric string can be used as image name. Using the format `<Your Docker Hub account>/<Image name>` as in this example allows to push the built image to your Docker Hub registry.  
-The image tag (following the colon) can be used to maintain a set of different image versions on Docker Hub, and is a key feature in enabling reproducibility of your computations through containers.
+Any lowercase alphanumeric string can be used as image name; here we've used `texlive`. The image tag (following the colon) can be optionally used to maintain a set of different image versions on Docker Hub, and is a key feature in enabling reproducibility of your computations through containers; here we've used `2019Apr23`.
 
+Adding the prefix `<Your Docker Hub account>/` to the image name is optional and allows to push the built image to your Docker Hub registry (see below). 
+
+The complete format for the image name looks like: `<Your Docker Hub account ^>/<Image name>:<Image tag ^>`. `^`These are optional.
+ 
 
 ### Layers in a container image ###
 
@@ -125,10 +128,19 @@ Several other instructions are available, that we haven't covered in this introd
 
 ### Pushing the image to Docker Hub ###
 
-If you have a (free) Docker Hub account, `marcodelapierre` in this case, you are now ready to push your newly created image to the Docker Hub web registry, using `docker push`:
+If you have a (free) Docker Hub account, you are now ready to push your newly created image to the Docker Hub web registry.
+
+First, let us create a second tag for the image, that includes your Docker Account. To this end we'll use `docker tag`:
 
 ```
-$ docker push marcodelapierre/texlive:2019Apr23 
+$ docker tag texlive:2019Apr23 <your-dockerhub-account>/texlive:2019Apr23
+```
+{: .bash}
+
+Now we can push the image:
+
+```
+$ docker push <your-dockerhub-account>/texlive:2019Apr23 
 ```
 {: .bash}
 
@@ -162,9 +174,9 @@ Other more basic images are [rocker/r-ver](https://hub.docker.com/r/rocker/r-ver
 
 > ## Build your own Scientific Python container ##
 > 
-> Using `continuumio/miniconda3:4.5.12` as base image, create an image called `mypython`, which includes the Python packages **numpy**, **scipy** and **pandas**. Hint: you can use `pip install` or `conda install -y` in the Dockerfile to this end. If you have a Docker Hub account, for the image name use the format `<Your Docker Hub account>/<Image name>:<Version tag>`.
+> Using `continuumio/miniconda3:4.5.12` as base image, create an image called `mypython`, which includes the Python packages **numpy**, **scipy** and **pandas**. Hint: you can use `pip install` or `conda install -y` in the Dockerfile to this end. 
 > 
-> Then, if you have a Docker Hub account, push the image to the web registry.
+> If you have a Docker Hub account, for the image name use the format `<Your Docker Hub account>/<Image name>:<Version tag>`. Then, push the image to the web registry.
 > 
 > > ## Solution ##
 > > 
@@ -186,15 +198,24 @@ Other more basic images are [rocker/r-ver](https://hub.docker.com/r/rocker/r-ver
 > > 
 > > Build the image:
 > > 
+> > a) Plain (no Docker Hub account):
+> > 
 > > ```
-> > $ docker build -t marcodelapierre/mypython:2019Apr23 .
+> > $ docker build -t mypython:2019Apr23 .
+> > ```
+> > {: .bash}
+> > 
+> > b) With a Docker Hub account:
+> > 
+> > ```
+> > $ docker build -t <your-dockerhub-account>/mypython:2019Apr23 .
 > > ```
 > > {: .bash}
 > > 
 > > Push the image (optional):
 > > 
 > > ```
-> > $ docker push marcodelapierre/mypython:2019Apr23
+> > $ docker push <your-dockerhub-account>/mypython:2019Apr23
 > > ```
 > > {: .bash}
 > {: .solution}
