@@ -70,15 +70,16 @@ A **Dockerfile** is a recipe to build an image.
 A **registry** is a server application where images are stored and can be accessed by users. It can be public (e.g. Docker Hub) or private.
 
 
-### A word of warning before we start ###
-
-Docker requires `sudo`, i.e. `root`, privileges to be used. The major implication is that commands and applications have to potential to damage the host operating system and filesystem, with no root password required. By default, no host directory is visible inside containers, which greatly reduces chances of harm. In a subsequent episode we'll see how to selectively map host directories to the container for input/output.
-
-A second consequence is that if you're running on a computer where you have limited user permissions (i.e. university/corporate computers), you might have troubles in running Docker, or even installing it. If this happens, you will need to get in touch with your IT services to figure out a workable solution.
-
-Third, to run Docker commands with `root` privileges on a Linux box, you will need to prepend them with `sudo`. There's a three-step procedure to follow if you want to avoid having to type `sudo` all the time (again, you might need IT support). See instructions at [Manage Docker as a non-root user](https://docs.docker.com/install/linux/linux-postinstall/).
-
-**Always** keep in mind that any Docker action is run as **root**!
+> ### A word of warning: sudo ###
+> 
+> Docker requires `sudo`, i.e. `root`, privileges to be used. The major implication is that commands and applications have to potential to damage the host operating system and filesystem, with no root password required. By default, no host directory is visible inside containers, which greatly reduces chances of harm. In a subsequent episode we'll see how to selectively map host directories to the container for input/output.
+> 
+> A second consequence is that if you're running on a computer where you have limited user permissions (i.e. university/corporate computers), you might have troubles in running Docker, or even installing it. If this happens, you will need to get in touch with your IT services to figure out a workable solution.
+> 
+> Third, to run Docker commands with `root` privileges on a Linux box, you will need to prepend them with `sudo`. There's a three-step procedure to follow if you want to avoid having to type `sudo` all the time (again, you might need IT support). See instructions at [Manage Docker as a non-root user](https://docs.docker.com/install/linux/linux-postinstall/).
+> 
+> **Always** keep in mind that any Docker action is run as **root**!
+{: .callout}
 
 
 ### Running a simple command in a container ###
