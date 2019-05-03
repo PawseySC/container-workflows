@@ -242,6 +242,6 @@ srun --export=all shifter run bskjerven/oz_sc:latest Rscript data/SC_Rscript.r
 Let's submit the script via SLURM:
 
 ```
-$ sbatch rscript-bio.sh
+$ sbatch --reservation <your-pawsey-reservation> rscript-bio.sh
 ```
 {: .bash}

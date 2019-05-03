@@ -171,6 +171,6 @@ srun --export=all shifter run rocker/tidyverse:3.5 Rscript readings-06.R --mean 
 Let's submit the script via SLURM:
 
 ```
-$ sbatch rscript.sh
+$ sbatch --reservation <your-pawsey-reservation> rscript.sh
 ```
 {: .bash}

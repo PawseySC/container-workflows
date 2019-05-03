@@ -172,7 +172,7 @@ srun --export=all shifter run <your-dockerhub-account>/python-demo
 Let's submit it to the SLURM scheduler:
 
 ```
-$ sbatch python.sh
+$ sbatch --reservation <your-pawsey-reservation> python.sh
 ```
 {: .bash}
 
@@ -214,7 +214,7 @@ srun --export=all shifter run jupyter/scipy-notebook python my_app.py
 Finally we are submitting the script with SLURM:
 
 ```
-$ sbatch python2.sh
+$ sbatch --reservation <your-pawsey-reservation> python2.sh
 ```
 {: .bash}
 

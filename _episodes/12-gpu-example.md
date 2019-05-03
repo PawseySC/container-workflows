@@ -86,7 +86,7 @@ srun --export=all shifter run nvcr.io/hpc/gromacs:2018.2 \
 The script is ready for submission:
 
 ```
-$ sbatch gpu.sh
+$ sbatch --reservation <your-pawsey-reservation> gpu.sh
 ```
 {: .bash}
 

@@ -187,10 +187,10 @@ srun --export=all shifter run ubuntu hostname
 
 Now use your favourite text editor to copy paste the script above in a file called `hostname.sh` somewhere under `$MYSCRATCH` or `$MYGROUP` (remember to specify your Pawsey Project ID in the script!),
 
-and then submit this script using SLURM:
+and then submit this script using SLURM. If you are running this during a live workshop, use the flag `--reservation <your-pawsey-reservation>` to use the compute nodes that have been reserved for the event:
 
 ```
-$ sbatch hostname.sh
+$ sbatch --reservation <your-pawsey-reservation> hostname.sh
 ```
 {: .bash}
 
@@ -278,7 +278,7 @@ Shifter does not allow to build container images. The best way to create an imag
 > > SLURM submission:
 > > 
 > > ```
-> > $ sbatch python_slurm.sh
+> > $ sbatch --reservation <your-pawsey-reservation> python_slurm.sh
 > > ```
 > > {: .bash}
 > {: .solution}
@@ -291,7 +291,14 @@ Raijin, the NCI HPC system, uses Singularity as the container engine, instead of
  
 This allows the NCI staff to inspect and sanitise the containers before use. For example, to ensure that they allow the use of system MPI libraries, or at least contain a compatible version. The images must be able to be built using a build script, rather than being distributed as just an opaque filesystem image. Mount points for the systems Lustre filesystems will also be included on build so that all of your user data is available at the same location as in the native image (e.g. `/home`, `/short`, and `/g/data`).
  
-Once you have an image, you can run an interactive shell inside the container using the `singularity shell` command. Here, we are using a CentOS image:
+First of all, let us load the Singularity module:
+
+```
+module load singularity
+```
+{: .bash}
+
+You can run an interactive shell inside the container using the `singularity shell` command. Here, we are using a CentOS image:
  
 ```
 $ singularity shell /apps/singularity/images/centos7/centos7-latest.simg 
@@ -356,6 +363,8 @@ On Raijin, Singularity is also integrated with the **PBS** batch scheduling syst
 #PBS -l walltime=00:05:00
 #PBS -l image=centos7
 
+module load singularity
+
 cat /etc/centos-release
 ```
 {: .bash}
@@ -368,6 +377,8 @@ Of course, you can also just use `singularity exec` within your job script as in
 #PBS -q normal
 #PBS -l ncpus=1
 #PBS -l walltime=00:05:00
+
+module load singularity
 
 singularity exec /apps/singularity/images/centos7/centos7-latest.simg cat /etc/centos-release
 ```

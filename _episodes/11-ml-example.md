@@ -189,7 +189,7 @@ srun --export=all shifter run tensorflow/tensorflow:1.13.1 python convolutional.
 Let us submit the script to SLURM:
 
 ```
-$ sbatch ml.sh
+$ sbatch --reservation <your-pawsey-reservation> ml.sh
 ```
 {: .bash}
 
@@ -246,6 +246,6 @@ srun --export=all shifter run tensorflow/tensorflow:1.13.1-gpu python convolutio
 Let's submit with:
 
 ```
-$ sbatch ml-gpu.sh
+$ sbatch --reservation <your-pawsey-reservation> ml-gpu.sh
 ```
 {: .bash}

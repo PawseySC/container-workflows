@@ -159,7 +159,7 @@ use your favourite text editor to copy paste the script above in a file called `
 and then submit this script using SLURM:
 
 ```
-$ sbatch blast.sh
+$ sbatch --reservation <your-pawsey-reservation> blast.sh
 ```
 {: .bash}
 
