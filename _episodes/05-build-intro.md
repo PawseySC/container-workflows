@@ -93,7 +93,7 @@ The `-t` flag is used to specify the image name (compulsory) and tag (optional).
 
 Any lowercase alphanumeric string can be used as image name; here we've used `texlive`. The image tag (following the colon) can be optionally used to maintain a set of different image versions on Docker Hub, and is a key feature in enabling reproducibility of your computations through containers; here we've used `2019Apr23`.
 
-Adding the prefix `<Your Docker Hub account>/` to the image name is optional and allows to push the built image to your Docker Hub registry (see below). 
+Adding the prefix `<Your Docker Hub account>/` to the image name is also optional and allows to push the built image to your Docker Hub registry (see below). 
 
 The complete format for the image name looks like: `<Your Docker Hub account ^>/<Image name>:<Image tag ^>`. `^`These are optional.
  

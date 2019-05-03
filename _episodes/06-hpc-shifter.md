@@ -29,6 +29,19 @@ At the moment, Pawsey is using CSCS Shifter on its HPC systems, and therefore th
 NCI (the National Computational Infrastructure in Canberra) is using Singularity on its HPC systems, for which examples will be provided as well.
 
 
+> ## How to login on Pawsey HPC systems? ##
+> 
+> Pawsey currently has two sytems, **Magnus** and **Zeus**. We're using Zeus for this tutorial. You can login using the `ssh` command and your Pawsey access credentials (they will be provided for live workshops):
+> 
+> ```
+> $ ssh <your-pawsey-account-name>@zeus.pawsey.org.au
+> ```
+> {: .bash}
+> 
+> After this, you'll be prompted to enter your account password.
+{: .callout}
+
+
 ### Pulling and managing images with Shifter ###
 
 To use Shifter on Pawsey HPC systems, we need first to load the corresponding module:
