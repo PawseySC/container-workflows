@@ -70,7 +70,7 @@ A **Dockerfile** is a recipe to build an image.
 A **registry** is a server application where images are stored and can be accessed by users. It can be public (e.g. Docker Hub) or private.
 
 
-> ### A word of warning: sudo ###
+> ## A word of warning: sudo ##
 > 
 > Docker requires `sudo`, i.e. `root`, privileges to be used. The major implication is that commands and applications have to potential to damage the host operating system and filesystem, with no root password required. By default, no host directory is visible inside containers, which greatly reduces chances of harm. In a subsequent episode we'll see how to selectively map host directories to the container for input/output.
 > 
