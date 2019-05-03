@@ -38,7 +38,7 @@ NCI (the National Computational Infrastructure in Canberra) is using Singularity
 > ```
 > {: .bash}
 > 
-> After this, you'll be prompted to enter your account password.
+> After this, you'll be prompted to enter your Pawsey account password.
 {: .callout}
 
 
