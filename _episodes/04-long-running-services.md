@@ -99,7 +99,31 @@ Now, go to your browser and in the address bar enter `localhost:8080` if you are
 
 That's a good start, but you now have a terminal tied up with nginx, and if you hit `CTRL-C` in that terminal, your web-server dies. 
 
-We can use the Docker option `-d` to run the container in the background instead (daemon mode):
+To practice a different solution, let's first stop this container. How to? Use the `docker stop` command!
+
+```
+$ docker stop nginx
+```
+{: .bash}
+
+```
+nginx
+```
+{: .output}
+
+Check that it's gone:
+
+```
+$ docker ps
+```
+{: .bash}
+
+```
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+```
+{: .output}
+
+Now let's go ahead with using the Docker option `-d` to run the container in the background instead (daemon mode):
 
 ```
 $ docker run -d -p 8080:80 --name=nginx nginx
@@ -177,7 +201,7 @@ root        15  0.0  0.0  11128  1036 ?        S+   18:59   0:00 grep ngin
 {: .output}
 -->
 
-So now you've started it, how do you stop it? Use the `docker stop` command! 
+Finally, let's stop this container:
 
 ```
 $ docker stop nginx
@@ -186,16 +210,6 @@ $ docker stop nginx
 
 ```
 nginx
-```
-{: .output}
-
-```
-$ docker ps   # check that it's gone
-```
-{: .bash}
-
-```
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 {: .output}
 
