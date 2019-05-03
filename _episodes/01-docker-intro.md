@@ -72,7 +72,7 @@ A **registry** is a server application where images are stored and can be access
 
 > ## A word of warning: sudo ##
 > 
-> Docker requires `sudo`, i.e. `root`, privileges to be used. The major implication is that commands and applications have to potential to damage the host operating system and filesystem, with no root password required. By default, no host directory is visible inside containers, which greatly reduces chances of harm. In a subsequent episode we'll see how to selectively map host directories to the container for input/output.
+> Docker requires `sudo`, i.e. `root`, privileges to be used. The major implication is that commands and applications have the potential to damage the host operating system and filesystem, with no root password required. By default, no host directory is visible inside containers, which greatly reduces chances of harm. In a subsequent episode we'll see how to selectively map host directories to the container for input/output.
 > 
 > A second consequence is that if you're running on a computer where you have limited user permissions (i.e. university/corporate computers), you might have troubles in running Docker, or even installing it. If this happens, you will need to get in touch with your IT services to figure out a workable solution.
 > 
@@ -118,7 +118,7 @@ UBUNTU_CODENAME=bionic
 
 Here's what we've done:
 
-* Downloaded an Ubuntu Docker image
+* Downloaded an Ubuntu Docker image (this wouldn't happen if the image had been downloaded previously)
 * Created a container from our Ubuntu image
 * The command we've run inside the Ubuntu container is `cat /etc/os-release`, which simply prints some info about the operating system
 
