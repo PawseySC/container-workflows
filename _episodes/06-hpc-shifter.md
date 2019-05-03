@@ -1,5 +1,5 @@
 ---
-title: "Run containers on HPC with Shifter"
+title: "Run containers on HPC with Shifter (and Singularity)"
 teaching: 15
 exercises: 5
 questions:
@@ -25,6 +25,8 @@ Fortunately, a number of alternatives are available to run containers at HPC fac
 * [Singularity](https://www.sylabs.io/singularity/): originally developed by LBL, has its own image format and can run Docker containers as well
 
 At the moment, Pawsey is using CSCS Shifter on its HPC systems, and therefore this will be the tool of choice in this tutorial.
+
+NCI (the National Computational Infrastructure in Canberra) is using Singularity on its HPC systems, for which examples will be provided as well.
 
 
 ### Pulling and managing images with Shifter ###
@@ -180,9 +182,9 @@ $ sbatch hostname.sh
 {: .bash}
 
 
-### Building container images for HPC ###
+### Can Shifter build container images? ###
 
-Shifter does not allow to build container images. The best way to create an image to be pulled and run on HPC is to use Docker on a distinct machine (see previous episode).
+Shifter does not allow to build container images. The best way to create an image to be pulled and run through it is to use Docker on a distinct machine (see previous episode).
 
 
 > ## Run a Python app in a container on HPC ##
@@ -268,3 +270,83 @@ Shifter does not allow to build container images. The best way to create an imag
 > > {: .bash}
 > {: .solution}
 {: .challenge}
+
+
+### HPC containers with Singularity at NCI ###
+
+Raijin, the NCI HPC system, uses Singularity as the container engine, instead of Shifter. However, much of the user-facing interface is similar, or even the same. The biggest difference is that on Raijin you cannot pull and use your own images; instead, you’ll need to contact the NCI Help Desk at <mailto:help@nci.org.au> and ask for your image to be added to the library.
+ 
+This allows the NCI staff to inspect and sanitise the containers before use. For example, to ensure that they allow the use of system MPI libraries, or at least contain a compatible version. The images must be able to be built using a build script, rather than being distributed as just an opaque filesystem image. Mount points for the systems Lustre filesystems will also be included on build so that all of your user data is available at the same location as in the native image (e.g. `/home`, `/short`, and `/g/data`).
+ 
+Once you have an image, you can run an interactive shell inside the container using the `singularity shell` command:
+ 
+```
+10:03 bjm900@raijin ~ > singularity shell /apps/singularity/images/centos7/centos7-latest.simg 
+```
+{: .bash}
+
+```
+Singularity: Invoking an interactive shell within container...
+ 
+Singularity centos7-2018051701.simg:~> cat /etc/centos-release
+CentOS Linux release 7.5.1804 (Core) 
+Singularity centos7-2018051701.simg:~> 
+```
+{: .output}
+
+```
+Singularity centos7-2018051701.simg:~> whoami
+```
+{: .bash}
+
+```
+bjm900
+```
+{: .output}
+
+```
+Singularity centos7-2018051701.simg:~> exit
+```
+{: .bash}
+
+Note that the CentOS version in the container image is 7.5 , whereas Raijin’s native OS is (currently) CentOS 6.10.
+
+You can run a specific command within the container using the `singularity exec` command:
+
+```
+10:05 bjm900@raijin ~ > singularity exec /apps/singularity/images/centos7/centos7-latest.simg cat /etc/centos-release
+```
+{: .bash}
+
+```
+CentOS Linux release 7.5.1804 (Core) 
+```
+{: .output}
+
+On Raijin, Singularity is also integrated with the **PBS** batch scheduling system. This allows you to specify the image to use via the directive `#PBS -l image` in your job script (or similarly on the `qsub` command line):
+
+```
+#!/bin/bash
+#PBS -P <your-nci-project>
+#PBS -q normal
+#PBS -l ncpus=1
+#PBS -l walltime=00:05:00
+#PBS -l image=centos7
+
+cat /etc/centos-release
+```
+{: .bash}
+
+Of course, you can also just use `singularity exec` within your job script as in the example above:
+
+```
+#!/bin/bash
+#PBS -P <your-nci-project>
+#PBS -q normal
+#PBS -l ncpus=1
+#PBS -l walltime=00:05:00
+
+singularity exec /apps/singularity/images/centos7/centos7-latest.simg cat /etc/centos-release
+```
+{: .bash}
+
