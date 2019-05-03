@@ -278,7 +278,7 @@ Raijin, the NCI HPC system, uses Singularity as the container engine, instead of
  
 This allows the NCI staff to inspect and sanitise the containers before use. For example, to ensure that they allow the use of system MPI libraries, or at least contain a compatible version. The images must be able to be built using a build script, rather than being distributed as just an opaque filesystem image. Mount points for the systems Lustre filesystems will also be included on build so that all of your user data is available at the same location as in the native image (e.g. `/home`, `/short`, and `/g/data`).
  
-Once you have an image, you can run an interactive shell inside the container using the `singularity shell` command:
+Once you have an image, you can run an interactive shell inside the container using the `singularity shell` command. Here, we are using a CentOS image:
  
 ```
 10:03 bjm900@raijin ~ > singularity shell /apps/singularity/images/centos7/centos7-latest.simg 
@@ -309,8 +309,6 @@ Singularity centos7-2018051701.simg:~> exit
 ```
 {: .bash}
 
-Note that the CentOS version in the container image is 7.5 , whereas Raijin’s native OS is (currently) CentOS 6.10.
-
 You can run a specific command within the container using the `singularity exec` command:
 
 ```
@@ -320,6 +318,18 @@ You can run a specific command within the container using the `singularity exec`
 
 ```
 CentOS Linux release 7.5.1804 (Core) 
+```
+{: .output}
+
+Note that the CentOS version in the container image is 7.5, whereas Raijin’s native OS is (currently) CentOS 6.10:
+
+```
+10:05 bjm900@raijin ~ > cat /etc/centos-release
+```
+{: .bash}
+
+```
+CentOS release 6.10 (Final)
 ```
 {: .output}
 
