@@ -128,7 +128,15 @@ Several other instructions are available, that we haven't covered in this introd
 
 ### Pushing the image to Docker Hub ###
 
-If you have a (free) Docker Hub account, you are now ready to push your newly created image to the Docker Hub web registry.
+If you have a (free) Docker Hub account you must first login to Docker.
+
+```
+$ docker login
+```
+{: .bash}
+
+
+You are now ready to push your newly created image to the Docker Hub web registry.
 
 First, let us create a second tag for the image, that includes your Docker Account. To this end we'll use `docker tag`:
 
