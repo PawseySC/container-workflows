@@ -320,6 +320,10 @@ $ docker-compose down
 ```
 {: .bash}
 
+Another example of usage for `docker-compose` can be found at this Github repo: <https://github.com/PawseySC/rstudio-nginx>.
+
+The YAML file in this repo sets up a secure RStudio server using Nginx.
+ 
 
 > ## Start a Jupyter web server using a container ##
 > 
