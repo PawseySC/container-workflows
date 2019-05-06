@@ -31,6 +31,19 @@ The key difference here is that VMs virtualise **hardware** while containers vir
 * Modular (can easily combine multiple containers that work together)
 
 
+### Terminology ###
+
+An **image** is a file (or set of files) that contains the application and all its dependencies, libraries, run-time systems, etc. required to run.  You can copy images around, upload them, download them etc.
+
+A **container** is an instantiation of an image.  That is, it's a process that Docker creates and starts up, and an image is run inside a container.  You can run multiple containers from the same image, much like you might run the same application with different options or arguments.
+
+In general, an image corresponds to a file, a container corresponds to a process.
+
+A **Dockerfile** is a recipe to build an image.
+
+A **registry** is a server application where images are stored and can be accessed by users. It can be public (e.g. Docker Hub) or private.
+
+
 ### Containers and your workflow ###
 
 There are a number of reasons for using containers in your daily work:
@@ -55,19 +68,6 @@ A few examples of how containers are being used at Pawsey
 Here's an overview of what a workflow might look like:
 
 ![Docker Workflow]({{ page.root }}/fig/docker_workflow.png)
-
-
-### Terminology ###
-
-An **image** is a file (or set of files) that contains the application and all its dependencies, libraries, run-time systems, etc. required to run.  You can copy images around, upload them, download them etc.
-
-A **container** is an instantiation of an image.  That is, it's a process that Docker creates and starts up, and an image is run inside a container.  You can run multiple containers from the same image, much like you might run the same application with different options or arguments.
-
-In general, an image corresponds to a file, a container corresponds to a process.
-
-A **Dockerfile** is a recipe to build an image.
-
-A **registry** is a server application where images are stored and can be accessed by users. It can be public (e.g. Docker Hub) or private.
 
 
 > ## A word of warning: sudo ##
