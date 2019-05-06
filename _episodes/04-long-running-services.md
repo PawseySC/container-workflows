@@ -222,6 +222,7 @@ We can run all of these via `docker run` commands, but it may get cumbersome if 
 
 All we need to do is define the various options and properties for our containers in a YAML file.  Let's create a simple, containerised MySQL/Nginx setup:
 
+<!--
 ```
 version: '3'
 services:
@@ -263,6 +264,37 @@ services:
   networks:
     appnet:
       driver: bridge
+```
+{: .source}
+-->
+
+```
+version: '3'
+services:
+
+  # Nginx
+  webserver:
+    image: nginx:alpine
+    container_name: nginx-webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+
+  # MySQL
+  db:
+    image: mysql:5.7.22
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - <PICK-A-HOST-DIRECTORY>:/var/lib/mysql
 ```
 {: .source}
 
