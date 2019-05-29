@@ -19,13 +19,13 @@ A Dockerfile is a recipe to build a container image with Docker. It is basically
 
 ### Let's write a Dockerfile ###
 
-We will build a very simple container image: a Ubuntu box featuring the `TeX Live` typsetting distribution. Its Dockerfile will contain most of the basic Docker instructions that can also be used to build more complicated images.
+We will build a very simple container image: a Ubuntu box featuring tools for building software and a text editor. Its Dockerfile will contain most of the basic Docker instructions that can also be used to build more complicated images.
 
 First let us create a directory where we'll store the Dockerfile. This directory will be the so called Docker **build context**. Docker will include files in this directory in the build process and in the final image. As a by-product, this will make the build process longer and the image larger, so that we want to include only those strictly required for the build, even none if possible.
 
 ```
-$ mkdir tex_dockerfile
-$ cd tex_dockerfile
+$ mkdir build_dockerfile
+$ cd build_dockerfile
 ```
 {: .bash}
 
@@ -36,14 +36,16 @@ FROM ubuntu:18.04
   
 MAINTAINER Your Name <youremail@yourdomain>
 
-RUN export DEBIAN_FRONTEND=noninteractive && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y \
-        texlive \
-        texlive-bibtex-extra \
-        texlive-pictures \
-        texlive-publishers \
-        texlive-science \
+        autoconf \
+        automake \
+        g++ \
+        gcc \
+        gfortran \
+        make \
+        nano \
+    && apt-get clean all \
     && rm -rf /var/lib/apt/lists/*
 
 VOLUME ["/data"]
@@ -55,8 +57,7 @@ CMD ["/bin/bash"]
 
 * `FROM`: compulsory, it provides the starting image we will use to build our customised one;
 * `MAINTAINER`: details of the person who wrote the Dockerfile, optional;
-* `RUN`: this is the most used instruction, that alllows to run most shell commands during the build. Multiple `RUN` instructions are often found in a single Dockerfile.  
-  **Note**: when defining an environment variable inside a `RUN` instruction, as for the case of `DEBIAN_FRONTEND` here, the definition only persists within the current `RUN` instruction, and is then lost in subsequent steps;
+* `RUN`: this is the most used instruction, that alllows to run most shell commands during the build. Multiple `RUN` instructions are often found in a single Dockerfile;
 * `VOLUME`: creates a mount point ready to be used for mounting external (e.g. host) volumes; creates the corresponding directory if not existing;
 * `WORKDIR`: changes directory to the specified path; the last current directory in the build will be the working directory in the running container.  
   **Note**: if you use instead `RUN cd <..>`, the changed directory will only persist within that `RUN` instruction, and then be lost in subsequent build steps;
@@ -68,30 +69,28 @@ CMD ["/bin/bash"]
 Once the Dockerfile is ready, let us build the image with `docker build`:
 
 ```
-$ docker build -t texlive:2019Apr23 .
+$ docker build -t build:2019May29 .
 ```
 {: .bash}
 
 ```
 Sending build context to Docker daemon  2.048kB
 Step 1/6 : FROM ubuntu:18.04
- ---> 93fd78260bd1
+ ---> d131e0fa2585
 [..]
 Step 6/6 : CMD ["/bin/bash"]
- ---> Running in d4a53da2f605
-Removing intermediate container d4a53da2f605
- ---> 4439098adf8a
-Successfully built 4439098adf8a
-Successfully tagged texlive:2019Apr23
+ ---> Running in fb003b87b020
+Removing intermediate container fb003b87b020
+ ---> 8986ee76d9a9
+Successfully built 8986ee76d9a9
+Successfully tagged build:2019May29
 ```
 {: .output}
-
-The build will take a few minutes, meanwhile we'll go on to discuss some aspects of building a container image.
 
 In the command above, `.` is the location of the build context (i.e. the directory for the Dockerfile).  
 The `-t` flag is used to specify the image name (compulsory) and tag (optional).
 
-Any lowercase alphanumeric string can be used as image name; here we've used `texlive`. The image tag (following the colon) can be optionally used to maintain a set of different image versions on Docker Hub, and is a key feature in enabling reproducibility of your computations through containers; here we've used `2019Apr23`.
+Any lowercase alphanumeric string can be used as image name; here we've used `build`. The image tag (following the colon) can be optionally used to maintain a set of different image versions on Docker Hub, and is a key feature in enabling reproducibility of your computations through containers; here we've used `2019May29`.
 
 Adding the prefix `<Your Docker Hub account>/` to the image name is also optional and allows to push the built image to your Docker Hub registry (see below). 
 
@@ -102,9 +101,8 @@ The complete format for the image name looks like: `<Your Docker Hub account ^>/
 
 Note how the `RUN` instruction above is used to execute a sequence of commands to:
 
-* set an environment variable required when installing the packages
 * update the list of available packages
-* install a set of `TeX` packages
+* install a set of Linux packages
 * clean build directories
 
 We have concatenated all these commands in one using the `&&` linux operator, and then the `\` symbol to break them into multiple lines for readability.
@@ -141,23 +139,23 @@ You are now ready to push your newly created image to the Docker Hub web registr
 First, let us create a second tag for the image, that includes your Docker Account. To this end we'll use `docker tag`:
 
 ```
-$ docker tag texlive:2019Apr23 <your-dockerhub-account>/texlive:2019Apr23
+$ docker tag build:2019May29 <your-dockerhub-account>/build:2019May29
 ```
 {: .bash}
 
 Now we can push the image:
 
 ```
-$ docker push <your-dockerhub-account>/texlive:2019Apr23 
+$ docker push <your-dockerhub-account>/build:2019May29
 ```
 {: .bash}
 
 ```
-The push refers to repository [docker.io/marcodelapierre/texlive]
-90f5135cec45: Pushed 
-eeec548f4430: Pushed 
+The push refers to repository [docker.io/marcodelapierre/build]
+cab15c00fd34: Pushed 
+cf5522ba3624: Pushed 
 [..]
-2019Apr23: digest: sha256:3aa21e925cf712e2d7a223e4918a2fc2c244749a3d0b397df87d91a9c55163d2 size: 1570
+2019May29: digest: sha256:bcb0e09927291c7a36a37ee686aa870939ab6c2cee2ef06ae4e742dba4bb1dd4 size: 1569
 ```
 {: .output}
 
