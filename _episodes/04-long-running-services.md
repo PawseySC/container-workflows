@@ -332,7 +332,7 @@ The YAML file in this repo sets up a secure RStudio server using Nginx.
 > A couple of extra requirements:
 > 
 > * assign the name `jupyter` to the container
-> * map the current host working directory as `/home/jovyan/data`
+> * map the current host working directory as `/home/jovyan/data` (see previous episode)
 > 
 > Some hints:
 > 
@@ -340,7 +340,7 @@ The YAML file in this repo sets up a secure RStudio server using Nginx.
 > * specify the right port both when launching the container and when looking up the corresponding page in the web browser
 > * no command needs to be specified for that container, the default behaviour is to start the webserver
 > 
-> After you have have started it, use `docker logs` to look for an access `token` string.
+> After you have started it, use `docker logs` to look for an access `token` string.
 > 
 > Once you are done, stop the container.
 > 
@@ -356,7 +356,7 @@ The YAML file in this repo sets up a secure RStudio server using Nginx.
 > > Start the webserver:
 > > 
 > > ```
-> > $ docker run --rm -d -p 8888:8888 --name=jupyter -v `pwd`:/home/jovyan/data jupyter/scipy-notebook
+> > $ docker run -d -p 8888:8888 --name=jupyter -v `pwd`:/home/jovyan/data jupyter/scipy-notebook
 > > ```
 > > {: .bash}
 > > 

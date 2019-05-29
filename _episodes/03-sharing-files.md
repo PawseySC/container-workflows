@@ -288,21 +288,21 @@ Finally, third-party containers might have been set-up so that permissions of st
 > 
 > Then, run it again by giving the input file through redirection with `<`.
 > 
-> Finally, if your are on a Linux system, have a look at the file ownership of the output file `row_sums`. Who's the owner? Now remove the file with `rm -f row_sums`, and adjust your container execution so that the output file belongs to the host user.
+> Finally, if you are on a Linux system, have a look at the file ownership of the output file `row_sums`. Who's the owner? Now remove the file with `rm -f row_sums`, and adjust your container execution so that the output file belongs to the host user.
 > 
 > > ## Solution ##
 > > 
 > > Run with input file as argument:
 > > 
 > > ```
-> > $ docker run --rm -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py input
+> > $ docker run -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py input
 > > ```
 > > {: .bash}
 > > 
 > > Run with input redirection:
 > > 
 > > ```
-> > $ docker run --rm -i -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py < input
+> > $ docker run -i -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py < input
 > > ```
 > > {: .bash}
 > > 
@@ -323,7 +323,7 @@ Finally, third-party containers might have been set-up so that permissions of st
 > > Run as host user, so that output file belongs to them, not to root:
 > > 
 > > ```
-> > $ docker run --rm -i -v `pwd`:/data -w /data -u $(id -u):$(id -g) continuumio/miniconda3:4.5.12 python app.py < input
+> > $ docker run -i -v `pwd`:/data -w /data -u $(id -u):$(id -g) continuumio/miniconda3:4.5.12 python app.py < input
 > > ```
 > > {: .bash}
 > {: .solution}
