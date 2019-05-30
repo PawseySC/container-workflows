@@ -1,6 +1,6 @@
 ---
 title: "Build your own container image with Docker"
-teaching 20
+teaching: 20
 exercises: 10
 questions:
 objectives:
