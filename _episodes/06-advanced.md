@@ -6,9 +6,11 @@ questions:
 objectives:
 - Learn how to set custom user and group IDs in a container
 - Learn how to redirect input to a container
+- Learn how to use Docker Compose to manage multiple containers for web services
 keypoints:
 - "Change user that runs the container with the flag `-u <user>:<group>`"
 - "Make the container accept input from STDIN with the flag `-i`"
+- "You can use a Docker Compose YAML file to orchestrate the setup of multiple containers at once"
 ---
 
 ### Input redirection with Docker ###
