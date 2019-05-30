@@ -1,29 +1,34 @@
 ---
 title: "Sharing files with the host with Docker"
-teaching: 20
+teaching: 10
 exercises: 5
 questions:
 objectives:
 - Learn how to mount host directories in a container
-- Learn how to set custom user and group IDs in a container
 keypoints:
 - "Map host directories in the containers with the flag `-v <host dir>:<container dir>`"
-- "Change user that runs the container with the flag `-u <user>:<group>`"
-- "Make the container accept input from STDIN with the flag `-i`"
 ---
 
 ### Directory and file defaults in Docker ###
 
-**Note**: we are going to use the bash syntax `bash -c '<..> ; <..>'` to run multiple commands at the same time within the same container.
-First, try and run the following to get to know what is the starting point in the Ubuntu container and what it contains:
+Try and run the following to get to know what is the starting point in the Ubuntu container and what it contains:
 
 ```
-$ docker run ubuntu bash -c 'pwd ; ls -l'
+$ docker run ubuntu pwd
 ```
 {: .bash}
 
 ```
 /
+```
+{: .output}
+
+```
+docker run ubuntu ls -l
+```
+{: .bash}
+
+```
 total 64
 drwxr-xr-x   2 root root 4096 Nov 12 20:56 bin
 drwxr-xr-x   2 root root 4096 Apr 24  2018 boot
@@ -49,7 +54,7 @@ drwxr-xr-x   1 root root 4096 Nov 12 20:56 var
 
 You are in the root `/` directory of the container, and if you compare the listing of directories with what you get in the host (type `ls -l /` for this), you will notice the two are different; even directories with the same name will have in general different timestamps, suggesting they are in fact distinct directories.
 
-Now try and create an empty file and then see who is the owner:
+Now try and create an empty file and then see who is the owner (we're feeding two commands at once to the container by separating them with a semi-colon, and running through `bash -c`):
 
 ```
 $ docker run ubuntu bash -c 'touch empty-file ; ls -l empty-file'
@@ -67,8 +72,6 @@ What we have just seen is a consequence of some Docker defaults:
 
 * a container hasn't got any access to directories in the host filesystem (i.e. directories in the computer where you're running the container from)
 * as by default a container is run as root, any created file is owned by the group user.
-
-Let's see how these defaults can be overridden if you want to read/write on host directories effectively.
 
 
 ### Accessing host directories ###
@@ -140,115 +143,6 @@ Docker has several ways to mount data into containers. Here we've only partially
 [Manage data in Docker](https://docs.docker.com/storage/) contains detailed information on these options.
 
 
-### Input redirection with Docker ###
-
-Suppose you need to redirect input to a Docker container, either using an input file with `<` or piping from another execution with `|`. If you just run the container as usual you won't get the expected result. As an example, let's use the unix command `wc -w` to count the number of words received in input; we'll produce the words with `echo`:
-
-```
-$ echo "one two three" | docker run ubuntu wc -w
-```
-{: .bash}
-
-```
-0
-```
-{: .output}
-
-We are getting `0` instead of `3`, suggesting input redirection is not happening. To make it work, we need to use the additional flag `-i`, which keeps Docker `STDIN` (standard input) open:
-
-```
-$ echo "one two three" | docker run -i ubuntu wc -w
-```
-{: .bash}
-
-```
-3
-``` 
-{: .output}
-
-Here we go!
-
-The same flag is required when receiving input from a file, for instance let's create a file with some words:
-
-```
-$ echo "one two three" > words
-```
-{: .bash}
-
-and then try and count them:
-
-```
-$ docker run ubuntu wc -w < words
-```
-{: .bash}
-
-```
-0
-```
-{: .output}
-
-```
-$ docker run -i ubuntu wc -w < words
-```
-{: .bash}
-
-```
-3
-```
-{: .output}
-
-
-### Matching user permissions with the host ###
-
-So far we have seen that files created by the container belong to the root user. This can be annoying, in that the host user might then have limitations in editing/deleting those files. 
-Docker has an option, `-u` or `--user`, to alter the user and group ID in the running container. It can be used in conjunction with the linux command `id` to pass the host user and group IDs directly to the container. For instance:
-
-```
-$ docker run -v `pwd`:/data -w /data -u `id -u`:`id -g` ubuntu touch container3
-```
-{: .bash}
-
-Now, let us inspect the ownerships of all the files created so far through containers:
-
-```
-$ ls -l container?
-```
-{: .bash}
-
-```
--rw-r--r-- 1 root   root   0 Dec 19 08:16 container1
--rw-r--r-- 1 root   root   0 Dec 19 08:19 container2
--rw-r--r-- 1 ubuntu ubuntu 0 Dec 19 08:38 container3
-```
-{: .output}
-
-As desired, the last created file is owned by the host user.
-
-When running a container interactively with host IDs, you might get warnings of this type:
-
-```
-$ docker run -it -u `id -u`:`id -g` ubuntu bash
-```
-{: .bash}
-
-```
-groups: cannot find name for group ID 1000
-I have no name!@9bfdf83aed93:/data$
-```
-{: .output}
-
-These can typically be ignored.
-
-```
-I have no name!@9bfdf83aed93:/data$ exit   # or hit CTRL-D
-```
-{: .bash}
-
-Finally, third-party containers might have been set-up so that permissions of standard users are more restricted compared to root. There are some critical cases here: only root can execute the application, or only root can write on certain locations that need to be modified at runtime. In these cases, the typical solutions are:
-* run the container as root, then fix output file ownerships;
-* build your own container for that application, with appropriate priviligies for non-root users.
-
-
 > ## Run a Python app in a container with I/O ##
 > 
 > With your favourite text editor create a file called `app.py` with the following content:
@@ -286,44 +180,12 @@ Finally, third-party containers might have been set-up so that permissions of st
 > 
 > Now, run `python app.py` using the the container image `continuumio/miniconda3:4.5.12` you previously pulled. Give the input filename as an argument to the app.
 > 
-> Then, run it again by giving the input file through redirection with `<`.
-> 
-> Finally, if you are on a Linux system, have a look at the file ownership of the output file `row_sums`. Who's the owner? Now remove the file with `rm -f row_sums`, and adjust your container execution so that the output file belongs to the host user.
-> 
 > > ## Solution ##
 > > 
 > > Run with input file as argument:
 > > 
 > > ```
 > > $ docker run -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py input
-> > ```
-> > {: .bash}
-> > 
-> > Run with input redirection:
-> > 
-> > ```
-> > $ docker run -i -v `pwd`:/data -w /data continuumio/miniconda3:4.5.12 python app.py < input
-> > ```
-> > {: .bash}
-> > 
-> > Check ownership of output:
-> > 
-> > ```
-> > $ ls -l row_sums
-> > ```
-> > {: .bash}
-> > 
-> > Delete output:
-> > 
-> > ```
-> > $ rm -f row_sums
-> > ```
-> > {: .bash}
-> > 
-> > Run as host user, so that output file belongs to them, not to root:
-> > 
-> > ```
-> > $ docker run -i -v `pwd`:/data -w /data -u $(id -u):$(id -g) continuumio/miniconda3:4.5.12 python app.py < input
 > > ```
 > > {: .bash}
 > {: .solution}
