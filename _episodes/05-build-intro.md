@@ -1,7 +1,7 @@
 ---
 title: "Build your own container image with Docker"
-teaching: 15
-exercises: 5
+teaching 20
+exercises: 10
 questions:
 objectives:
 - Learn what is a Dockerfile and its basic syntax
