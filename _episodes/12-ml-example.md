@@ -195,7 +195,7 @@ $ sbatch --reservation <your-pawsey-reservation> ml.sh
 
 ### Run a ML container on HPC ... using GPUs ###
 
-TensorFlow developers are making available on Docker Hub container images not only for the CPU version of TensorFlow, but for the GPU version as well; the corresponding version tags end with a `-gpu` suffix. Let's give them a try. 
+TensorFlow developers are making available on Docker Hub container images not only for the CPU version of TensorFlow, but for the GPU version as well; the corresponding version tags end with a `-gpu` suffix. Let's give them a try, we'll use the legacy version `1.12.0-rc0-gpu` for compatibility with the drivers currently installed on Zeus at Pawsey.
 
 If your Docker machine has got an Nvidia GPU installed, then you can install the `nvidia-docker` (e.g. see <https://devblogs.nvidia.com/gpu-containers-runtime> ). For this tutorial, we are instead going to use Shifter and the GPU nodes available on the Zeus HPC system at Pawsey.
 
@@ -207,7 +207,7 @@ $ mkdir ml_example_gpu
 $ cd ml_example_gpu
 
 $ module load shifter
-$ sg $PAWSEY_PROJECT -c 'shifter pull tensorflow/tensorflow:1.13.1-gpu'
+$ sg $PAWSEY_PROJECT -c 'shifter pull tensorflow/tensorflow:1.12.0-rc0-gpu'
 ```
 {: .bash}
 
@@ -239,7 +239,7 @@ wget --no-check-certificate https://raw.githubusercontent.com/tensorflow/models/
 sed -i 's/NUM_EPOCHS *=.*/NUM_EPOCHS = 1/' convolutional.py
 
 # run the ML script
-srun --export=all shifter run tensorflow/tensorflow:1.13.1-gpu python convolutional.py
+srun --export=all shifter run tensorflow/tensorflow:1.12.0-rc0-gpu python convolutional.py
 ```
 {: .bash}
 
