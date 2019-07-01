@@ -76,24 +76,24 @@ Now, in order to run a web server such as a Nginx, we are going to use some addi
 We will also use a number of new Docker commands. Let's start with a known one:
 
 ```
-$ docker run -p 8080:80 --name=nginx nginx
+$ docker run -p 80:80 --name=nginx nginx
 ```
 {: .bash}
 
-The option `-p 8080:80` option tells Docker to map port 80 in the container to port 8080 on the host, so you can communicate with it.
+The option `-p 80:80` tells Docker to map port `80` on the host to port `80` in the container, so you can communicate with it.
 
 We've also introduced a second new option: `--name`. Docker automatically names containers, but these names don't reflect the purpose of the container (e.g. `pensive_booth` was the name of the nginx container I ran for this example without the `--name` option).  You can name your container whatever you want, but it's helpful to give it a name similar to the container you're using, or the specific service or application you're running in the container. This can be useful when we need to act on the container while it's running, e.g. to stop it, or to get logs, as wwe'll see soon. In this example, we've called our container `nginx`. 
 
 Note also that we didn't tell docker what program to run, that's baked into the container in this case. More on that later.
 
-Now, go to your browser and in the address bar enter `localhost:8080` if you are running Docker on your machine, or `<Your VM's IP Address>:8080` if you are running on a cloud service. You should see a page with a **Welcome to nginx!** message. On your terminal where you ran the docker command, you'll see some log information:
+Now, go to your browser and in the address bar enter `localhost` if you are running Docker on your machine, or `<Your VM's IP Address>` if you are running on a cloud service. You should see a page with a **Welcome to nginx!** message. On your terminal where you ran the docker command, you'll see some log information:
 
 ```
 172.17.0.1 - - [30/Nov/2016:18:07:59 +0000] "GET / HTTP/1.1" 200 612 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101 Firefox/49.0" "-"
-2016/11/30 18:07:59 [error] 7#7: *1 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 172.17.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080"
+2016/11/30 18:07:59 [error] 7#7: *1 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 172.17.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost"
 172.17.0.1 - - [30/Nov/2016:18:07:59 +0000] "GET /favicon.ico HTTP/1.1" 404 169 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101 Firefox/49.0" "-"
 172.17.0.1 - - [30/Nov/2016:18:07:59 +0000] "GET /favicon.ico HTTP/1.1" 404 169 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101 Firefox/49.0" "-"
-2016/11/30 18:07:59 [error] 7#7: *1 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 172.17.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080"
+2016/11/30 18:07:59 [error] 7#7: *1 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 172.17.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost"
 ```
 {: .output}
 
@@ -126,7 +126,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 Now let's go ahead with using the Docker option `-d` to run the container in the background instead (daemon mode):
 
 ```
-$ docker run -d -p 8080:80 --name=nginx nginx
+$ docker run -d -p 80:80 --name=nginx nginx
 ```
 {: .bash}
 
@@ -135,7 +135,7 @@ $ docker run -d -p 8080:80 --name=nginx nginx
 ```
 {: .output}
 
-Go back to your browser, reload `localhost:8080` (or `<Your VM's IP Address>:8080`), and you should get the page loaded again.
+Go back to your browser, reload `localhost` (or `<Your VM's IP Address>`), and you should get the page loaded again.
 
 We can view the logs of our nginx service with the `docker logs` command, followed by the container name, `nginx`:
 
@@ -160,7 +160,7 @@ $ docker ps
 
 ```
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                           NAMES
-48a2dca14407        nginx               "nginx -g 'daemon off"   3 minutes ago       Up 3 minutes        443/tcp, 0.0.0.0:8080->80/tcp   nginx
+48a2dca14407        nginx               "nginx -g 'daemon off"   3 minutes ago       Up 3 minutes        443/tcp, 0.0.0.0:80->80/tcp   nginx
 ```
 {: .output}
 
@@ -225,8 +225,8 @@ nginx
 > 
 > Some hints:
 > 
-> * by default, that image wants to use port `8888`
-> * specify the right port both when launching the container and when looking up the corresponding page in the web browser
+> * by default, that image wants to use port `8888` for the container
+> * use the default HTTP port `80` for the host, to navigate to the corresponding page in the web browser using default syntax
 > * no command needs to be specified for that container, the default behaviour is to start the webserver
 > 
 > After you have started it, use `docker logs` to look for an access `token` string.
@@ -245,7 +245,7 @@ nginx
 > > Start the webserver:
 > > 
 > > ```
-> > $ docker run -d -p 8888:8888 --name=jupyter -v `pwd`:/home/jovyan/data jupyter/scipy-notebook
+> > $ docker run -d -p 80:8888 --name=jupyter -v `pwd`:/home/jovyan/data jupyter/scipy-notebook
 > > ```
 > > {: .bash}
 > > 
@@ -256,7 +256,7 @@ nginx
 > > ```
 > > {: .bash}
 > > 
-> > Use your web browser to go to `localhost:8888` if you are running Docker on your machine, or `<Your VM's IP Address>:8888` if you are running on a cloud service.
+> > Use your web browser to go to `localhost` if you are running Docker on your machine, or `<Your VM's IP Address>` if you are running on a cloud service.
 > > 
 > > Stop the container:
 > > 
